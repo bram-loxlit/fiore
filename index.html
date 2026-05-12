@@ -18,12 +18,12 @@
             overflow: hidden;
         }
 
-        /* The Hero Background */
+        /* The Hero Background - Matched to your filename: hero.png */
         .hero {
             height: 100vh;
             width: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), 
-                        url('hero.jpg') no-repeat center center;
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), 
+                        url('hero.png') no-repeat center center;
             background-size: cover;
             display: flex;
             flex-direction: column;
@@ -32,10 +32,10 @@
             position: relative;
         }
 
-        /* Logo Styling */
+        /* Logo Styling - Matched to your filename: Logo.png */
         .logo-container {
-            width: 80%;
-            max-width: 600px;
+            width: 85%;
+            max-width: 500px;
             z-index: 10;
             transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
         }
@@ -43,34 +43,43 @@
         .logo-container img {
             width: 100%;
             height: auto;
-            /* Stylized touch: adds a soft white "aura" and sharpens the white text */
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)) brightness(1.2);
+            /* Subtle glow to make the white logo pop against the hair */
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.25));
         }
 
         .logo-container:hover {
-            transform: scale(1.02);
+            transform: scale(1.03);
         }
 
         /* Bottom Credits */
         .footer {
             position: absolute;
-            bottom: 30px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 12px;
-            letter-spacing: 3px;
+            bottom: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            letter-spacing: 4px;
             text-transform: uppercase;
             text-align: center;
             width: 100%;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Subtle Animation for entrance */
+        .copyright {
+            font-size: 9px;
+            opacity: 0.5;
+            margin-top: 12px;
+            display: block;
+            letter-spacing: 2px;
+        }
+
+        /* Smooth entrance animation */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .hero > * {
-            animation: fadeIn 2s ease forwards;
+            animation: fadeIn 2.5s ease-out forwards;
         }
     </style>
 </head>
@@ -78,12 +87,12 @@
 
     <section class="hero">
         <div class="logo-container">
-            <img src="logo.png" alt="FIORE Logo">
+            <img src="Logo.png" alt="FIORE Logo">
         </div>
 
         <div class="footer">
-            A Portrait | Profile & Gallery<br>
-            <span style="font-size: 10px; opacity: 0.4; margin-top: 10px; display: block;">
+            A Portrait | Profile & Gallery
+            <span class="copyright">
                 © 2026 FIORE. All rights reserved.
             </span>
         </div>
