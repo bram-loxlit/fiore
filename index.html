@@ -21,62 +21,65 @@
         .hero {
             height: 100vh;
             width: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.2)), 
                         url('hero.png') no-repeat center center;
             background-size: cover;
+            position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Logo start vanaf boven */
-            align-items: center;
-            position: relative;
         }
 
-        /* Logo hoger geplaatst en gecentreerd */
+        /* Logo linksboven geplaatst */
         .logo-container {
-            width: 60%; /* Iets groter dan de vorige versie, maar kleiner dan de eerste */
-            max-width: 400px;
-            margin-top: 12vh; /* Plaatst het logo op ongeveer 12% van de bovenkant van het scherm */
+            position: absolute;
+            top: 40px;      /* Afstand van boven */
+            left: 50px;     /* Afstand van links */
+            width: 20%;     /* Subtieler formaat */
+            max-width: 180px;
             z-index: 10;
-            transition: transform 0.8s ease;
+            transition: opacity 0.5s ease;
         }
 
         .logo-container img {
             width: 100%;
             height: auto;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
+            /* Lichte schaduw voor leesbaarheid op de grijze achtergrond */
+            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
         }
 
         .logo-container:hover {
-            transform: scale(1.02);
+            opacity: 0.8;
         }
 
-        /* Footer onderaan */
+        /* Footer gecentreerd onderaan */
         .footer {
             position: absolute;
             bottom: 40px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            letter-spacing: 4px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 10px;
+            letter-spacing: 5px;
             text-transform: uppercase;
             text-align: center;
             width: 100%;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
         }
 
         .copyright {
-            font-size: 9px;
+            font-size: 8px;
             opacity: 0.5;
             margin-top: 10px;
             display: block;
             letter-spacing: 2px;
         }
 
+        /* Fade-in effect voor een chique binnenkomst */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .hero > * {
-            animation: fadeIn 2.5s ease forwards;
+            animation: fadeIn 3s ease-in-out forwards;
         }
     </style>
 </head>
