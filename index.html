@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIORE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #000;
+            overflow: hidden;
+        }
+
+        /* The Hero Background */
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.5)), 
+                        url('hero.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Logo Styling */
+        .logo-container {
+            width: 80%;
+            max-width: 600px;
+            z-index: 10;
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: auto;
+            /* Stylized touch: adds a soft white "aura" and sharpens the white text */
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3)) brightness(1.2);
+        }
+
+        .logo-container:hover {
+            transform: scale(1.02);
+        }
+
+        /* Bottom Credits */
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Subtle Animation for entrance */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero > * {
+            animation: fadeIn 2s ease forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <div class="logo-container">
+            <img src="logo.png" alt="FIORE Logo">
+        </div>
+
+        <div class="footer">
+            A Portrait | Profile & Gallery<br>
+            <span style="font-size: 10px; opacity: 0.4; margin-top: 10px; display: block;">
+                © 2026 FIORE. All rights reserved.
+            </span>
+        </div>
+    </section>
+
+</body>
+</html>
