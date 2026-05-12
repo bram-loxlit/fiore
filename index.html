@@ -44,7 +44,7 @@
             opacity: 0; transition: opacity 2s ease-in-out; z-index: 1;
         }
         .section-bg.active { opacity: 1; }
-        .section-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.1); z-index: 2; }
+        .section-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.15); z-index: 2; }
 
         .section-content { position: relative; z-index: 10; }
         .section-content h2 { font-size: 24px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
@@ -134,75 +134,19 @@
         </div>
     </section>
 
-    <div id="sidePanel" class="side-panel">
-        <div class="close-panel" onclick="closeDetails()">×</div>
-        <div id="panelData" class="panel-data"></div>
-    </div>
-
-    <footer class="footer-section">
-        <div class="contact-form">
-            <h3 style="font-size: 10px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
-            <input type="text" placeholder="NAME">
-            <input type="email" placeholder="EMAIL">
-            <textarea placeholder="MESSAGE" rows="4"></textarea>
-            <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
+    <section id="fd8">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>FD8 Executive</h2>
+            <p>Desk Collection</p>
+            <div class="plus-trigger" onclick="openDetails('fd8')">+</div>
         </div>
-        <p style="margin-top: 100px; font-size: 8px; opacity: 0.2; letter-spacing: 5px;">© 2026 FIORE | BEYOND TIME</p>
-    </footer>
+    </section>
 
-    <script>
-        // Hero Slideshow
-        let hIdx = 0;
-        const hSlides = document.querySelectorAll('.hero-slide');
-        setInterval(() => {
-            hSlides[hIdx].classList.remove('active');
-            hIdx = (hIdx + 1) % hSlides.length;
-            hSlides[hIdx].classList.add('active');
-        }, 6000);
-
-        // Sectie Slideshows
-        document.querySelectorAll('section').forEach(s => {
-            const bgs = s.querySelectorAll('.section-bg');
-            if(bgs.length > 1) {
-                let bIdx = 0;
-                setInterval(() => {
-                    bgs[bIdx].classList.remove('active');
-                    bIdx = (bIdx + 1) % bgs.length;
-                    bgs[bIdx].classList.add('active');
-                }, 5000);
-            }
-        });
-
-        // Data & Panel (Prijs staat alleen hier)
-        const projects = {
-            'starfish': {
-                title: 'Starfish Guéridon',
-                desc: 'A masterpiece of generative design. The Starfish Guéridon explores organic structures through aerospace-grade materials. Lead time: 16 weeks.',
-                price: '€ 64.000',
-                draw: 'Fiore-Drawing-Starfish.jpg'
-            },
-            'drop-ripple': {
-                title: 'Drop & Ripple',
-                desc: 'The Drop table and Ripple rug form a singular landscape of fluid geometry.',
-                price: 'Price on request',
-                draw: 'Fiore-Drawing-DropRipple.jpg'
-            }
-        };
-
-        function openDetails(id) {
-            const p = projects[id];
-            document.getElementById('panelData').innerHTML = `
-                <h3>${p.title}</h3>
-                <p>${p.desc}</p>
-                <p style="font-weight: 600; margin-top: 10px;">${p.price}</p>
-                <div class="drawing-container">
-                    <div class="drawing-label">Technical View</div>
-                    <img src="${p.draw}" alt="Drawing">
-                </div>
-            `;
-            document.getElementById('sidePanel').classList.add('open');
-        }
-        function closeDetails() { document.getElementById('sidePanel').classList.remove('open'); }
-    </script>
-</body>
-</html>
+    <section id="dodragao">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="
