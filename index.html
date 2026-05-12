@@ -18,40 +18,39 @@
             overflow: hidden;
         }
 
-        /* The Hero Background - Matched to your filename: hero.png */
         .hero {
             height: 100vh;
             width: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.4)), 
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3)), 
                         url('hero.png') no-repeat center center;
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Logo start vanaf boven */
             align-items: center;
             position: relative;
         }
 
-        /* Logo Styling - Matched to your filename: Logo.png */
+        /* Logo hoger geplaatst en gecentreerd */
         .logo-container {
-            width: 85%;
-            max-width: 500px;
+            width: 60%; /* Iets groter dan de vorige versie, maar kleiner dan de eerste */
+            max-width: 400px;
+            margin-top: 12vh; /* Plaatst het logo op ongeveer 12% van de bovenkant van het scherm */
             z-index: 10;
-            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+            transition: transform 0.8s ease;
         }
 
         .logo-container img {
             width: 100%;
             height: auto;
-            /* Subtle glow to make the white logo pop against the hair */
-            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.25));
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.4));
         }
 
         .logo-container:hover {
-            transform: scale(1.03);
+            transform: scale(1.02);
         }
 
-        /* Bottom Credits */
+        /* Footer onderaan */
         .footer {
             position: absolute;
             bottom: 40px;
@@ -61,25 +60,23 @@
             text-transform: uppercase;
             text-align: center;
             width: 100%;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
         .copyright {
             font-size: 9px;
             opacity: 0.5;
-            margin-top: 12px;
+            margin-top: 10px;
             display: block;
             letter-spacing: 2px;
         }
 
-        /* Smooth entrance animation */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(15px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .hero > * {
-            animation: fadeIn 2.5s ease-out forwards;
+            animation: fadeIn 2.5s ease forwards;
         }
     </style>
 </head>
