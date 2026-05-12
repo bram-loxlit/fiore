@@ -7,72 +7,151 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; font-family: 'Inter', sans-serif; background-color: #000; overflow: hidden; color: #fff; }
+        body, html { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background-color: #000; overflow: hidden; color: #fff; }
 
+        /* Slideshow */
         .slideshow-container { position: fixed; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
-        
         .slide { 
             position: absolute; width: 100%; height: 100%; 
             background-size: cover; background-position: center; 
             opacity: 0; transition: opacity 2s ease-in-out; 
         }
         .slide.active { opacity: 1; }
-        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.1); z-index: 2; }
+        .overlay-dim { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.15); z-index: 2; }
 
-        /* Aangepaste logo-container voor een strakkere hoek-uitlijning */
-        .logo-container { 
-            position: absolute; 
-            top: 25px;      /* Hoger naar de rand */
-            left: 30px;     /* Verder naar links */
-            width: 140px;   /* Iets compacter en eleganter */
-            z-index: 10; 
+        /* UI Elements */
+        .logo-container { position: absolute; top: 25px; left: 30px; width: 140px; z-index: 10; transition: opacity 0.5s; }
+
+        /* Info per slide */
+        .slide-info {
+            position: absolute;
+            bottom: 120px;
+            left: 30px;
+            z-index: 5;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 1s ease 1s; /* Vertraging zodat slide eerst verschijnt */
         }
-        .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3)); }
+        .slide-info.active { opacity: 1; transform: translateY(0); }
+        .slide-info h2 { font-size: 24px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px; }
+        .slide-info p { font-size: 12px; font-weight: 300; letter-spacing: 2px; opacity: 0.8; margin-bottom: 20px; }
+        
+        .btn-more {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff;
+            padding: 12px 25px;
+            font-size: 10px;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .btn-more:hover { background: #fff; color: #000; border-color: #fff; }
 
-        .footer { position: absolute; bottom: 50px; width: 100%; text-align: center; z-index: 10; letter-spacing: 6px; text-transform: uppercase; }
-        .baseline { font-size: 11px; font-weight: 300; color: rgba(255, 255, 255, 0.9); display: block; margin-bottom: 10px; }
-        .copyright { font-size: 8px; opacity: 0.4; letter-spacing: 2px; }
+        /* Side Panel (JW Anderson style) */
+        .details-panel {
+            position: fixed;
+            top: 0; right: -100%; /* Verberg rechts */
+            width: 40%;
+            height: 100vh;
+            background: #fff;
+            color: #000;
+            z-index: 100;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 80px 40px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+        }
+        .details-panel.open { transform: translateX(-100%); }
+        .panel-close { 
+            position: absolute; top: 30px; right: 30px; 
+            cursor: pointer; font-size: 24px; font-weight: 200; 
+        }
+        .panel-content h3 { font-size: 28px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; font-weight: 400; }
+        .panel-content p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; color: #333; }
+
+        /* Footer */
+        .footer { position: absolute; bottom: 40px; width: 100%; text-align: center; z-index: 10; letter-spacing: 6px; text-transform: uppercase; }
+        .baseline { font-size: 10px; font-weight: 300; color: rgba(255, 255, 255, 0.7); display: block; }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .details-panel { width: 100%; top: 100%; right: 0; height: 80vh; }
+            .details-panel.open { transform: translateY(-100%); }
+            .logo-container { width: 110px; left: 20px; top: 20px; }
+            .slide-info { bottom: 100px; left: 20px; }
+            .slide-info h2 { font-size: 18px; }
+        }
     </style>
 </head>
 <body>
 
     <div id="slideshow" class="slideshow-container">
-        <div class="overlay"></div>
+        <div class="overlay-dim"></div>
     </div>
 
     <div class="logo-container">
-        <img src="Logo.png" alt="FIORE Logo">
+        <img src="Logo.png" alt="FIORE">
+    </div>
+
+    <div id="slide-info" class="slide-info">
+        <h2 id="info-title">Starfish Guéridon</h2>
+        <p id="info-subtitle">Limited Edition 2026</p>
+        <button class="btn-more" onclick="openPanel()">More Details</button>
+    </div>
+
+    <div id="detailsPanel" class="details-panel">
+        <span class="panel-close" onclick="closePanel()">×</span>
+        <div class="panel-content">
+            <h3 id="panel-title">Project Title</h3>
+            <p id="panel-text">De tekst over het project komt hier...</p>
+            <p id="panel-price" style="font-weight: bold;"></p>
+        </div>
     </div>
 
     <div class="footer">
         <span class="baseline">Beyond Time | Through Design</span>
-        <span class="copyright">© 2026 FIORE. All rights reserved.</span>
     </div>
 
     <script>
+        // Project data - pas dit aan naar je wensen
+        const projectData = {
+            'hero.png': {
+                title: 'Starfish Guéridon',
+                subtitle: 'Collectible Design',
+                description: 'De Starfish Guéridon verkent de grens tussen organische groei en AI-precisie. Het unieke rode hart symboliseert de digitale ziel van het object.',
+                price: '€ 64.000'
+            },
+            'hero1.png': {
+                title: 'Fiore Mask',
+                subtitle: 'The Digital Designer',
+                description: 'Het masker van Fiore representeert de anonimiteit van de ontwerper van de toekomst. Een AI-entiteit die vormgeeft zonder ego.',
+                price: 'Immortal Identity'
+            },
+            'hero2.png': {
+                title: 'Do Dragao',
+                subtitle: 'Daybed & Loveseat',
+                description: 'Vloeiende structuren geïnspireerd op mythologische vormen. Ontworpen in 2020 als startpunt van de exclusieve meubellijn.',
+                price: 'On Request'
+            }
+        };
+
         const container = document.getElementById('slideshow');
-        // We beginnen met de hoofd-image 'hero.png'
+        const infoBox = document.getElementById('slide-info');
         const images = ['hero.png']; 
         let currentIndex = 0;
 
         async function loadImages() {
             let i = 1;
-            let searching = true;
-
-            // Zoekt automatisch naar hero1.png, hero2.png, hero3.png, etc.
-            while (searching && i < 20) { 
+            while (i < 10) { 
                 const filename = `hero${i}.png`;
                 try {
                     const response = await fetch(filename, { method: 'HEAD' });
-                    if (response.ok) {
-                        images.push(filename);
-                        i++;
-                    } else {
-                        searching = false;
-                    }
-                } catch (e) {
-                    searching = false;
-                }
+                    if (response.ok) { images.push(filename); i++; } 
+                    else break;
+                } catch (e) { break; }
             }
             
             images.forEach((img, index) => {
@@ -81,19 +160,35 @@
                 div.style.backgroundImage = `url('${img}')`;
                 container.appendChild(div);
             });
+            updateText();
+            if (images.length > 1) setInterval(nextSlide, 7000); // Iets langer wachten per slide
+        }
 
-            if (images.length > 1) {
-                setInterval(nextSlide, 5000);
-            }
+        function updateText() {
+            const currentImg = images[currentIndex];
+            const data = projectData[currentImg] || { title: 'Fiore Creation', subtitle: 'A.I. Design', description: 'Ontwerp in ontwikkeling.' };
+            
+            infoBox.classList.remove('active');
+            setTimeout(() => {
+                document.getElementById('info-title').innerText = data.title;
+                document.getElementById('info-subtitle').innerText = data.subtitle;
+                document.getElementById('panel-title').innerText = data.title;
+                document.getElementById('panel-text').innerText = data.description;
+                document.getElementById('panel-price').innerText = data.price;
+                infoBox.classList.add('active');
+            }, 800);
         }
 
         function nextSlide() {
             const slides = document.querySelectorAll('.slide');
-            if (slides.length === 0) return;
             slides[currentIndex].classList.remove('active');
             currentIndex = (currentIndex + 1) % slides.length;
             slides[currentIndex].classList.add('active');
+            updateText();
         }
+
+        function openPanel() { document.getElementById('detailsPanel').classList.add('open'); }
+        function closePanel() { document.getElementById('detailsPanel').classList.remove('open'); }
 
         loadImages();
     </script>
