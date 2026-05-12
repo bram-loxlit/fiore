@@ -7,99 +7,151 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; font-family: 'Inter', -apple-system, sans-serif; background-color: #000; overflow: hidden; color: #fff; }
-
-        /* Slideshow */
-        .slideshow-container { position: fixed; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
-        .slide { 
-            position: absolute; width: 100%; height: 100%; 
-            background-size: cover; background-position: center; 
-            opacity: 0; transition: opacity 2s ease-in-out; 
-        }
-        .slide.active { opacity: 1; }
-        .overlay-dim { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.15); z-index: 2; }
-
-        /* UI Elements */
-        .logo-container { position: absolute; top: 25px; left: 30px; width: 140px; z-index: 10; }
-
-        /* Info per slide */
-        .slide-info {
-            position: absolute;
-            bottom: 120px;
-            left: 30px;
-            z-index: 5;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 1s ease 0.5s;
-        }
-        .slide-info.active { opacity: 1; transform: translateY(0); }
-        .slide-info h2 { font-size: 24px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px; }
-        .slide-info p { font-size: 12px; font-weight: 300; letter-spacing: 2px; opacity: 0.8; margin-bottom: 20px; }
-        
-        .btn-more {
-            background: none;
-            border: 1px solid rgba(255,255,255,0.4);
+        body, html { 
+            height: 100%; 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background-color: #000; 
             color: #fff;
-            padding: 12px 25px;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Navigatie / Logo */
+        .logo-container { 
+            position: fixed; 
+            top: 25px; left: 30px; 
+            width: 140px; 
+            z-index: 100; 
+        }
+        .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
+
+        /* Sections als Fullscreen Slides */
+        section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 0 30px 120px 30px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+        }
+
+        section h2 { 
+            font-size: 28px; 
+            font-weight: 300; 
+            letter-spacing: 5px; 
+            text-transform: uppercase; 
+            margin-bottom: 10px;
+        }
+
+        section p.subtitle { 
+            font-size: 12px; 
+            letter-spacing: 2px; 
+            opacity: 0.8; 
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .btn-details {
+            background: none;
+            border: 1px solid rgba(255,255,255,0.5);
+            color: #fff;
+            padding: 12px 30px;
             font-size: 10px;
             letter-spacing: 3px;
             cursor: pointer;
-            transition: all 0.3s;
             text-transform: uppercase;
+            transition: 0.3s;
         }
-        .btn-more:hover { background: #fff; color: #000; border-color: #fff; }
+        .btn-details:hover { background: #fff; color: #000; }
 
         /* Side Panel */
         .details-panel {
             position: fixed;
             top: 0; right: -100%;
-            width: 40%;
-            height: 100vh;
-            background: #fff;
-            color: #000;
-            z-index: 100;
+            width: 40%; height: 100vh;
+            background: #fff; color: #000;
+            z-index: 1000;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 80px 40px;
-            display: flex;
-            flex-direction: column;
         }
         .details-panel.open { transform: translateX(-100%); }
-        .panel-close { position: absolute; top: 30px; right: 30px; cursor: pointer; font-size: 24px; font-weight: 200; }
-        .panel-content h3 { font-size: 28px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; font-weight: 400; }
-        .panel-content p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; color: #333; }
+        .panel-close { position: absolute; top: 30px; right: 30px; cursor: pointer; font-size: 30px; font-weight: 200; }
+        
+        .panel-content h3 { font-size: 24px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .panel-content p { font-size: 15px; line-height: 1.7; margin-bottom: 20px; color: #444; }
 
-        .footer { position: absolute; bottom: 40px; width: 100%; text-align: center; z-index: 10; letter-spacing: 6px; text-transform: uppercase; }
-        .baseline { font-size: 10px; font-weight: 300; color: rgba(255, 255, 255, 0.7); display: block; }
+        /* Footer */
+        .footer { 
+            position: fixed; 
+            bottom: 40px; 
+            width: 100%; 
+            text-align: center; 
+            z-index: 50; 
+            pointer-events: none;
+        }
+        .baseline { font-size: 10px; letter-spacing: 6px; text-transform: uppercase; opacity: 0.6; }
 
+        /* Mobile */
         @media (max-width: 768px) {
-            .details-panel { width: 100%; top: 100%; right: 0; height: 80vh; }
+            .details-panel { width: 100%; top: 100%; right: 0; height: 85vh; }
             .details-panel.open { transform: translateY(-100%); }
+            section { padding-bottom: 100px; }
         }
     </style>
 </head>
 <body>
 
-    <div id="slideshow" class="slideshow-container">
-        <div class="overlay-dim"></div>
-    </div>
-
     <div class="logo-container">
-        <img src="Logo.png" alt="FIORE">
+        <a href="#starfish"><img src="Logo.png" alt="FIORE"></a>
     </div>
 
-    <div id="slide-info" class="slide-info">
-        <h2 id="info-title"></h2>
-        <p id="info-subtitle"></p>
-        <button class="btn-more" onclick="openPanel()">More Details</button>
-    </div>
+    <section id="starfish" style="background-image: url('Fiore-StarfishGueridon.png');">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2>Starfish Guéridon</h2>
+            <p class="subtitle">Collectible Design | € 64.000</p>
+            <button class="btn-details" onclick="openPanel('starfish')">More Details</button>
+        </div>
+    </section>
+
+    <section id="dodragao" style="background-image: url('Fiore-DoDragao.png');">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2>Do Dragao</h2>
+            <p class="subtitle">Daybed & Loveseat | Limited Edition</p>
+            <button class="btn-details" onclick="openPanel('dodragao')">More Details</button>
+        </div>
+    </section>
+
+    <section id="about" style="background-image: url('Fiore-about.png');">
+        <div class="overlay"></div>
+        <div class="content-wrapper">
+            <h2>About Fiore</h2>
+            <p class="subtitle">The Immortal Digital Designer</p>
+            <button class="btn-details" onclick="openPanel('about')">More Details</button>
+        </div>
+    </section>
 
     <div id="detailsPanel" class="details-panel">
         <span class="panel-close" onclick="closePanel()">×</span>
-        <div class="panel-content">
-            <h3 id="panel-title"></h3>
-            <p id="panel-text"></p>
-            <p id="panel-extra" style="font-weight: bold; margin-top: 10px;"></p>
-        </div>
+        <div class="panel-content" id="panelContent">
+            </div>
     </div>
 
     <div class="footer">
@@ -107,86 +159,38 @@
     </div>
 
     <script>
-        const projectData = {
-            'hero.png': {
+        const data = {
+            'starfish': {
                 title: 'Starfish Guéridon',
-                subtitle: 'Collectible Design',
-                description: 'The Starfish Guéridon explores the intersection of organic growth and AI-driven precision. Its fluid, structural form and iconic red interior evoke a sense of future-forward craftsmanship.',
-                extra: 'Price: € 64.000'
+                text: 'The Starfish Guéridon explores the intersection of organic growth and AI-driven precision. Its fluid, structural form and iconic red interior evoke a sense of future-forward craftsmanship.',
+                price: 'Price: € 64.000'
             },
-            'hero1.png': {
-                title: 'About Fiore',
-                subtitle: 'The Digital Designer',
-                description: 'Fiore is an immortal digital entity, creating design beyond the ego. Using an AI-generated mask to maintain anonymity, the focus remains purely on form and creation since 2020.',
-                extra: 'Immortal Vision'
-            },
-            'hero2.png': {
+            'dodragao': {
                 title: 'Do Dragao',
-                subtitle: 'Daybed & Loveseat',
-                description: 'Mythology meets modernity. The Do Dragao series features sweeping, skeletal lines that redefine comfort through a futuristic lens.',
-                extra: 'Edition: Limited'
+                text: 'Mythology meets modernity. The Do Dragao series features sweeping, skeletal lines that redefine comfort through a futuristic lens.',
+                price: 'Limited Edition'
             },
-            'hero3.png': {
-                title: 'FD8 Desk',
-                subtitle: 'Executive Collection',
-                description: 'The FD8 Executive Desk is a statement of power and flow. A seamless blend of ergonomics and avant-garde aesthetic.',
-                extra: 'Bespoke Creation'
+            'about': {
+                title: 'About Fiore',
+                text: 'Fiore is an immortal digital entity, creating design beyond the ego. Using an AI-generated mask to maintain anonymity, the focus remains purely on form and creation since 2020.',
+                price: 'Established 2020'
             }
         };
 
-        const container = document.getElementById('slideshow');
-        const infoBox = document.getElementById('slide-info');
-        const images = ['hero.png']; 
-        let currentIndex = 0;
-
-        async function loadImages() {
-            let i = 1;
-            while (i < 15) { 
-                const filename = `hero${i}.png`;
-                try {
-                    const response = await fetch(filename, { method: 'HEAD' });
-                    if (response.ok) { images.push(filename); i++; } 
-                    else break;
-                } catch (e) { break; }
-            }
-            
-            images.forEach((img, index) => {
-                const div = document.createElement('div');
-                div.className = `slide ${index === 0 ? 'active' : ''}`;
-                div.style.backgroundImage = `url('${img}')`;
-                container.appendChild(div);
-            });
-            updateText();
-            if (images.length > 1) setInterval(nextSlide, 7000);
+        function openPanel(id) {
+            const project = data[id];
+            document.getElementById('panelContent').innerHTML = `
+                <h3>${project.title}</h3>
+                <p>${project.text}</p>
+                <p><strong>${project.price}</strong></p>
+            `;
+            document.getElementById('detailsPanel').classList.add('open');
         }
 
-        function updateText() {
-            const currentImg = images[currentIndex];
-            const data = projectData[currentImg] || { title: 'Fiore Original', subtitle: 'Design Archive', description: 'Exploring the future of form.', extra: '' };
-            
-            infoBox.classList.remove('active');
-            setTimeout(() => {
-                document.getElementById('info-title').innerText = data.title;
-                document.getElementById('info-subtitle').innerText = data.subtitle;
-                document.getElementById('panel-title').innerText = data.title;
-                document.getElementById('panel-text').innerText = data.description;
-                document.getElementById('panel-extra').innerText = data.extra;
-                infoBox.classList.add('active');
-            }, 800);
+        function closePanel() {
+            document.getElementById('detailsPanel').classList.remove('open');
         }
-
-        function nextSlide() {
-            const slides = document.querySelectorAll('.slide');
-            slides[currentIndex].classList.remove('active');
-            currentIndex = (currentIndex + 1) % slides.length;
-            slides[currentIndex].classList.add('active');
-            updateText();
-        }
-
-        function openPanel() { document.getElementById('detailsPanel').classList.add('open'); }
-        function closePanel() { document.getElementById('detailsPanel').classList.remove('remove'); document.getElementById('detailsPanel').classList.remove('open'); }
-
-        loadImages();
     </script>
+
 </body>
 </html>
