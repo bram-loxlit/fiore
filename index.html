@@ -20,7 +20,7 @@
         .overlay-dim { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.15); z-index: 2; }
 
         /* UI Elements */
-        .logo-container { position: absolute; top: 25px; left: 30px; width: 140px; z-index: 10; transition: opacity 0.5s; }
+        .logo-container { position: absolute; top: 25px; left: 30px; width: 140px; z-index: 10; }
 
         /* Info per slide */
         .slide-info {
@@ -30,7 +30,7 @@
             z-index: 5;
             opacity: 0;
             transform: translateY(20px);
-            transition: all 1s ease 1s; /* Vertraging zodat slide eerst verschijnt */
+            transition: all 1s ease 0.5s;
         }
         .slide-info.active { opacity: 1; transform: translateY(0); }
         .slide-info h2 { font-size: 24px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 5px; }
@@ -49,10 +49,10 @@
         }
         .btn-more:hover { background: #fff; color: #000; border-color: #fff; }
 
-        /* Side Panel (JW Anderson style) */
+        /* Side Panel */
         .details-panel {
             position: fixed;
-            top: 0; right: -100%; /* Verberg rechts */
+            top: 0; right: -100%;
             width: 40%;
             height: 100vh;
             background: #fff;
@@ -62,27 +62,18 @@
             padding: 80px 40px;
             display: flex;
             flex-direction: column;
-            box-shadow: -10px 0 30px rgba(0,0,0,0.2);
         }
         .details-panel.open { transform: translateX(-100%); }
-        .panel-close { 
-            position: absolute; top: 30px; right: 30px; 
-            cursor: pointer; font-size: 24px; font-weight: 200; 
-        }
+        .panel-close { position: absolute; top: 30px; right: 30px; cursor: pointer; font-size: 24px; font-weight: 200; }
         .panel-content h3 { font-size: 28px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; font-weight: 400; }
         .panel-content p { font-size: 15px; line-height: 1.6; margin-bottom: 20px; color: #333; }
 
-        /* Footer */
         .footer { position: absolute; bottom: 40px; width: 100%; text-align: center; z-index: 10; letter-spacing: 6px; text-transform: uppercase; }
         .baseline { font-size: 10px; font-weight: 300; color: rgba(255, 255, 255, 0.7); display: block; }
 
-        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .details-panel { width: 100%; top: 100%; right: 0; height: 80vh; }
             .details-panel.open { transform: translateY(-100%); }
-            .logo-container { width: 110px; left: 20px; top: 20px; }
-            .slide-info { bottom: 100px; left: 20px; }
-            .slide-info h2 { font-size: 18px; }
         }
     </style>
 </head>
@@ -97,17 +88,17 @@
     </div>
 
     <div id="slide-info" class="slide-info">
-        <h2 id="info-title">Starfish Guéridon</h2>
-        <p id="info-subtitle">Limited Edition 2026</p>
+        <h2 id="info-title"></h2>
+        <p id="info-subtitle"></p>
         <button class="btn-more" onclick="openPanel()">More Details</button>
     </div>
 
     <div id="detailsPanel" class="details-panel">
         <span class="panel-close" onclick="closePanel()">×</span>
         <div class="panel-content">
-            <h3 id="panel-title">Project Title</h3>
-            <p id="panel-text">De tekst over het project komt hier...</p>
-            <p id="panel-price" style="font-weight: bold;"></p>
+            <h3 id="panel-title"></h3>
+            <p id="panel-text"></p>
+            <p id="panel-extra" style="font-weight: bold; margin-top: 10px;"></p>
         </div>
     </div>
 
@@ -116,25 +107,30 @@
     </div>
 
     <script>
-        // Project data - pas dit aan naar je wensen
         const projectData = {
             'hero.png': {
                 title: 'Starfish Guéridon',
                 subtitle: 'Collectible Design',
-                description: 'De Starfish Guéridon verkent de grens tussen organische groei en AI-precisie. Het unieke rode hart symboliseert de digitale ziel van het object.',
-                price: '€ 64.000'
+                description: 'The Starfish Guéridon explores the intersection of organic growth and AI-driven precision. Its fluid, structural form and iconic red interior evoke a sense of future-forward craftsmanship.',
+                extra: 'Price: € 64.000'
             },
             'hero1.png': {
-                title: 'Fiore Mask',
+                title: 'About Fiore',
                 subtitle: 'The Digital Designer',
-                description: 'Het masker van Fiore representeert de anonimiteit van de ontwerper van de toekomst. Een AI-entiteit die vormgeeft zonder ego.',
-                price: 'Immortal Identity'
+                description: 'Fiore is an immortal digital entity, creating design beyond the ego. Using an AI-generated mask to maintain anonymity, the focus remains purely on form and creation since 2020.',
+                extra: 'Immortal Vision'
             },
             'hero2.png': {
                 title: 'Do Dragao',
                 subtitle: 'Daybed & Loveseat',
-                description: 'Vloeiende structuren geïnspireerd op mythologische vormen. Ontworpen in 2020 als startpunt van de exclusieve meubellijn.',
-                price: 'On Request'
+                description: 'Mythology meets modernity. The Do Dragao series features sweeping, skeletal lines that redefine comfort through a futuristic lens.',
+                extra: 'Edition: Limited'
+            },
+            'hero3.png': {
+                title: 'FD8 Desk',
+                subtitle: 'Executive Collection',
+                description: 'The FD8 Executive Desk is a statement of power and flow. A seamless blend of ergonomics and avant-garde aesthetic.',
+                extra: 'Bespoke Creation'
             }
         };
 
@@ -145,7 +141,7 @@
 
         async function loadImages() {
             let i = 1;
-            while (i < 10) { 
+            while (i < 15) { 
                 const filename = `hero${i}.png`;
                 try {
                     const response = await fetch(filename, { method: 'HEAD' });
@@ -161,12 +157,12 @@
                 container.appendChild(div);
             });
             updateText();
-            if (images.length > 1) setInterval(nextSlide, 7000); // Iets langer wachten per slide
+            if (images.length > 1) setInterval(nextSlide, 7000);
         }
 
         function updateText() {
             const currentImg = images[currentIndex];
-            const data = projectData[currentImg] || { title: 'Fiore Creation', subtitle: 'A.I. Design', description: 'Ontwerp in ontwikkeling.' };
+            const data = projectData[currentImg] || { title: 'Fiore Original', subtitle: 'Design Archive', description: 'Exploring the future of form.', extra: '' };
             
             infoBox.classList.remove('active');
             setTimeout(() => {
@@ -174,7 +170,7 @@
                 document.getElementById('info-subtitle').innerText = data.subtitle;
                 document.getElementById('panel-title').innerText = data.title;
                 document.getElementById('panel-text').innerText = data.description;
-                document.getElementById('panel-price').innerText = data.price;
+                document.getElementById('panel-extra').innerText = data.extra;
                 infoBox.classList.add('active');
             }, 800);
         }
@@ -188,7 +184,7 @@
         }
 
         function openPanel() { document.getElementById('detailsPanel').classList.add('open'); }
-        function closePanel() { document.getElementById('detailsPanel').classList.remove('open'); }
+        function closePanel() { document.getElementById('detailsPanel').classList.remove('remove'); document.getElementById('detailsPanel').classList.remove('open'); }
 
         loadImages();
     </script>
