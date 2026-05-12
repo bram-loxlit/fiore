@@ -4,92 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIORE</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { height: 100%; font-family: 'Inter', sans-serif; background-color: #000; overflow: hidden; color: #fff; }
 
-        body, html {
-            height: 100%;
-            font-family: 'Inter', sans-serif;
-            background-color: #000;
-            overflow: hidden;
-            color: #fff;
+        .slideshow-container { position: fixed; width: 100%; height: 100vh; z-index: 1; overflow: hidden; }
+        
+        .slide { 
+            position: absolute; width: 100%; height: 100%; 
+            background-size: cover; background-position: center; 
+            opacity: 0; transition: opacity 2s ease-in-out; 
         }
-
-        /* Slideshow Container */
-        .slideshow-container {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .slide {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            opacity: 0;
-            transition: opacity 2s ease-in-out; /* De snelheid van het overvloeien */
-        }
-
         .slide.active { opacity: 1; }
+        .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.15); z-index: 2; }
 
-        /* Overlay voor leesbaarheid */
-        .overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 2;
-        }
+        .logo-container { position: absolute; top: 40px; left: 50px; width: 180px; z-index: 10; }
+        .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3)); }
 
-        /* Logo linksboven */
-        .logo-container {
-            position: absolute;
-            top: 40px;
-            left: 50px;
-            width: 180px;
-            z-index: 10;
-        }
-
-        .logo-container img {
-            width: 100%;
-            filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.3));
-        }
-
-        /* De nieuwe baseline onderaan */
-        .footer {
-            position: absolute;
-            bottom: 50px;
-            width: 100%;
-            text-align: center;
-            z-index: 10;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-        }
-
-        .baseline {
-            font-size: 12px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.9);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .copyright {
-            font-size: 8px;
-            opacity: 0.4;
-            letter-spacing: 2px;
-        }
+        .footer { position: absolute; bottom: 50px; width: 100%; text-align: center; z-index: 10; letter-spacing: 6px; text-transform: uppercase; }
+        .baseline { font-size: 12px; font-weight: 300; color: rgba(255, 255, 255, 0.9); display: block; margin-bottom: 10px; }
+        .copyright { font-size: 8px; opacity: 0.4; letter-spacing: 2px; }
     </style>
 </head>
 <body>
 
-    <div class="slideshow-container">
-        <div class="slide active" style="background-image: url('hero.png');"></div>
-        <div class="slide" style="background-image: url('hero2.png');"></div>
-        <div class="slide" style="background-image: url('hero3.png');"></div>
+    <div id="slideshow" class="slideshow-container">
         <div class="overlay"></div>
     </div>
 
@@ -98,24 +38,57 @@
     </div>
 
     <div class="footer">
-        <span class="baseline">Beyond the Persona. Pure Form. A.I. Furniture Design since 2020</span>
+        <span class="baseline">Design Transcends the Ego</span>
         <span class="copyright">© 2026 FIORE. All rights reserved.</span>
     </div>
 
     <script>
-        // Eenvoudige slideshow script
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        
-        function nextSlide() {
-            slides[currentSlide].classList.remove('active');
-            currentSlide = (currentSlide + 1) % slides.length;
-            slides[currentSlide].classList.add('active');
+        const container = document.getElementById('slideshow');
+        const images = ['hero.png']; // We beginnen altijd met de hoofd-image
+        let currentIndex = 0;
+
+        // Functie om te checken of heroX.png bestaat en ze toe te voegen
+        async function loadImages() {
+            let i = 1;
+            let searching = true;
+
+            while (searching && i < 20) { // Max 20 images om loop-fouten te voorkomen
+                const filename = `hero${i}.png`;
+                try {
+                    const response = await fetch(filename, { method: 'HEAD' });
+                    if (response.ok) {
+                        images.push(filename);
+                        i++;
+                    } else {
+                        searching = false;
+                    }
+                } catch (e) {
+                    searching = false;
+                }
+            }
+            
+            // Maak de slides aan in de HTML
+            images.forEach((img, index) => {
+                const div = document.createElement('div');
+                div.className = `slide ${index === 0 ? 'active' : ''}`;
+                div.style.backgroundImage = `url('${img}')`;
+                container.appendChild(div);
+            });
+
+            // Start de slideshow als er meer dan 1 image is
+            if (images.length > 1) {
+                setInterval(nextSlide, 5000);
+            }
         }
 
-        // Wisselt elke 5 seconden van afbeelding
-        setInterval(nextSlide, 5000);
-    </script>
+        function nextSlide() {
+            const slides = document.querySelectorAll('.slide');
+            slides[currentIndex].classList.remove('active');
+            currentIndex = (currentIndex + 1) % slides.length;
+            slides[currentIndex].classList.add('active');
+        }
 
+        loadImages();
+    </script>
 </body>
 </html>
