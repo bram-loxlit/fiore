@@ -12,11 +12,11 @@
             background-color: #000; color: #fff; scroll-behavior: smooth;
         }
 
-        /* Navigatie */
+        /* Fixed Navigation */
         .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 1000; }
         .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
-        /* HERO SLIDESHOW */
+        /* 1. HERO SLIDESHOW */
         .hero-slideshow { position: relative; height: 100vh; width: 100%; overflow: hidden; }
         .hero-slide { 
             position: absolute; width: 100%; height: 100%; 
@@ -36,7 +36,7 @@
         section {
             position: relative; height: 100vh; width: 100%; overflow: hidden;
             display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 0 40px 100px 40px; border-bottom: 1px solid #111;
+            padding: 0 40px 100px 40px;
         }
         .section-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -57,7 +57,7 @@
         }
         .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-        /* SIDE PANEL */
+        /* SIDE PANEL (Right on Desktop, Bottom on Mobile) */
         .side-panel {
             position: fixed; top: 0; right: -100%; width: 40%; height: 100vh;
             background: #fff; color: #000; z-index: 2000;
@@ -74,7 +74,7 @@
         .drawing-label { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 10px; }
 
         /* FOOTER / CONTACT */
-        .footer-section { background: #000; padding: 120px 40px; text-align: center; }
+        .footer-section { background: #000; padding: 120px 40px; text-align: center; border-top: 1px solid #111; }
         .contact-form { max-width: 450px; margin: 0 auto; }
         input, textarea { 
             width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.15);
@@ -149,4 +149,53 @@
         <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
         <div class="section-overlay"></div>
-        <div class="
+        <div class="section-content">
+            <h2>Do Dragao</h2>
+            <p>Daybed & Loveseat</p>
+            <div class="plus-trigger" onclick="openDetails('dodragao')">+</div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-About.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>About Fiore</h2>
+            <p>Immortal Vision</p>
+            <div class="plus-trigger" onclick="openDetails('about')">+</div>
+        </div>
+    </section>
+
+    <div id="sidePanel" class="side-panel">
+        <div class="close-panel" onclick="closeDetails()">×</div>
+        <div id="panelData" class="panel-data"></div>
+    </div>
+
+    <footer class="footer-section">
+        <div class="contact-form">
+            <h3 style="font-size: 10px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
+            <input type="text" placeholder="NAME">
+            <input type="email" placeholder="EMAIL">
+            <textarea placeholder="MESSAGE" rows="4"></textarea>
+            <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
+        </div>
+        <p style="margin-top: 100px; font-size: 8px; opacity: 0.2; letter-spacing: 5px;">© 2026 FIORE | BEYOND TIME</p>
+    </footer>
+
+    <script>
+        // Hero Slideshow
+        let hIdx = 0;
+        const hSlides = document.querySelectorAll('.hero-slide');
+        setInterval(() => {
+            hSlides[hIdx].classList.remove('active');
+            hIdx = (hIdx + 1) % hSlides.length;
+            hSlides[hIdx].classList.add('active');
+        }, 6000);
+
+        // Section Slideshows (Detects all bgs in each section)
+        document.querySelectorAll('section').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                setInterval(() => {
+                    bgs[bIdx].classList.remove('active');
