@@ -12,19 +12,33 @@
             background-color: #000; color: #fff; scroll-behavior: smooth;
         }
 
-        /* Fixed Navigation */
+        /* Navigatie */
         .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 1000; }
         .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
-        /* 1. HERO SLIDESHOW */
-        .hero-slideshow { position: relative; height: 100vh; width: 100%; overflow: hidden; }
+        /* HERO SLIDESHOW - TRANSITIE LOGICA */
+        .hero-slideshow { position: relative; height: 100vh; width: 100%; overflow: hidden; background: #000; }
+        
         .hero-slide { 
-            position: absolute; width: 100%; height: 100%; 
-            background-size: cover; background-position: center; 
-            opacity: 0; transition: opacity 2s ease-in-out; 
+            position: absolute; 
+            top: 0; left: 0;
+            width: 100%; height: 100%; 
+            background-size: cover; 
+            background-position: center; 
+            opacity: 0; 
+            z-index: 1;
+            /* De transitie MOET hier staan voor de fade-out */
+            transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
             display: flex; align-items: center; justify-content: center;
+            will-change: opacity;
         }
-        .hero-slide.active { opacity: 1; }
+
+        /* De actieve slide komt bovenop en wordt zichtbaar */
+        .hero-slide.active { 
+            opacity: 1; 
+            z-index: 2; 
+        }
+
         .hero-link {
             text-decoration: none; color: #fff; font-size: 10px; letter-spacing: 8px;
             text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.2);
@@ -32,7 +46,7 @@
         }
         .hero-link:hover { letter-spacing: 11px; border-bottom: 1px solid #fff; }
 
-        /* PRODUCT SECTIONS */
+        /* SECTIONS */
         section {
             position: relative; height: 100vh; width: 100%; overflow: hidden;
             display: flex; flex-direction: column; justify-content: flex-end;
@@ -45,7 +59,6 @@
         }
         .section-bg.active { opacity: 1; }
         .section-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.15); z-index: 2; }
-
         .section-content { position: relative; z-index: 10; }
         .section-content h2 { font-size: 24px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
         .section-content p { font-size: 10px; letter-spacing: 2px; opacity: 0.5; margin-bottom: 25px; text-transform: uppercase; }
@@ -57,7 +70,7 @@
         }
         .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-        /* SIDE PANEL (Right on Desktop, Bottom on Mobile) */
+        /* SIDE PANEL */
         .side-panel {
             position: fixed; top: 0; right: -100%; width: 40%; height: 100vh;
             background: #fff; color: #000; z-index: 2000;
@@ -66,21 +79,13 @@
         }
         .side-panel.open { transform: translateX(-100%); }
         .close-panel { position: absolute; top: 40px; right: 40px; cursor: pointer; font-size: 30px; font-weight: 200; }
-        .panel-data h3 { font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .panel-data p { font-size: 14px; line-height: 1.8; margin-bottom: 20px; color: #333; }
 
-        .drawing-container { width: 100%; margin-top: 40px; }
-        .drawing-container img { width: 100%; height: auto; filter: grayscale(1); mix-blend-mode: multiply; }
-        .drawing-label { font-size: 8px; letter-spacing: 2px; text-transform: uppercase; color: #999; margin-bottom: 10px; }
-
-        /* FOOTER / CONTACT */
+        /* FOOTER */
         .footer-section { background: #000; padding: 120px 40px; text-align: center; border-top: 1px solid #111; }
-        .contact-form { max-width: 450px; margin: 0 auto; }
         input, textarea { 
             width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.15);
-            color: #fff; padding: 15px 0; margin-bottom: 40px; font-family: inherit; font-size: 11px; letter-spacing: 1px;
+            color: #fff; padding: 15px 0; margin-bottom: 40px; font-family: inherit; font-size: 11px;
         }
-        input:focus { outline: none; border-bottom: 1px solid #fff; }
 
         @media (max-width: 768px) {
             .side-panel { width: 100%; top: 100%; right: 0; height: 90vh; }
@@ -98,7 +103,7 @@
         <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
             <a href="#starfish" class="hero-link">Explore Starfish Table</a>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-DropRipple.jpg');">
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-DropRippleFlipped.jpg');">
             <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
         </div>
         <div class="hero-slide" style="background-image: url('Fiore-Hero-FD8.jpg');">
@@ -112,90 +117,39 @@
         </div>
     </div>
 
-    <section id="starfish">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <h2>Starfish Table</h2>
-            <p>Collectible Design</p>
-            <div class="plus-trigger" onclick="openDetails('starfish')">+</div>
-        </div>
-    </section>
-
-    <section id="drop-ripple">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <h2>Drop & Ripple</h2>
-            <p>Table & Rug</p>
-            <div class="plus-trigger" onclick="openDetails('drop-ripple')">+</div>
-        </div>
-    </section>
-
-    <section id="fd8">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <h2>FD8 Executive</h2>
-            <p>Desk Collection</p>
-            <div class="plus-trigger" onclick="openDetails('fd8')">+</div>
-        </div>
-    </section>
-
-    <section id="dodragao">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <h2>Do Dragao</h2>
-            <p>Daybed & Loveseat</p>
-            <div class="plus-trigger" onclick="openDetails('dodragao')">+</div>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-About.jpg');"></div>
-        <div class="section-overlay"></div>
-        <div class="section-content">
-            <h2>About Fiore</h2>
-            <p>Immortal Vision</p>
-            <div class="plus-trigger" onclick="openDetails('about')">+</div>
-        </div>
-    </section>
-
     <div id="sidePanel" class="side-panel">
         <div class="close-panel" onclick="closeDetails()">×</div>
         <div id="panelData" class="panel-data"></div>
     </div>
 
-    <footer class="footer-section">
-        <div class="contact-form">
-            <h3 style="font-size: 10px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
-            <input type="text" placeholder="NAME">
-            <input type="email" placeholder="EMAIL">
-            <textarea placeholder="MESSAGE" rows="4"></textarea>
-            <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
-        </div>
-        <p style="margin-top: 100px; font-size: 8px; opacity: 0.2; letter-spacing: 5px;">© 2026 FIORE | BEYOND TIME</p>
-    </footer>
-
     <script>
-        // Hero Slideshow
+        // 1. PRELOADER: Dwing de browser om afbeeldingen te laden
+        const heroImages = [
+            'Fiore-Hero-Starfish.jpg',
+            'Fiore-Hero-DropRippleFlipped.jpg',
+            'Fiore-Hero-FD8.jpg',
+            'Fiore-Hero-DoDragao.jpg',
+            'Fiore-Hero-About.jpg'
+        ];
+
+        heroImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        // 2. HERO SLIDESHOW LOGICA
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
-        setInterval(() => {
+        
+        function rotateHero() {
             hSlides[hIdx].classList.remove('active');
             hIdx = (hIdx + 1) % hSlides.length;
             hSlides[hIdx].classList.add('active');
-        }, 6000);
+        }
+        
+        if(hSlides.length > 1) {
+            setInterval(rotateHero, 6000);
+        }
 
-        // Section Slideshows (Detects all bgs in each section)
-        document.querySelectorAll('section').forEach(s => {
-            const bgs = s.querySelectorAll('.section-bg');
-            if(bgs.length > 1) {
-                let bIdx = 0;
-                setInterval(() => {
-                    bgs[bIdx].classList.remove('active');
+        // 3. PANEL & SECTION LOGICA (Blijft hetzelfde)
+        function closeDetails() { document.getElementById('sidePanel').classList.remove('open');
