@@ -14,7 +14,7 @@
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
-            overflow-y: auto; /* Garandeert de scrollbar op desktop en mobiel */
+            overflow-y: auto;
         }
 
         /* Fixed Navigation Logo */
@@ -42,8 +42,13 @@
 
         /* 2. PRODUCT SECTIONS */
         section {
-            position: relative; height: 100vh; width: 100%; overflow: hidden;
-            display: flex; flex-direction: column; justify-content: flex-end;
+            position: relative; 
+            height: 100vh; 
+            width: 100%; 
+            overflow: hidden;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: flex-end;
             padding: 0 40px 100px 40px;
             border-bottom: 1px solid #111;
         }
@@ -67,19 +72,19 @@
         }
         .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-        /* 3. SIDE PANEL (Frosted Glass Look & Premium Typography) */
+        /* 3. LOKAAL SIDE PANEL (Nu 'position: absolute' ipv 'fixed') */
         .side-panel {
-            position: fixed; 
+            position: absolute; 
             top: 0; 
-            right: -45%; /* Volledig buiten beeld startpositie */
+            right: -45%; /* Verbergen buiten de rechterkant van de specifieke sectie */
             width: 40%; 
             height: 100vh;
-            z-index: 2000;
+            z-index: 100; /* Boven de sectie content, maar onder de fixed nav */
             transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             padding: 80px 60px; 
             overflow-y: auto;
 
-            /* Glassmorphism */
+            /* Frosted Glass */
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(25px) saturate(120%);
             -webkit-backdrop-filter: blur(25px) saturate(120%);
@@ -104,7 +109,6 @@
             margin-bottom: 25px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.5px;
         }
 
-        /* Inverteert zwarte technische tekeningen naar wit op het glas */
         .drawing-container { width: 100%; margin-top: 40px; }
         .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.7; }
 
@@ -112,12 +116,12 @@
         .footer-section { background: #000; padding: 120px 40px; text-align: center; border-top: 1px solid #111; }
         .contact-form { max-width: 450px; margin: 0 auto; }
         input, textarea { 
-            width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.15);
+            width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff; padding: 15px 0; margin-bottom: 40px; font-family: inherit; font-size: 11px;
         }
         input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
-        /* Mobile Layout */
+        /* Mobile Layout overschrijving */
         @media (max-width: 768px) {
             .side-panel { 
                 width: 100%; height: 90vh; top: 100%; right: 0; 
@@ -159,7 +163,11 @@
         <div class="section-content">
             <h2>Starfish Table</h2>
             <p>Collectible Design</p>
-            <div class="plus-trigger" onclick="openDetails('starfish')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'starfish')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="close-panel" onclick="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -170,7 +178,11 @@
         <div class="section-content">
             <h2>Drop & Ripple</h2>
             <p>Table & Rug</p>
-            <div class="plus-trigger" onclick="openDetails('drop-ripple')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'drop-ripple')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="close-panel" onclick="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -181,7 +193,11 @@
         <div class="section-content">
             <h2>FD8 Executive</h2>
             <p>Desk Collection</p>
-            <div class="plus-trigger" onclick="openDetails('fd8')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'fd8')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="close-panel" onclick="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -192,7 +208,11 @@
         <div class="section-content">
             <h2>Do Dragao</h2>
             <p>Daybed & Loveseat</p>
-            <div class="plus-trigger" onclick="openDetails('dodragao')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'dodragao')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="close-panel" onclick="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -202,18 +222,17 @@
         <div class="section-content">
             <h2>About Fiore</h2>
             <p>Immortal Vision</p>
-            <div class="plus-trigger" onclick="openDetails('about')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'about')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="close-panel" onclick="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
-    <div id="sidePanel" class="side-panel">
-        <div class="close-panel" onclick="closeDetails()">×</div>
-        <div id="panelData" class="panel-data"></div>
-    </div>
-
     <footer class="footer-section">
         <div class="contact-form">
-            <h3 style="font-size: 10px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6; color: #fff;">INQUIRIES</h3>
+            <h3 style="font-size: 10px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
             <input type="text" placeholder="NAME">
             <input type="email" placeholder="EMAIL">
             <textarea placeholder="MESSAGE" rows="4"></textarea>
@@ -223,7 +242,7 @@
     </footer>
 
     <script>
-        // Hero Preloader - Dwingt de cache om de beelden direct binnen te halen
+        // Hero Preloader
         const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-DropRipple.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
         hImgs.forEach(s => { const i = new Image(); i.src = s; });
 
@@ -238,7 +257,7 @@
             }
         }, 6000);
 
-        // Subtiele achtergrond slideshow per sectie bij het scrollen
+        // Interne Section Slideshows
         document.querySelectorAll('section').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
             if(bgs.length > 1) {
@@ -251,7 +270,7 @@
             }
         });
 
-        // Data Structuur voor het Frosted Glass Panel
+        // Data Structuur
         const projects = {
             'starfish': { title: 'Starfish Guéridon', desc: 'Organic growth meets digital precision. Achieved through advanced manufacturing techniques.', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
             'drop-ripple': { title: 'Drop & Ripple', desc: 'Fluid landscape of furniture where table and rug co-exist.', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
@@ -260,20 +279,31 @@
             'about': { title: 'Fiore', desc: 'An immortal digital entity established in 2020. Focus is strictly aimed at the pure evolution of form.', price: 'Beyond Time', draw: 'Fiore-Drawing-About.jpg' }
         };
 
-        function openDetails(id) {
+        // Gecorrigeerde JavaScript om het panel LOKAAL binnen de geklikte sectie te openen
+        function openDetails(triggerElement, id) {
             const p = projects[id];
             if(!p) return;
-            document.getElementById('panelData').innerHTML = `
+            
+            // Zoek de sectie waar deze specifieke knop in zit
+            const parentSection = triggerElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const panelData = parentSection.querySelector('.panel-data');
+            
+            // Vul alleen het paneel van DEZE sectie
+            panelData.innerHTML = `
                 <h3>${p.title}</h3>
                 <p>${p.desc}</p>
                 <p style="font-weight:600; letter-spacing: 1px; margin-bottom: 30px;">${p.price}</p>
                 <div class="drawing-container"><img src="${p.draw}" alt="Technical View"></div>
             `;
-            document.getElementById('sidePanel').classList.add('open');
+            
+            panel.classList.add('open');
         }
 
-        function closeDetails() { 
-            document.getElementById('sidePanel').classList.remove('open'); 
+        function closeDetails(closeElement) { 
+            const parentSection = closeElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            panel.classList.remove('open'); 
         }
     </script>
 </body>
