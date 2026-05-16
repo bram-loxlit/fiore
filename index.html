@@ -1,81 +1,280 @@
-/* 3. SIDE PANEL (Frosted Glass Look) */
-.side-panel {
-    position: fixed; 
-    top: 0; 
-    right: -45%; /* Volledig buiten beeld op desktop */
-    width: 40%; 
-    height: 100vh;
-    z-index: 2000;
-    transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-    padding: 80px 60px; 
-    overflow-y: auto;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIORE | Beyond Time</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body, html { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            overflow-y: auto; /* Garandeert de scrollbar op desktop en mobiel */
+        }
 
-    /* De Frosted Glass Magie */
-    background: rgba(255, 255, 255, 0.08); /* Heel licht transparant wit */
-    backdrop-filter: blur(25px) saturate(120%); /* Zorgt voor de wazige glaslook */
-    -webkit-backdrop-filter: blur(25px) saturate(120%); /* Safari ondersteuning */
-    border-left: 1px solid rgba(255, 255, 255, 0.1); /* Subtiele glasrand */
-    
-    /* Tekstkleur naar wit omdat de achtergrond donker/transparant is */
-    color: #fff; 
-}
+        /* Fixed Navigation Logo */
+        .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 1000; }
+        .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
-/* Schuift naar binnen */
-.side-panel.open { right: 0; }
+        /* 1. HERO SLIDESHOW */
+        .hero-slideshow { position: relative; height: 100vh; width: 100%; overflow: hidden; background: #000; }
+        .hero-slide { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background-size: cover; background-position: center; 
+            opacity: 0; z-index: 1;
+            transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
+            display: flex; align-items: center; justify-content: center;
+            will-change: opacity;
+        }
+        .hero-slide.active { opacity: 1; z-index: 2; }
+        
+        .hero-link {
+            text-decoration: none; color: #fff; font-size: 10px; letter-spacing: 8px;
+            text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px; transition: 0.5s; z-index: 10;
+        }
+        .hero-link:hover { letter-spacing: 11px; border-bottom: 1px solid #fff; }
 
-/* Sluitknop verfijning */
-.close-panel { 
-    position: absolute; 
-    top: 40px; 
-    right: 40px; 
-    cursor: pointer; 
-    font-size: 32px; 
-    font-weight: 100; /* Ultradun */
-    color: rgba(255, 255, 255, 0.6);
-    transition: color 0.3s;
-}
-.close-panel:hover { color: #fff; }
+        /* 2. PRODUCT SECTIONS */
+        section {
+            position: relative; height: 100vh; width: 100%; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 0 40px 100px 40px;
+            border-bottom: 1px solid #111;
+        }
+        
+        .section-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            opacity: 0; transition: opacity 2s ease-in-out; z-index: 1;
+        }
+        .section-bg.active { opacity: 1; z-index: 2; }
+        .section-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.15); z-index: 3; }
 
-/* Font aanpassingen binnen het paneel */
-.panel-data h3 { 
-    font-size: 22px; 
-    font-weight: 300; 
-    letter-spacing: 4px; 
-    text-transform: uppercase; 
-    margin-bottom: 30px; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-    padding-bottom: 20px; 
-    color: #fff;
-}
+        .section-content { position: relative; z-index: 10; }
+        .section-content h2 { font-size: 24px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
+        .section-content p { font-size: 10px; letter-spacing: 2px; opacity: 0.5; margin-bottom: 25px; text-transform: uppercase; }
 
-.panel-data p { 
-    font-size: 13px; 
-    font-weight: 300;
-    line-height: 1.9; 
-    margin-bottom: 25px; 
-    color: rgba(255, 255, 255, 0.85); /* Net van het harde wit af voor premium look */
-    letter-spacing: 0.5px;
-}
+        .plus-trigger {
+            font-size: 32px; font-weight: 200; cursor: pointer;
+            display: inline-block; transition: transform 0.4s ease;
+            line-height: 1; opacity: 0.8;
+        }
+        .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-/* Technische tekening aanpassing voor donkere glas-achtergrond */
-.drawing-container { width: 100%; margin-top: 40px; }
-.drawing-container img { 
-    width: 100%; 
-    height: auto; 
-    filter: invert(1) grayscale(1); /* Inverteert zwarte lijnen naar wit voor op het glas */
-    opacity: 0.7; 
-}
+        /* 3. SIDE PANEL (Frosted Glass Look & Premium Typography) */
+        .side-panel {
+            position: fixed; 
+            top: 0; 
+            right: -45%; /* Volledig buiten beeld startpositie */
+            width: 40%; 
+            height: 100vh;
+            z-index: 2000;
+            transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 80px 60px; 
+            overflow-y: auto;
 
-/* Mobiele overschrijving voor glaslook */
-@media (max-width: 768px) {
-    .side-panel { 
-        width: 100%; 
-        height: 90vh; 
-        top: 100%; 
-        right: 0; 
-        transition: top 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-        border-left: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .side-panel.open { top: 10vh; right: 0; }
-}
+            /* Glassmorphism */
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px) saturate(120%);
+            -webkit-backdrop-filter: blur(25px) saturate(120%);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff; 
+        }
+        .side-panel.open { right: 0; }
+        
+        .close-panel { 
+            position: absolute; top: 40px; right: 40px; cursor: pointer; 
+            font-size: 32px; font-weight: 100; 
+            color: rgba(255, 255, 255, 0.6); transition: color 0.3s;
+        }
+        .close-panel:hover { color: #fff; }
+
+        .panel-data h3 { 
+            font-size: 22px; font-weight: 300; letter-spacing: 4px; text-transform: uppercase; 
+            margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; 
+        }
+        .panel-data p { 
+            font-size: 13px; font-weight: 300; line-height: 1.9; 
+            margin-bottom: 25px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.5px;
+        }
+
+        /* Inverteert zwarte technische tekeningen naar wit op het glas */
+        .drawing-container { width: 100%; margin-top: 40px; }
+        .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.7; }
+
+        /* 4. FOOTER */
+        .footer-section { background: #000; padding: 120px 40px; text-align: center; border-top: 1px solid #111; }
+        .contact-form { max-width: 450px; margin: 0 auto; }
+        input, textarea { 
+            width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255,255,255,0.15);
+            color: #fff; padding: 15px 0; margin-bottom: 40px; font-family: inherit; font-size: 11px;
+        }
+        input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
+
+        /* Mobile Layout */
+        @media (max-width: 768px) {
+            .side-panel { 
+                width: 100%; height: 90vh; top: 100%; right: 0; 
+                transition: top 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+                border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .side-panel.open { top: 10vh; right: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo-container">
+        <a href="#"><img src="Logo.png" alt="FIORE"></a>
+    </div>
+
+    <div class="hero-slideshow">
+        <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
+            <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+        </div>
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-DropRipple.jpg');">
+            <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
+        </div>
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-FD8.jpg');">
+            <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+        </div>
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-DoDragao.jpg');">
+            <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+        </div>
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-About.jpg');">
+            <a href="#about" class="hero-link">About Fiore</a>
+        </div>
+    </div>
+
+    <section id="starfish">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Starfish Table</h2>
+            <p>Collectible Design</p>
+            <div class="plus-trigger" onclick="openDetails('starfish')">+</div>
+        </div>
+    </section>
+
+    <section id="drop-ripple">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Drop & Ripple</h2>
+            <p>Table & Rug</p>
+            <div class="plus-trigger" onclick="openDetails('drop-ripple')">+</div>
+        </div>
+    </section>
+
+    <section id="fd8">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>FD8 Executive</h2>
+            <p>Desk Collection</p>
+            <div class="plus-trigger" onclick="openDetails('fd8')">+</div>
+        </div>
+    </section>
+
+    <section id="dodragao">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Do Dragao</h2>
+            <p>Daybed & Loveseat</p>
+            <div class="plus-trigger" onclick="openDetails('dodragao')">+</div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-About.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>About Fiore</h2>
+            <p>Immortal Vision</p>
+            <div class="plus-trigger" onclick="openDetails('about')">+</div>
+        </div>
+    </section>
+
+    <div id="sidePanel" class="side-panel">
+        <div class="close-panel" onclick="closeDetails()">×</div>
+        <div id="panelData" class="panel-data"></div>
+    </div>
+
+    <footer class="footer-section">
+        <div class="contact-form">
+            <h3 style="font-size: 10px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6; color: #fff;">INQUIRIES</h3>
+            <input type="text" placeholder="NAME">
+            <input type="email" placeholder="EMAIL">
+            <textarea placeholder="MESSAGE" rows="4"></textarea>
+            <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
+        </div>
+        <p style="margin-top: 100px; font-size: 8px; opacity: 0.2; letter-spacing: 5px;">© 2026 FIORE | BEYOND TIME</p>
+    </footer>
+
+    <script>
+        // Hero Preloader - Dwingt de cache om de beelden direct binnen te halen
+        const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-DropRipple.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
+        hImgs.forEach(s => { const i = new Image(); i.src = s; });
+
+        // Hero Slideshow logica
+        let hIdx = 0;
+        const hSlides = document.querySelectorAll('.hero-slide');
+        setInterval(() => {
+            if(hSlides.length > 0) {
+                hSlides[hIdx].classList.remove('active');
+                hIdx = (hIdx + 1) % hSlides.length;
+                hSlides[hIdx].classList.add('active');
+            }
+        }, 6000);
+
+        // Subtiele achtergrond slideshow per sectie bij het scrollen
+        document.querySelectorAll('section').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                setInterval(() => {
+                    bgs[bIdx].classList.remove('active');
+                    bIdx = (bIdx + 1) % bgs.length;
+                    bgs[bIdx].classList.add('active');
+                }, 5000);
+            }
+        });
+
+        // Data Structuur voor het Frosted Glass Panel
+        const projects = {
+            'starfish': { title: 'Starfish Guéridon', desc: 'Organic growth meets digital precision. Achieved through advanced manufacturing techniques.', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
+            'drop-ripple': { title: 'Drop & Ripple', desc: 'Fluid landscape of furniture where table and rug co-exist.', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
+            'fd8': { title: 'FD8 Executive', desc: 'Power, authority and ergonomics fused seamlessly.', price: 'Price on request', draw: 'Fiore-Drawing-FD8.jpg' },
+            'dodragao': { title: 'Do Dragao', desc: 'Mythology translated into sweeping, sculptural skeletal lines.', price: 'Price on request', draw: 'Fiore-Drawing-DoDragao.jpg' },
+            'about': { title: 'Fiore', desc: 'An immortal digital entity established in 2020. Focus is strictly aimed at the pure evolution of form.', price: 'Beyond Time', draw: 'Fiore-Drawing-About.jpg' }
+        };
+
+        function openDetails(id) {
+            const p = projects[id];
+            if(!p) return;
+            document.getElementById('panelData').innerHTML = `
+                <h3>${p.title}</h3>
+                <p>${p.desc}</p>
+                <p style="font-weight:600; letter-spacing: 1px; margin-bottom: 30px;">${p.price}</p>
+                <div class="drawing-container"><img src="${p.draw}" alt="Technical View"></div>
+            `;
+            document.getElementById('sidePanel').classList.add('open');
+        }
+
+        function closeDetails() { 
+            document.getElementById('sidePanel').classList.remove('open'); 
+        }
+    </script>
+</body>
+</html>
