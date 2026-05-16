@@ -44,7 +44,7 @@
             padding-bottom: 12px; 
             transition: letter-spacing 0.5s, border-color 0.5s; 
             z-index: 10;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); 
         }
         .hero-link:hover { letter-spacing: 0.8em; border-bottom: 1px solid #fff; }
 
@@ -64,7 +64,9 @@
         }
         .slide-arrow:hover { color: rgba(255, 255, 255, 0.8); }
         .arrow-left { left: 15px; }
+        .arrow-left:hover { transform: translateY(-50%) scale(1.1); }
         .arrow-right { right: 15px; }
+        .arrow-right:hover { transform: translateY(-50%) scale(1.1); }
 
         /* 2. PRODUCT SECTIONS */
         section {
@@ -75,7 +77,7 @@
             display: flex; 
             flex-direction: column; 
             justify-content: flex-end;
-            padding: 0 5% 10vh 5%;
+            padding: 0 5% 10vh 5%; 
             border-bottom: 1px solid #111;
         }
         
@@ -97,29 +99,31 @@
         .section-content h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 8px; }
         .section-content p { font-size: clamp(10px, 1.2vw, 12px); letter-spacing: 3px; opacity: 0.7; margin-bottom: 25px; text-transform: uppercase; }
 
+        /* Plus trigger met cursor-fix en touch-action voorkeur */
         .plus-trigger {
             font-size: clamp(32px, 4vw, 42px); font-weight: 200; cursor: pointer;
             display: inline-block; transition: transform 0.4s ease, opacity 0.3s;
-            line-height: 1; opacity: 0.7; user-select: none;
+            line-height: 1; opacity: 0.7;
+            touch-action: manipulation; /* Optimaliseert click-delay op touchscreens */
         }
-        .plus-trigger:hover { opacity: 1; }
+        .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-        /* 3. LOKAAL SIDE PANEL (Nu exact 64% breed op desktop/tablet) */
+        /* 3. LOKAAL SIDE PANEL */
         .side-panel {
             position: absolute; 
             top: 0; 
-            right: -66%; /* Volledig buiten beeld startpositie */
-            width: 64%; /* Exact 64% breedte gevraagd */
+            right: -55%; 
+            width: 40%; 
             height: 100vh;
             z-index: 100; 
             transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-            padding: 90px 60px; 
+            padding: 80px 50px; 
             overflow-y: auto;
 
             /* Frosted Glass */
-            background: rgba(15, 15, 15, 0.55);
-            backdrop-filter: blur(35px) saturate(140%);
-            -webkit-backdrop-filter: blur(35px) saturate(140%);
+            background: rgba(20, 20, 20, 0.55); /* Iets contrastrijker voor mobiel/tablet */
+            backdrop-filter: blur(30px) saturate(140%);
+            -webkit-backdrop-filter: blur(30px) saturate(140%);
             border-left: 1px solid rgba(255, 255, 255, 0.08);
             color: #fff; 
         }
@@ -127,32 +131,23 @@
         
         .close-panel { 
             position: absolute; top: 40px; right: 40px; cursor: pointer; 
-            font-size: 32px; font-weight: 100; 
-            color: rgba(255, 255, 255, 0.4); transition: color 0.3s;
+            font-size: 36px; font-weight: 100; 
+            color: rgba(255, 255, 255, 0.5); transition: color 0.3s;
+            touch-action: manipulation;
         }
         .close-panel:hover { color: #fff; }
 
-        /* Twee Kolommen Structuur binnen het Paneel */
-        .panel-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr; /* Links iets breder voor tekst, rechts voor specs/tekening */
-            gap: 60px;
-            align-items: start;
-            margin-top: 20px;
+        .panel-data h3 { 
+            font-size: clamp(18px, 2.5vw, 24px); font-weight: 300; letter-spacing: 4px; text-transform: uppercase; 
+            margin-bottom: 30px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; 
         }
-
-        .panel-col-text h3 { 
-            font-size: clamp(20px, 2.5vw, 26px); font-weight: 300; letter-spacing: 4px; text-transform: uppercase; 
-            margin-bottom: 25px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 20px; 
-        }
-        .panel-col-text p { 
-            font-size: clamp(12px, 1.3vw, 14px); font-weight: 300; line-height: 1.9; 
+        .panel-data p { 
+            font-size: clamp(12px, 1.4vw, 14px); font-weight: 300; line-height: 1.9; 
             margin-bottom: 25px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.5px;
         }
-        .panel-price { font-weight: 500; font-size: 16px; letter-spacing: 1px; margin-top: 10px; color: #fff; }
 
-        .drawing-container { width: 100%; }
-        .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.8; }
+        .drawing-container { width: 100%; margin-top: 40px; }
+        .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.75; }
 
         /* 4. FOOTER */
         .footer-section { background: #000; padding: 120px 10%; text-align: center; border-top: 1px solid #111; }
@@ -163,28 +158,32 @@
         }
         input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
-        /* ==========================================================================
-           RESPONSIVE DESIGN BREEKPUNTEN
-           ========================================================================== */
-
-        /* TABLET LANDSCAPE BEHOUDT 64%, PORTRAIT GAAT IETS BREDER */
-        @media (max-width: 1024px) and (orientation: portrait) {
-            .side-panel { width: 75%; right: -76%; padding: 80px 40px; }
-            .panel-grid { grid-template-columns: 1fr; gap: 40px; } /* Kolommen onder elkaar op portrait tablet */
+        /* TABLET OPTIMALISATIE */
+        @media (max-width: 1024px) {
+            .side-panel { 
+                width: 55%; 
+                right: -60%;
+                padding: 80px 40px;
+            }
+            .logo-container { width: 120px; top: 20px; left: 20px; }
         }
 
         /* MOBIEL OPTIMALISATIE */
         @media (max-width: 768px) {
             .side-panel { 
-                width: 100%; height: 88vh; top: 100%; right: 0; 
+                width: 100%; 
+                height: 88vh; 
+                top: 100%; 
+                right: 0; 
                 transition: top 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-                border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1);
+                border-left: none; 
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
                 padding: 60px 30px;
             }
             .side-panel.open { top: 12vh; right: 0; }
-            .panel-grid { grid-template-columns: 1fr; gap: 40px; }
             section { padding: 0 30px 80px 30px; }
             .hero-link { letter-spacing: 0.4em; }
+            .hero-link:hover { letter-spacing: 0.5em; }
         }
     </style>
 </head>
@@ -225,14 +224,11 @@
         <div class="section-content">
             <h2>Starfish Table</h2>
             <p>Collectible Design</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'starfish')" ontouchstart="openDetails(this, 'starfish')">+</div>
         </div>
         <div class="side-panel">
-            <div class="close-panel" onclick="forceCloseDetails(this)">×</div>
-            <div class="panel-grid">
-                <div class="panel-col-text"></div>
-                <div class="drawing-container"></div>
-            </div>
+            <div class="close-panel" onclick="closeDetails(this)" ontouchstart="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -246,14 +242,11 @@
         <div class="section-content">
             <h2>Drop & Ripple</h2>
             <p>Table & Rug</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'drop-ripple')" ontouchstart="openDetails(this, 'drop-ripple')">+</div>
         </div>
         <div class="side-panel">
-            <div class="close-panel" onclick="forceCloseDetails(this)">×</div>
-            <div class="panel-grid">
-                <div class="panel-col-text"></div>
-                <div class="drawing-container"></div>
-            </div>
+            <div class="close-panel" onclick="closeDetails(this)" ontouchstart="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -267,14 +260,11 @@
         <div class="section-content">
             <h2>FD8 Executive</h2>
             <p>Desk Collection</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'fd8')" ontouchstart="openDetails(this, 'fd8')">+</div>
         </div>
         <div class="side-panel">
-            <div class="close-panel" onclick="forceCloseDetails(this)">×</div>
-            <div class="panel-grid">
-                <div class="panel-col-text"></div>
-                <div class="drawing-container"></div>
-            </div>
+            <div class="close-panel" onclick="closeDetails(this)" ontouchstart="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -288,14 +278,11 @@
         <div class="section-content">
             <h2>Do Dragao</h2>
             <p>Daybed & Loveseat</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'dodragao')" ontouchstart="openDetails(this, 'dodragao')">+</div>
         </div>
         <div class="side-panel">
-            <div class="close-panel" onclick="forceCloseDetails(this)">×</div>
-            <div class="panel-grid">
-                <div class="panel-col-text"></div>
-                <div class="drawing-container"></div>
-            </div>
+            <div class="close-panel" onclick="closeDetails(this)" ontouchstart="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -305,14 +292,11 @@
         <div class="section-content">
             <h2>About Fiore</h2>
             <p>Immortal Vision</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'about')">+</div>
+            <div class="plus-trigger" onclick="openDetails(this, 'about')" ontouchstart="openDetails(this, 'about')">+</div>
         </div>
         <div class="side-panel">
-            <div class="close-panel" onclick="forceCloseDetails(this)">×</div>
-            <div class="panel-grid">
-                <div class="panel-col-text"></div>
-                <div class="drawing-container"></div>
-            </div>
+            <div class="close-panel" onclick="closeDetails(this)" ontouchstart="closeDetails(this)">×</div>
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -332,7 +316,7 @@
         const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-DropRipple.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
         hImgs.forEach(s => { const i = new Image(); i.src = s; });
 
-        // Hero Slideshow Logica
+        // 1. HERO SLIDESHOW LOGICA
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
         let heroInterval = setInterval(() => moveHero(1), 6000);
@@ -344,4 +328,66 @@
             hSlides[hIdx].classList.add('active');
             
             clearInterval(heroInterval);
-            heroInterval = setInterval(()
+            heroInterval = setInterval(() => moveHero(1), 6000);
+        }
+
+        // 2. PRODUCT SECTIONS SLIDESHOW LOGICA
+        document.querySelectorAll('section').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                let sectInterval = setInterval(() => changeBg(1), 5000);
+
+                function changeBg(direction) {
+                    bgs[bIdx].classList.remove('active');
+                    bIdx = (bIdx + direction + bgs.length) % bgs.length;
+                    bgs[bIdx].classList.add('active');
+                }
+
+                s.moveBg = function(direction) {
+                    changeBg(direction);
+                    clearInterval(sectInterval);
+                    sectInterval = setInterval(() => changeBg(1), 5000);
+                };
+            }
+        });
+
+        function moveSection(arrowElement, direction) {
+            const parentSection = arrowElement.closest('section');
+            if (parentSection && typeof parentSection.moveBg === 'function') {
+                parentSection.moveBg(direction);
+            }
+        }
+
+        // Data Structuur
+        const projects = {
+            'starfish': { title: 'Starfish Guéridon', desc: 'Organic growth meets digital precision. Achieved through advanced manufacturing techniques.', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
+            'drop-ripple': { title: 'Drop & Ripple', desc: 'Fluid landscape of furniture where table and rug co-exist.', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
+            'fd8': { title: 'FD8 Executive', desc: 'Power, authority and ergonomics fused seamlessly.', price: 'Price on request', draw: 'Fiore-Drawing-FD8.jpg' },
+            'dodragao': { title: 'Do Dragao', desc: 'Mythology translated into sweeping, sculptural skeletal lines.', price: 'Price on request', draw: 'Fiore-Drawing-DoDragao.jpg' },
+            'about': { title: 'Fiore', desc: 'An immortal digital entity established in 2020. Focus is strictly aimed at the pure evolution of form.', price: 'Beyond Time', draw: 'Fiore-Drawing-About.jpg' }
+        };
+
+        // Touch-Proof Open/Close Functies
+        function openDetails(triggerElement, id) {
+            const p = projects[id];
+            if(!p) return;
+            const parentSection = triggerElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const panelData = parentSection.querySelector('.panel-data');
+            
+            panelData.innerHTML = `
+                <h3>${p.title}</h3>
+                <p>${p.desc}</p>
+                <p style="font-weight:600; letter-spacing: 1px; margin-bottom: 30px;">${p.price}</p>
+                <div class="drawing-container"><img src="${p.draw}" alt="Technical View"></div>
+            `;
+            panel.classList.add('open');
+        }
+
+        function closeDetails(closeElement) { 
+            closeElement.closest('section').querySelector('.side-panel').classList.remove('open'); 
+        }
+    </script>
+</body>
+</html>
