@@ -14,10 +14,10 @@
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
-            overflow-y: auto; /* Zorgt dat de scrollbar ALTIJD werkt */
+            overflow-y: auto;
         }
 
-        /* Navigatie */
+        /* Fixed Navigation */
         .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 1000; }
         .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
@@ -53,8 +53,8 @@
             background-size: cover; background-position: center;
             opacity: 0; transition: opacity 2s ease-in-out; z-index: 1;
         }
-        .section-bg.active { opacity: 1; }
-        .section-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.15); z-index: 2; }
+        .section-bg.active { opacity: 1; z-index: 2; }
+        .section-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.15); z-index: 3; }
 
         .section-content { position: relative; z-index: 10; }
         .section-content h2 { font-size: 24px; font-weight: 300; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 5px; }
@@ -67,14 +67,23 @@
         }
         .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-        /* 3. SIDE PANEL */
+        /* 3. SIDE PANEL (Gecorrigeerde JW Anderson CSS) */
         .side-panel {
-            position: fixed; top: 0; right: -100%; width: 40%; height: 100vh;
-            background: #fff; color: #000; z-index: 2000;
-            transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-            padding: 80px 60px; overflow-y: auto;
+            position: fixed; 
+            top: 0; 
+            right: -45%; /* Volledig buiten beeld op desktop */
+            width: 40%; 
+            height: 100vh;
+            background: #fff; 
+            color: #000; 
+            z-index: 2000;
+            transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 80px 60px; 
+            overflow-y: auto;
         }
-        .side-panel.open { transform: translateX(-100%); }
+        /* Schuift nu via de right-positioning correct naar binnen op desktop */
+        .side-panel.open { right: 0; }
+        
         .close-panel { position: absolute; top: 40px; right: 40px; cursor: pointer; font-size: 30px; font-weight: 200; }
         .panel-data h3 { font-size: 20px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
         .panel-data p { font-size: 14px; line-height: 1.8; margin-bottom: 20px; color: #333; }
@@ -90,9 +99,16 @@
             color: #fff; padding: 15px 0; margin-bottom: 40px; font-family: inherit; font-size: 11px;
         }
 
+        /* Mobiele overschrijving */
         @media (max-width: 768px) {
-            .side-panel { width: 100%; top: 100%; right: 0; height: 90vh; }
-            .side-panel.open { transform: translateY(-100%); }
+            .side-panel { 
+                width: 100%; 
+                height: 90vh; 
+                top: 100%; 
+                right: 0; 
+                transition: top 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+            }
+            .side-panel.open { top: 10vh; right: 0; }
         }
     </style>
 </head>
@@ -122,6 +138,7 @@
 
     <section id="starfish">
         <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Starfish Table</h2>
@@ -132,6 +149,7 @@
 
     <section id="drop-ripple">
         <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Drop & Ripple</h2>
@@ -142,6 +160,7 @@
 
     <section id="fd8">
         <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>FD8 Executive</h2>
@@ -152,6 +171,7 @@
 
     <section id="dodragao">
         <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Do Dragao</h2>
@@ -196,7 +216,20 @@
             hSlides[hIdx].classList.add('active');
         }, 6000);
 
-        // Data & Panel
+        // Gecorrigeerde Section Slideshow Logica
+        document.querySelectorAll('section').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                setInterval(() => {
+                    bgs[bIdx].classList.remove('active');
+                    bIdx = (bIdx + 1) % bgs.length;
+                    bgs[bIdx].classList.add('active');
+                }, 5000);
+            }
+        });
+
+        // Data voor het Panel
         const projects = {
             'starfish': { title: 'Starfish Guéridon', desc: 'Organic growth meets digital precision.', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
             'drop-ripple': { title: 'Drop & Ripple', desc: 'Fluid landscape of furniture.', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
@@ -207,10 +240,19 @@
 
         function openDetails(id) {
             const p = projects[id];
-            document.getElementById('panelData').innerHTML = `<h3>${p.title}</h3><p>${p.desc}</p><p style="font-weight:600;">${p.price}</p><div class="drawing-container"><img src="${p.draw}"></div>`;
+            if(!p) return;
+            document.getElementById('panelData').innerHTML = `
+                <h3>${p.title}</h3>
+                <p>${p.desc}</p>
+                <p style="font-weight:600;">${p.price}</p>
+                <div class="drawing-container"><img src="${p.draw}" alt="Drawing"></div>
+            `;
             document.getElementById('sidePanel').classList.add('open');
         }
-        function closeDetails() { document.getElementById('sidePanel').classList.remove('open'); }
+
+        function closeDetails() { 
+            document.getElementById('sidePanel').classList.remove('open'); 
+        }
     </script>
 </body>
 </html>
