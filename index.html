@@ -40,6 +40,24 @@
         }
         .hero-link:hover { letter-spacing: 11px; border-bottom: 1px solid #fff; }
 
+        /* SUBTIELE PIJLEN STYLING */
+        .slide-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s, opacity 0.3s;
+            z-index: 15; /* Altijd boven de beelden, maar onder het zijpaneel */
+            padding: 20px;
+        }
+        .slide-arrow:hover { color: rgba(255, 255, 255, 0.8); }
+        .arrow-left { left: 20px; }
+        .arrow-right { right: 20px; }
+
         /* 2. PRODUCT SECTIONS */
         section {
             position: relative; 
@@ -72,14 +90,14 @@
         }
         .plus-trigger:hover { transform: rotate(90deg); opacity: 1; }
 
-        /* 3. LOKAAL SIDE PANEL (Nu 'position: absolute' ipv 'fixed') */
+        /* 3. LOKAAL SIDE PANEL */
         .side-panel {
             position: absolute; 
             top: 0; 
-            right: -45%; /* Verbergen buiten de rechterkant van de specifieke sectie */
+            right: -45%; 
             width: 40%; 
             height: 100vh;
-            z-index: 100; /* Boven de sectie content, maar onder de fixed nav */
+            z-index: 100; 
             transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             padding: 80px 60px; 
             overflow-y: auto;
@@ -129,6 +147,7 @@
                 border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1);
             }
             .side-panel.open { top: 10vh; right: 0; }
+            .slide-arrow { font-size: 20px; padding: 10px; } /* Iets compacter op mobiel */
         }
     </style>
 </head>
@@ -138,7 +157,10 @@
         <a href="#"><img src="Logo.png" alt="FIORE"></a>
     </div>
 
-    <div class="hero-slideshow">
+    <div class="hero-slideshow" id="heroSlideshow">
+        <div class="slide-arrow arrow-left" onclick="moveHero(-1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveHero(1)">&#155;</div>
+        
         <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
             <a href="#starfish" class="hero-link">Explore Starfish Table</a>
         </div>
@@ -157,6 +179,9 @@
     </div>
 
     <section id="starfish">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
         <div class="section-overlay"></div>
@@ -172,6 +197,9 @@
     </section>
 
     <section id="drop-ripple">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
         <div class="section-overlay"></div>
@@ -187,6 +215,9 @@
     </section>
 
     <section id="fd8">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
         <div class="section-overlay"></div>
@@ -202,6 +233,9 @@
     </section>
 
     <section id="dodragao">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
         <div class="section-overlay"></div>
@@ -246,31 +280,52 @@
         const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-DropRipple.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
         hImgs.forEach(s => { const i = new Image(); i.src = s; });
 
-        // Hero Slideshow logica
+        // 1. HERO SLIDESHOW LOGICA (Automatisch + Handmatig)
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
-        setInterval(() => {
-            if(hSlides.length > 0) {
-                hSlides[hIdx].classList.remove('active');
-                hIdx = (hIdx + 1) % hSlides.length;
-                hSlides[hIdx].classList.add('active');
-            }
-        }, 6000);
+        let heroInterval = setInterval(() => moveHero(1), 6000);
 
-        // Interne Section Slideshows
+        function moveHero(direction) {
+            if(hSlides.length === 0) return;
+            hSlides[hIdx].classList.remove('active');
+            hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
+            hSlides[hIdx].classList.add('active');
+            
+            // Reset de automatische timer na een handmatige klik
+            clearInterval(heroInterval);
+            heroInterval = setInterval(() => moveHero(1), 6000);
+        }
+
+        // 2. PRODUCT SECTIONS SLIDESHOW LOGICA (Automatisch + Handmatig)
         document.querySelectorAll('section').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
             if(bgs.length > 1) {
                 let bIdx = 0;
-                setInterval(() => {
+                let sectInterval = setInterval(() => changeBg(1), 5000);
+
+                function changeBg(direction) {
                     bgs[bIdx].classList.remove('active');
-                    bIdx = (bIdx + 1) % bgs.length;
+                    bIdx = (bIdx + direction + bgs.length) % bgs.length;
                     bgs[bIdx].classList.add('active');
-                }, 5000);
+                }
+
+                // Koppel de handmatige functie aan de pijlen van deze specifieke sectie
+                s.moveBg = function(direction) {
+                    changeBg(direction);
+                    clearInterval(sectInterval);
+                    sectInterval = setInterval(() => changeBg(1), 5000);
+                };
             }
         });
 
-        // Data Structuur
+        function moveSection(arrowElement, direction) {
+            const parentSection = arrowElement.closest('section');
+            if (parentSection && typeof parentSection.moveBg === 'function') {
+                parentSection.moveBg(direction);
+            }
+        }
+
+        // 3. DATA & PANEL
         const projects = {
             'starfish': { title: 'Starfish Guéridon', desc: 'Organic growth meets digital precision. Achieved through advanced manufacturing techniques.', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
             'drop-ripple': { title: 'Drop & Ripple', desc: 'Fluid landscape of furniture where table and rug co-exist.', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
@@ -279,31 +334,24 @@
             'about': { title: 'Fiore', desc: 'An immortal digital entity established in 2020. Focus is strictly aimed at the pure evolution of form.', price: 'Beyond Time', draw: 'Fiore-Drawing-About.jpg' }
         };
 
-        // Gecorrigeerde JavaScript om het panel LOKAAL binnen de geklikte sectie te openen
         function openDetails(triggerElement, id) {
             const p = projects[id];
             if(!p) return;
-            
-            // Zoek de sectie waar deze specifieke knop in zit
             const parentSection = triggerElement.closest('section');
             const panel = parentSection.querySelector('.side-panel');
             const panelData = parentSection.querySelector('.panel-data');
             
-            // Vul alleen het paneel van DEZE sectie
             panelData.innerHTML = `
                 <h3>${p.title}</h3>
                 <p>${p.desc}</p>
                 <p style="font-weight:600; letter-spacing: 1px; margin-bottom: 30px;">${p.price}</p>
                 <div class="drawing-container"><img src="${p.draw}" alt="Technical View"></div>
             `;
-            
             panel.classList.add('open');
         }
 
         function closeDetails(closeElement) { 
-            const parentSection = closeElement.closest('section');
-            const panel = parentSection.querySelector('.side-panel');
-            panel.classList.remove('open'); 
+            closeElement.closest('section').querySelector('.side-panel').classList.remove('open'); 
         }
     </script>
 </body>
