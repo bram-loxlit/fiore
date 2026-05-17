@@ -114,13 +114,13 @@
             padding: 0 10%;
         }
 
+        /* Verhoogd naar height 130% om GSAP de ruimte te geven voor de scroll-berekening */
         .spotlight-bg {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: -15%; left: 0; width: 100%; height: 130%;
             background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.07) 0%, rgba(0,0,0,0) 60%);
             z-index: 1;
             pointer-events: none;
-            transform: scale(1.4);
             will-change: transform;
         }
 
@@ -129,8 +129,9 @@
             z-index: 2;
         }
         
+        /* Verhoogd naar height 130% tegen witte randen tijdens de ultra-vloeiende parallax */
         .section-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 120%;
+            position: absolute; top: -15%; left: 0; width: 100%; height: 130%;
             background-size: cover; background-position: center;
             opacity: 0; z-index: 1;
             will-change: transform, opacity;
@@ -156,15 +157,15 @@
         }
         .plus-trigger:hover { opacity: 1; }
 
-        /* 3. SIDE PANEL */
+        /* 3. LOKAAL SIDE PANEL (Hersteld en gestabiliseerd) */
         .side-panel {
-            position: fixed; 
+            position: absolute; 
             top: 0; 
             right: -50%; 
             width: 45%; 
             height: 100vh;
-            z-index: 1100; 
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100; 
+            transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 95px 60px; 
             overflow-y: auto;
             background: rgba(10, 10, 10, 0.85); 
@@ -173,7 +174,7 @@
             border-left: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff; 
         }
-        .side-panel.open { transform: translateX(-100%); }
+        .side-panel.open { right: 0; }
 
         .spec-group {
             margin-bottom: 35px;
@@ -233,19 +234,30 @@
         }
         input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
+        /* TABLET OPTIMALISATIE */
         @media (max-width: 1024px) {
-            .side-panel { width: 65%; right: -65%; padding: 95px 45px; }
+            .side-panel { 
+                width: 65%; 
+                right: -70%;
+                padding: 95px 45px;
+            }
             .logo-container { width: 120px; top: 20px; left: 20px; }
             section { padding: 0 6% 16vh 6%; } 
         }
 
+        /* MOBIEL OPTIMALISATIE */
         @media (max-width: 768px) {
             .side-panel { 
-                width: 100%; height: 88vh; top: 100%; right: 0; 
-                transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-                border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px;
+                width: 100%; 
+                height: 88vh; 
+                top: 100%; 
+                right: 0; 
+                transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+                border-left: none; 
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 60px 30px;
             }
-            .side-panel.open { transform: translateY(-88vh); }
+            .side-panel.open { top: 12vh; right: 0; }
             section { padding: 0 30px 14vh 30px; }
             .hero-link { letter-spacing: 0.4em; }
             .hero-navigation-wrapper { gap: 15px; }
@@ -258,11 +270,8 @@
         <a href="#"><img src="Logo.png" alt="FIORE"></a>
     </div>
 
-    <div class="side-panel" id="globalSidePanel">
-        <div class="panel-data"></div>
-    </div>
-
     <div class="hero-slideshow" id="heroSlideshow">
+        
         <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
@@ -270,6 +279,7 @@
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
+
         <div class="hero-slide" style="background-image: url('Fiore-Hero-DropRipple.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
@@ -277,6 +287,7 @@
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
+        
         <div class="hero-slide" style="background-image: url('Fiore-Hero-FD8.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
@@ -284,6 +295,7 @@
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
+        
         <div class="hero-slide" style="background-image: url('Fiore-Hero-DoDragao.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
@@ -291,6 +303,7 @@
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
+        
         <div class="hero-slide" style="background-image: url('Fiore-Hero-About.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
@@ -298,6 +311,7 @@
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
+        
     </div>
 
     <section class="intermission">
@@ -313,18 +327,22 @@
     <section id="starfish">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Starfish Table</h2>
             <p>Collectible Design</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')">+</div>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-data"></div>
         </div>
     </section>
 
     <section class="intermission">
-        <div class="spotlight-bg" style="background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="spotlight-bg"></div>
         <div class="intermission-content" style="max-width: 800px; width: 100%; text-align: left; padding: 0 5%;">
             <p style="font-size: 10px; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; color: rgba(255,255,255,0.5);">SECTION O2 / DESIGNBLUEPRINT</p>
             <div style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 30px; margin-bottom: 35px;">
@@ -340,18 +358,22 @@
     <section id="drop-ripple">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Drop & Ripple</h2>
             <p>Table & Rug</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')">+</div>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-data"></div>
         </div>
     </section>
 
     <section class="intermission">
-        <div class="spotlight-bg" style="background: radial-gradient(circle at 70% 40%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="spotlight-bg"></div>
         <div class="intermission-content" style="max-width: 800px; width: 100%; text-align: left; padding: 0 5%;">
             <p style="font-size: 10px; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; color: rgba(255,255,255,0.5);">SECTION O3 / STRUCTURAL MATRIX</p>
             <div style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 30px; margin-bottom: 35px;">
@@ -367,19 +389,24 @@
     <section id="fd8">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>FD8 Executive</h2>
             <p>Desk Collection</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')">+</div>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-data"></div>
         </div>
     </section>
 
     <section style="position: relative; justify-content: center; align-items: center; text-align: center;">
-        <div class="section-bg active" style="background-image: url('Fiore-Texture-Leather.jpg'); opacity: 0.25; height: 100%;"></div>
+        <div class="section-bg active" style="background-image: url('Fiore-Texture-Leather.jpg'); opacity: 0.25;"></div>
         <div class="section-overlay" style="background: rgba(0,0,0,0.45);"></div>
+        
         <div style="position: relative; z-index: 10; max-width: 800px;">
             <h3 style="font-size: clamp(16px, 2.2vw, 22px); font-weight: 300; letter-spacing: 9px; text-transform: uppercase; margin-bottom: 15px;">
                 Material Focus: Aniline Leather
@@ -393,18 +420,22 @@
     <section id="dodragao">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
         <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
         <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Do Dragao</h2>
             <p>Daybed & Loveseat</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')">+</div>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-data"></div>
         </div>
     </section>
 
     <section class="intermission">
-        <div class="spotlight-bg" style="background: radial-gradient(circle at 50% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 65%);"></div>
+        <div class="spotlight-bg"></div>
         <div class="intermission-content" style="max-width: 700px;">
             <p style="font-size: 10px; letter-spacing: 8px; opacity: 0.5; margin-bottom: 30px; color: rgba(255,255,255,0.4);">GENESIS OF THOUGHT</p>
             <p style="font-size: clamp(14px, 1.6vw, 18px); font-weight: 300; letter-spacing: 5px; line-height: 2; text-transform: uppercase; color: rgba(255,255,255,0.85);">
@@ -420,7 +451,10 @@
         <div class="section-content">
             <h2>About Fiore</h2>
             <p>Immortal Vision</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'about')">+</div>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-data"></div>
         </div>
     </section>
 
@@ -438,11 +472,11 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. HARDWARE-ACCELERATED SMOOTH SCROLL (Lenis Engine)
+        // 1. SHOPIFY EDITIONS LEVEL SMOOTH SCROLL (Lenis Motor)
         const lenis = new Lenis({
-            duration: 1.4,
+            duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            touchMultiplier: 2,
+            touchMultiplier: 1.5,
             infinite: false,
         });
 
@@ -451,20 +485,18 @@
             requestAnimationFrame(raf);
         }
         requestAnimationFrame(raf);
-
-        // Synchroniseer Lenis scrollposities met GSAP ScrollTrigger
         lenis.on('scroll', ScrollTrigger.update);
 
-        // 2. ULTRA-SMOOTH PARALLAX MATRIX (Shopify Editions Level)
+        // 2. GSAP SCROLLTRIGGER ENGINE (Ultra-vloeiende parallax)
         document.querySelectorAll('section').forEach(sect => {
             const bg = sect.querySelector('.section-bg');
             const spotlight = sect.querySelector('.spotlight-bg');
             
             if (bg) {
                 gsap.fromTo(bg, 
-                    { yPercent: -10 },
+                    { yPercent: -8 },
                     { 
-                        yPercent: 10,
+                        yPercent: 8,
                         ease: "none",
                         scrollTrigger: {
                             trigger: sect,
@@ -478,9 +510,9 @@
 
             if (spotlight) {
                 gsap.fromTo(spotlight,
-                    { y: -60 },
+                    { yPercent: -15 },
                     {
-                        y: 60,
+                        yPercent: 15,
                         ease: "none",
                         scrollTrigger: {
                             trigger: sect,
@@ -492,6 +524,10 @@
                 );
             }
         });
+
+        // Hero Preloader
+        const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-DropRipple.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
+        hImgs.forEach(s => { const i = new Image(); i.src = s; });
 
         // 3. HERO SLIDESHOW LOGICA
         let hIdx = 0;
@@ -508,7 +544,7 @@
             heroInterval = setInterval(() => moveHero(1), 6000);
         }
 
-        // 4. PRODUCT SECTIONS BG SLIDESHOW
+        // 4. PRODUCT SECTIONS SLIDESHOW LOGICA
         document.querySelectorAll('section').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
             if(bgs.length > 1) {
@@ -536,7 +572,7 @@
             }
         }
 
-        // 5. DATA BLUEPRINT & HEADLESS API ARCHITECTUUR
+        // Tech Spec Data Map
         const projects = {
             'starfish': { dimensions: 'H 740 mm | Ø 1300 mm', materials: 'Aerospace-grade Aluminum, High-gloss Soul-Red composite coating', leadtime: '16 Weeks', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
             'drop-ripple': { dimensions: 'Table: 2400 x 1100 mm | Rug: 3500 x 2500 mm', materials: 'Solid Walnut, Hand-knotted Tibetan silk & wool landscape', leadtime: '14 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
@@ -545,21 +581,17 @@
             'about': { dimensions: 'Beyond Human Limitations', materials: 'Algorithmic neural matrix, Pure procedural evolution', leadtime: 'Continuous', price: 'Eternity', draw: 'Fiore-Drawing-About.jpg' }
         };
 
-        let activeId = null;
-
+        // 5. TOUCH-PROOF LOKALE TOGGLE DETAILS LOGICA
         function toggleDetails(element, id) {
-            const panel = document.getElementById('globalSidePanel');
-            const panelData = panel.querySelector('.panel-data');
-            const plusTrigger = element;
+            const parentSection = element.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const panelData = parentSection.querySelector('.panel-data');
             
-            if (panel.classList.contains('open') && activeId === id) {
+            if (panel.classList.contains('open')) {
                 panel.classList.remove('open');
                 plusTrigger.style.transform = 'rotate(0deg)';
-                activeId = null;
             } else {
-                // Reset eventuele eerdere actieve triggers
-                document.querySelectorAll('.plus-trigger').forEach(trigger => trigger.style.transform = 'rotate(0deg)');
-                
                 const p = projects[id];
                 if(!p) return;
                 
@@ -569,23 +601,25 @@
                     <div class="spec-group"><div class="spec-label">Lead Time</div><div class="spec-value">${p.leadtime}</div></div>
                     <div class="spec-group"><div class="spec-label">Price</div><div class="spec-value" style="color: #fff;">${p.price}</div></div>
                     <div class="panel-inquiry-container">
-                        <div class="panel-inquiry-link" onclick="scrollToInquiries()">Inquire for purchase</div>
+                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for purchase</div>
                     </div>
                     <div class="drawing-container"><img src="${p.draw}" alt="Technical Specification"></div>
                 `;
                 
                 panel.classList.add('open');
                 plusTrigger.style.transform = 'rotate(45deg)';
-                activeId = id;
             }
         }
 
-        function scrollToInquiries() {
-            const panel = document.getElementById('globalSidePanel');
-            panel.classList.remove('open');
-            document.querySelectorAll('.plus-trigger').forEach(trigger => trigger.style.transform = 'rotate(0deg)');
-            activeId = null;
+        function scrollToInquiries(linkElement) {
+            const parentSection = linkElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
             
+            panel.classList.remove('open');
+            plusTrigger.style.transform = 'rotate(0deg)';
+            
+            // Lenis smooth scroll trigger naar de inquiries footer
             lenis.scrollTo('#inquiries', { duration: 1.5 });
         }
     </script>
