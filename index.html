@@ -45,9 +45,11 @@
             letter-spacing: 0.6em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.2);
             padding-bottom: 12px; transition: 0.5s; white-space: nowrap;
         }
+        .hero-link:hover { letter-spacing: 0.8em; border-bottom: 1px solid #fff; }
+        
         .hero-arrow {
             font-size: clamp(24px, 3vw, 36px); font-weight: 100; color: rgba(255, 255, 255, 0.25);
-            cursor: pointer; transition: 0.3s; margin-bottom: 8px;
+            cursor: pointer; transition: 0.3s; margin-bottom: 8px; user-select: none;
         }
         .hero-arrow:hover { color: #fff; transform: scale(1.1); }
 
@@ -64,41 +66,41 @@
             opacity: 0; z-index: 1; will-change: transform;
         }
         .section-bg.active { opacity: 1; z-index: 2; }
-        .section-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+        
+        .section-overlay { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%); z-index: 3; 
         }
-        .section-content { position: relative; z-index: 10; }
+        .section-content { position: relative; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.5); }
         .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
-        .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; }
+        .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
         .plus-trigger {
             font-size: clamp(36px, 5vw, 48px); font-weight: 200; cursor: pointer;
-            display: inline-block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            display: inline-block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
             line-height: 1; opacity: 0.7; touch-action: manipulation;
         }
+        .plus-trigger:hover { opacity: 1; }
 
         /* 3. ADVANCED PARALLAX INTERMISSIONS */
         section.intermission {
-            height: 120vh; /* Iets hoger voor langere scroll-path */
+            height: 120vh; 
             display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden; background: #000;
         }
 
-        /* De spotlight die extreem traag drift */
         .parallax-spotlight {
             position: absolute; width: 140%; height: 140%; top: -20%; left: -20%;
             background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 65%);
             z-index: 1; will-change: transform;
         }
 
-        /* Abstracte wegdrijvende tekstlaag (Midden-parallax) */
         .parallax-drift-text {
-            position: absolute; white-space: nowrap; font-size: 15vh; font-weight: 900;
-            color: rgba(255,255,255,0.03); text-transform: uppercase; letter-spacing: 0.2em;
+            position: absolute; white-space: nowrap; font-size: 14vh; font-weight: 900;
+            color: rgba(255,255,255,0.025); text-transform: uppercase; letter-spacing: 0.2em;
             z-index: 2; pointer-events: none; will-change: transform;
         }
 
-        /* De narratieve tekst (Voorgrond) */
         .narrative-container {
             position: relative; z-index: 10; max-width: 800px; padding: 0 40px; text-align: center;
         }
@@ -107,45 +109,64 @@
             margin-bottom: 40px; text-transform: uppercase;
         }
         .narrative-text {
-            font-size: clamp(18px, 2.5vw, 28px); font-weight: 300; line-height: 1.8;
+            font-size: clamp(16px, 2.2vw, 24px); font-weight: 300; line-height: 2;
             letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.9);
         }
         .narrative-line {
             width: 1px; height: 100px; background: linear-gradient(to bottom, #fff, transparent);
-            margin: 60px auto 0 auto; opacity: 0.3;
+            margin: 60px auto 0 auto; opacity: 0.2;
         }
 
-        /* 4. SIDE PANEL (Frosted Glass) */
+        /* 4. LOKAAL SIDE PANEL (Frosted Glass hersteld) */
         .side-panel {
             position: absolute; top: 0; right: -50%; width: 45%; height: 100vh;
-            z-index: 100; transition: right 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
             padding: 95px 60px; overflow-y: auto; background: rgba(10, 10, 10, 0.85); 
-            backdrop-filter: blur(35px) saturate(140%); -webkit-backdrop-filter: blur(35px);
+            backdrop-filter: blur(35px) saturate(140%); -webkit-backdrop-filter: blur(35px) saturate(140%);
             border-left: 1px solid rgba(255, 255, 255, 0.12); color: #fff; 
         }
         .side-panel.open { right: 0; }
-        .spec-group { margin-bottom: 35px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); padding-bottom: 20px; }
-        .spec-label { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255, 255, 255, 0.65); margin-bottom: 12px; }
-        .spec-value { font-size: clamp(16px, 2vw, 20px); font-weight: 400; color: #fff; }
-        .panel-inquiry-link {
-            display: block; text-align: center; font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
-            color: #fff; border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px; margin: 40px 0;
-            transition: 0.4s; cursor: pointer;
-        }
-        .panel-inquiry-link:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
 
-        /* Footer */
+        .spec-group {
+            margin-bottom: 35px; border-bottom: 1px solid rgba(255, 255, 255, 0.12); padding-bottom: 20px;
+        }
+        .spec-label {
+            font-size: clamp(10px, 1.2vw, 12px); letter-spacing: 3px; text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.65); font-weight: 400; margin-bottom: 12px;
+        }
+        .spec-value {
+            font-size: clamp(16px, 2vw, 20px); font-weight: 400; line-height: 1.7; color: #ffffff; letter-spacing: 0.5px;
+        }
+
+        .panel-inquiry-container { margin: 45px 0; width: 100%; }
+        .panel-inquiry-link {
+            display: block; text-align: center; font-size: clamp(12px, 1.5vw, 14px); font-weight: 400;
+            letter-spacing: 4px; text-transform: uppercase; color: #fff; text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.4); padding: 20px 24px;
+            transition: background 0.4s, border-color 0.4s, letter-spacing 0.4s; cursor: pointer; touch-action: manipulation;
+        }
+        .panel-inquiry-link:hover { border-color: #fff; background: rgba(255, 255, 255, 0.12); letter-spacing: 5px; }
+
+        .drawing-container { width: 100%; margin-top: 45px; }
+        .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.85; }
+
+        /* 5. FOOTER */
         .footer-section { background: #000; padding: 140px 10%; text-align: center; border-top: 1px solid #111; }
+        .contact-form { max-width: 500px; margin: 0 auto; }
         input, textarea { 
             width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff; padding: 18px 0; margin-bottom: 45px; font-size: 13px;
+            color: #fff; padding: 18px 0; margin-bottom: 45px; font-family: inherit; font-size: 13px; letter-spacing: 1px;
         }
+        input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
-        /* Mobile */
-        @media (max-width: 1024px) { .side-panel { width: 65%; right: -70%; } }
+        /* Responsive */
+        @media (max-width: 1024px) { .side-panel { width: 65%; right: -70%; padding: 95px 45px; } section.product-view { padding: 0 6% 16vh 6%; } }
         @media (max-width: 768px) {
-            .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-            .side-panel.open { top: 12vh; }
+            .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1); border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px; }
+            .side-panel.open { top: 12vh; right: 0; }
+            section.product-view { padding: 0 30px 14vh 30px; }
+            .hero-link { letter-spacing: 0.4em; }
+            .hero-navigation-wrapper { gap: 15px; }
         }
     </style>
 </head>
@@ -184,6 +205,13 @@
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-About.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#about" class="hero-link">About Fiore</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
     </div>
 
     <section class="intermission">
@@ -212,11 +240,11 @@
 
     <section class="intermission">
         <div class="parallax-spotlight" style="background: radial-gradient(circle at 30% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
-        <div class="parallax-drift-text" style="right: -20%;">ANATOMY OF FORM</div>
-        <div class="narrative-container">
-            <p class="narrative-label">Chapter O2 / The Blueprint</p>
-            <h3 class="narrative-text">Every artifact is a manifestation of structural tension. Form follows emotion, frozen in aerospace-grade materials.</h3>
-            <div class="narrative-line"></div>
+        <div class="parallax-drift-text" style="right: -10%;">ANATOMY OF FORM</div>
+        <div class="narrative-container" style="text-align: left; max-width: 850px;">
+            <p class="narrative-label">Chapter O2 / Fluid Landscapes</p>
+            <h3 class="narrative-text">Fusing domestic layers into singular organic statements. Where object and environment merge into an integrated tactical landscape.</h3>
+            <div class="narrative-line" style="margin-left: 0;"></div>
         </div>
     </section>
 
@@ -228,7 +256,7 @@
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Drop & Ripple</h2>
-            <p>Integrated Landscapes</p>
+            <p>Table & Rug</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
@@ -237,10 +265,10 @@
     <section class="intermission">
         <div class="parallax-spotlight" style="background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%);"></div>
         <div class="parallax-drift-text">ZERO COMPROMISE</div>
-        <div class="narrative-container" style="text-align: left;">
+        <div class="narrative-container">
             <p class="narrative-label">Chapter O3 / Workspace Architecture</p>
-            <h3 class="narrative-text">Shifting the paradigm. We create monolithic systems for executive environments where power meets digital ergonomics.</h3>
-            <div class="narrative-line" style="margin-left: 0;"></div>
+            <h3 class="narrative-text">Shifting the paradigm. Monolithic, executive systems engineered for environments where power meets advanced structural ergonomics.</h3>
+            <div class="narrative-line"></div>
         </div>
     </section>
 
@@ -258,13 +286,12 @@
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
-    <section class="intermission">
-        <div class="parallax-spotlight"></div>
-        <div class="parallax-drift-text" style="left: -10%;">BEYOND HUMAN SENSES</div>
-        <div class="narrative-container">
-            <p class="narrative-label">Chapter O4 / Materiality</p>
-            <h3 class="narrative-text">Aniline hide, cast magnesium, soul-red composite. The tactile soul of a digital vision.</h3>
-            <div class="narrative-line"></div>
+    <section style="position: relative; justify-content: center; align-items: center; text-align: center;">
+        <div class="section-bg active" style="background-image: url('Fiore-Texture-Leather.jpg'); opacity: 0.25;"></div>
+        <div class="section-overlay" style="background: rgba(0,0,0,0.45);"></div>
+        <div style="position: relative; z-index: 10; max-width: 800px;">
+            <h3 style="font-size: clamp(16px, 2.2vw, 22px); font-weight: 300; letter-spacing: 9px; text-transform: uppercase; margin-bottom: 15px;">Material Focus: Aniline Leather</h3>
+            <p style="font-size: 11px; letter-spacing: 4px; opacity: 0.6; text-transform: uppercase;">Sourced to coat the organic anatomy of Do Dragao</p>
         </div>
     </section>
 
@@ -282,21 +309,32 @@
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
-    <section id="about" class="intermission" style="height: 100vh;">
-        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);"></div>
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 65%);"></div>
+        <div class="parallax-drift-text" style="left: -10%;">BEYOND HUMAN SENSES</div>
         <div class="narrative-container">
-            <p class="narrative-label">Beyond Time</p>
-            <h2 style="font-size: clamp(32px, 5vw, 60px); letter-spacing: 15px; font-weight: 200; text-transform: uppercase;">FIORE</h2>
-            <p style="margin-top: 30px; opacity: 0.5; letter-spacing: 4px;">AN IMMORTAL VISION</p>
-            <div class="plus-trigger" style="margin-top: 50px;" onclick="toggleDetails(this, 'about')">+</div>
+            <p class="narrative-label">Chapter O4 / Digital Prototyping</p>
+            <h3 class="narrative-text">Every artifact we materialize is a manifestation of raw computational data engineered into physical, visceral realities.</h3>
+            <div class="narrative-line"></div>
         </div>
-        <div class="side-panel" style="position: absolute;"><div class="panel-data"></div></div>
+    </section>
+
+    <section id="about" class="product-view">
+        <div class="section-bg active" style="background-image: url('Fiore-Section-About.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>About Fiore</h2>
+            <p>Immortal Vision</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
     <footer class="footer-section" id="inquiries">
         <div class="contact-form">
             <h3 style="font-size: 11px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
-            <input type="text" placeholder="NAME"><input type="email" placeholder="EMAIL">
+            <input type="text" placeholder="NAME">
+            <input type="email" placeholder="EMAIL">
             <textarea placeholder="MESSAGE" rows="4"></textarea>
             <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
         </div>
@@ -306,21 +344,131 @@
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. LENIS SMOOTH SCROLL
-        const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        // 1. PREMIUM SMOOTH SCROLL (Lenis Engine)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
         lenis.on('scroll', ScrollTrigger.update);
 
-        // 2. ADVANCED PARALLAX MATRIX
+        // 2. ADVANCED GSAP PARALLAX ENGINE
         document.querySelectorAll('.intermission').forEach(sect => {
             const spot = sect.querySelector('.parallax-spotlight');
             const drift = sect.querySelector('.parallax-drift-text');
             const narrative = sect.querySelector('.narrative-container');
 
-            // De spotlight beweegt traag mee (Verticale Parallax)
-            gsap.to(spot, { yPercent: 15, ease: "none", scrollTrigger: { trigger: sect, scrub: true } });
+            if(spot) { gsap.to(spot, { yPercent: 15, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+            if(drift) { gsap.fromTo(drift, { xPercent: 10 }, { xPercent: -10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+            if(narrative) {
+                gsap.fromTo(narrative, 
+                    { y: 100, opacity: 0 }, 
+                    { y: -40, opacity: 1, ease: "power2.out", scrollTrigger: { trigger: sect, start: "top 85%", end: "top 25%", scrub: 1 } }
+                );
+            }
+        });
 
-            // De grote achtergrondtekst drijft horizontaal weg (Horizontal Drift)
-            if(drift) {
-                gsap.fromTo(drift, { xPercent: 10 }, { xPercent: -10, ease: "none", scroll
+        // Product Images Parallax
+        document.querySelectorAll('.product-view').forEach(sect => {
+            const bg = sect.querySelector('.section-bg');
+            if(bg) { gsap.fromTo(bg, { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+        });
+
+        // 3. HERO SLIDESHOW SYSTEM (Hersteld)
+        let hIdx = 0;
+        const hSlides = document.querySelectorAll('.hero-slide');
+        let heroInterval = setInterval(() => moveHero(1), 6000);
+
+        function moveHero(direction) {
+            if(hSlides.length === 0) return;
+            hSlides[hIdx].classList.remove('active');
+            hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
+            hSlides[hIdx].classList.add('active');
+            
+            clearInterval(heroInterval);
+            heroInterval = setInterval(() => moveHero(1), 6000);
+        }
+
+        // 4. LOKALE PRODUCT SLIDESHOW SYSTEMS (Hersteld)
+        document.querySelectorAll('.product-view').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                let sectInterval = setInterval(() => changeBg(1), 5000);
+
+                function changeBg(direction) {
+                    bgs[bIdx].classList.remove('active');
+                    bIdx = (bIdx + direction + bgs.length) % bgs.length;
+                    bgs[bIdx].classList.add('active');
+                }
+
+                s.moveBg = function(direction) {
+                    changeBg(direction);
+                    clearInterval(sectInterval);
+                    sectInterval = setInterval(() => changeBg(1), 5000);
+                };
+            }
+        });
+
+        function moveSection(arrowElement, direction) {
+            const parentSection = arrowElement.closest('section');
+            if (parentSection && typeof parentSection.moveBg === 'function') {
+                parentSection.moveBg(direction);
+            }
+        }
+
+        // Tech Spec Data Map
+        const projects = {
+            'starfish': { dimensions: 'H 740 mm | Ø 1300 mm', materials: 'Aerospace-grade Aluminum, Soul-Red composite coating', leadtime: '16 Weeks', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
+            'drop-ripple': { dimensions: 'Table: 2400 x 1100 mm | Rug: 3500 x 2500 mm', materials: 'Solid Walnut, Hand-knotted Tibetan silk & wool landscape', leadtime: '14 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
+            'fd8': { dimensions: '2200 x 1000 x 750 mm', materials: 'Anodized Titanium structural frame, Matte carbon fiber top', leadtime: '18 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-FD8.jpg' },
+            'dodragao': { dimensions: 'L 2100 mm | W 950 mm | H 650 mm', materials: 'Cast magnesium skeleton structure, Premium full-grain aniline leather', leadtime: '16 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DoDragao.jpg' },
+            'about': { dimensions: 'Beyond Human Limitations', materials: 'Algorithmic neural matrix, Pure procedural evolution', leadtime: 'Continuous', price: 'Eternity', draw: 'Fiore-Drawing-About.jpg' }
+        };
+
+        // 5. TOUCH-PROOF LOKALE HOOFD-TOGGLE VOOR DE ZIJPANELEN (Hersteld)
+        function toggleDetails(element, id) {
+            const parentSection = element.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const panelData = parentSection.querySelector('.panel-data');
+            
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                plusTrigger.style.transform = 'rotate(0deg)';
+            } else {
+                const p = projects[id];
+                if(!p) return;
+                
+                panelData.innerHTML = `
+                    <div class="spec-group"><div class="spec-label">Dimensions</div><div class="spec-value">${p.dimensions}</div></div>
+                    <div class="spec-group"><div class="spec-label">Materials</div><div class="spec-value">${p.materials}</div></div>
+                    <div class="spec-group"><div class="spec-label">Lead Time</div><div class="spec-value">${p.leadtime}</div></div>
+                    <div class="spec-group"><div class="spec-label">Price</div><div class="spec-value" style="color: #fff;">${p.price}</div></div>
+                    <div class="panel-inquiry-container">
+                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for purchase</div>
+                    </div>
+                    <div class="drawing-container"><img src="${p.draw}" alt="Technical Specification"></div>
+                `;
+                
+                panel.classList.add('open');
+                plusTrigger.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        function scrollToInquiries(linkElement) {
+            const parentSection = linkElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            
+            panel.classList.remove('open');
+            if(plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            
+            lenis.scrollTo('#inquiries', { duration: 1.5 });
+        }
+    </script>
+</body>
+</html>
