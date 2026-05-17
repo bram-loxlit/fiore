@@ -34,6 +34,18 @@
         }
         .hero-slide.active { opacity: 1; z-index: 2; }
         
+        /* Container om link en pijlen in de Hero perfect horizontaal uit te lijnen */
+        .hero-navigation-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(20px, 4vw, 50px); 
+            z-index: 10;
+            padding: 0 20px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
         .hero-link {
             text-decoration: none; 
             color: #fff; 
@@ -43,12 +55,26 @@
             border-bottom: 1px solid rgba(255,255,255,0.2);
             padding-bottom: 12px; 
             transition: letter-spacing 0.5s, border-color 0.5s; 
-            z-index: 10;
             text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); 
+            white-space: nowrap;
         }
         .hero-link:hover { letter-spacing: 0.8em; border-bottom: 1px solid #fff; }
 
-        /* NAVIGATIEPIJLEN */
+        /* HERO SPECIFIEKE PIJLEN (In lijn met de tekst) */
+        .hero-arrow {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 100;
+            color: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
+            padding: 10px 15px;
+            margin-bottom: 8px; 
+        }
+        .hero-arrow:hover { color: rgba(255, 255, 255, 0.8); transform: scale(1.1); }
+
+        /* SECTIE NAVIGATIEPIJLEN */
         .slide-arrow {
             position: absolute;
             top: 50%;
@@ -79,7 +105,6 @@
             border-bottom: 1px solid #111;
         }
         
-        /* PARALLAX SPOTLIGHT INTERMISSIONS */
         section.intermission {
             justify-content: center;
             align-items: center;
@@ -235,6 +260,7 @@
             .side-panel.open { top: 12vh; right: 0; }
             section { padding: 0 30px 14vh 30px; }
             .hero-link { letter-spacing: 0.4em; }
+            .hero-navigation-wrapper { gap: 15px; }
         }
     </style>
 </head>
@@ -245,21 +271,47 @@
     </div>
 
     <div class="hero-slideshow" id="heroSlideshow">
-        <div class="slide-arrow arrow-left" onclick="moveHero(-1)">&#139;</div>
-        <div class="slide-arrow arrow-right" onclick="moveHero(1)">&#155;</div>
         
         <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
-            <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
+
+        <div class="hero-slide" style="background-image: url('Fiore-Hero-DropRipple.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        
         <div class="hero-slide" style="background-image: url('Fiore-Hero-FD8.jpg');">
-            <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
+        
         <div class="hero-slide" style="background-image: url('Fiore-Hero-DoDragao.jpg');">
-            <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
+        
         <div class="hero-slide" style="background-image: url('Fiore-Hero-About.jpg');">
-            <a href="#about" class="hero-link">About Fiore</a>
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#about" class="hero-link">About Fiore</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
+        
     </div>
 
     <section class="intermission">
@@ -292,14 +344,45 @@
     <section class="intermission">
         <div class="spotlight-bg" style="background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
         <div class="intermission-content" style="max-width: 800px; width: 100%; text-align: left; padding: 0 5%;">
-            <p style="font-size: 10px; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; color: rgba(255,255,255,0.5);">SECTION O2 / BLUEPRINT MATRIX</p>
+            <p style="font-size: 10px; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; color: rgba(255,255,255,0.5);">SECTION O2 / DESIGNBLUEPRINT</p>
+            <div style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 30px; margin-bottom: 35px;">
+                <h4 style="font-size: clamp(18px, 2.5vw, 25px); font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; color: #fff;">Fluid Landscapes</h4>
+                <p style="font-size: clamp(12px, 1.5vw, 14px); font-weight: 300; letter-spacing: 2px; line-height: 1.8; opacity: 0.8; color: rgba(255,255,255,0.75);">
+                    Fusing domestic layers into singular organic statements. Where furniture and flooring no longer live apart, but form one integrated tactical landscape.
+                </p>
+            </div>
+            <p style="font-size: 11px; letter-spacing: 3px; opacity: 0.4;">FIORE DESIGN LABS // 51.2194° N, 4.4025° E</p>
+        </div>
+    </section>
+
+    <section id="drop-ripple">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+
+        <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
+        <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Drop & Ripple</h2>
+            <p>Table & Rug</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-data"></div>
+        </div>
+    </section>
+
+    <section class="intermission">
+        <div class="spotlight-bg" style="background: radial-gradient(circle at 70% 40%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="intermission-content" style="max-width: 800px; width: 100%; text-align: left; padding: 0 5%;">
+            <p style="font-size: 10px; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; color: rgba(255,255,255,0.5);">SECTION O3 / STRUCTURAL MATRIX</p>
             <div style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 30px; margin-bottom: 35px;">
                 <h4 style="font-size: clamp(18px, 2.5vw, 25px); font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; color: #fff;">Architectural Workspace Systems</h4>
                 <p style="font-size: clamp(12px, 1.5vw, 14px); font-weight: 300; letter-spacing: 2px; line-height: 1.8; opacity: 0.8; color: rgba(255,255,255,0.75);">
                     Shifting the paradigm from traditional corporate furniture to monolithic, executive workspace architecture. Zero compromises. Pure structural tension.
                 </p>
             </div>
-            <p style="font-size: 11px; letter-spacing: 3px; opacity: 0.4;">FIORE DESIGN LABS // 51.2194° N, 4.4025° E</p>
+            <p style="font-size: 11px; letter-spacing: 3px; opacity: 0.4;">FIORE DESIGN LABS // ARCHITECTURE DIVISION</p>
         </div>
     </section>
 
@@ -387,8 +470,8 @@
     </footer>
 
     <script>
-        // Hero Preloader
-        const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
+        // Hero Preloader (Wederom inclusief Drop & Ripple)
+        const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-DropRipple.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
         hImgs.forEach(s => { const i = new Image(); i.src = s; });
 
         // 1. HERO SLIDESHOW LOGICA
@@ -438,7 +521,6 @@
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             
-            // Subtiele parallax verschuiving voor alle object-achtergronden
             document.querySelectorAll('.section-bg').forEach(bg => {
                 const parent = bg.closest('section');
                 const speed = 0.12;
@@ -451,22 +533,22 @@
                 }
             });
 
-            // Parallax spotlight verschuiving voor intermissions
             document.querySelectorAll('.spotlight-bg').forEach(spot => {
                 const parent = spot.closest('section');
                 if (parent) {
                     const rect = parent.getBoundingClientRect();
                     if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const yPos = (rect.top * 0.2); // Beweegt trager mee
+                        const yPos = (rect.top * 0.2); 
                         spot.style.transform = `translateY(${yPos}px) scale(1.2)`;
                     }
                 }
             });
         });
 
-        // Tech Spec Data Map
+        // Tech Spec Data Map (Drop & Ripple hersteld)
         const projects = {
             'starfish': { dimensions: 'H 740 mm | Ø 1300 mm', materials: 'Aerospace-grade Aluminum, High-gloss Soul-Red composite coating', leadtime: '16 Weeks', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
+            'drop-ripple': { dimensions: 'Table: 2400 x 1100 mm | Rug: 3500 x 2500 mm', materials: 'Solid Walnut, Hand-knotted Tibetan silk & wool landscape', leadtime: '14 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
             'fd8': { dimensions: '2200 x 1000 x 750 mm', materials: 'Anodized Titanium structural frame, Matte carbon fiber top', leadtime: '18 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-FD8.jpg' },
             'dodragao': { dimensions: 'L 2100 mm | W 950 mm | H 650 mm', materials: 'Cast magnesium skeleton structure, Premium full-grain aniline leather', leadtime: '16 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DoDragao.jpg' },
             'about': { dimensions: 'Beyond Human Limitations', materials: 'Algorithmic neural matrix, Pure procedural evolution', leadtime: 'Continuous', price: 'Eternity', draw: 'Fiore-Drawing-About.jpg' }
