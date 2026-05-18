@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FIORE | Beyond Time</title>
+    <title>FIORE | Immortal Narrative</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -12,14 +17,12 @@
             background-color: #000; 
             color: #fff; 
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
             overflow-x: hidden;
-            overflow-y: auto;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Fixed Navigation Logo */
-        .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 1000; }
+        /* Fixed Navigation */
+        .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 2000; }
         .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
         /* 1. HERO SLIDESHOW */
@@ -30,368 +33,368 @@
             opacity: 0; z-index: 1;
             transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
             display: flex; align-items: center; justify-content: center;
-            will-change: opacity;
         }
         .hero-slide.active { opacity: 1; z-index: 2; }
         
+        .hero-navigation-wrapper {
+            display: flex; align-items: center; justify-content: center;
+            gap: clamp(20px, 4vw, 50px); z-index: 10; padding: 0 20px;
+        }
         .hero-link {
-            text-decoration: none; 
-            color: #fff; 
-            font-size: clamp(14px, 1.8vw, 18px); 
-            letter-spacing: 0.6em;
-            text-transform: uppercase; 
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            padding-bottom: 12px; 
-            transition: letter-spacing 0.5s, border-color 0.5s; 
-            z-index: 10;
-            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6); 
+            text-decoration: none; color: #fff; font-size: clamp(14px, 1.8vw, 18px); 
+            letter-spacing: 0.6em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 12px; transition: 0.5s; white-space: nowrap;
         }
         .hero-link:hover { letter-spacing: 0.8em; border-bottom: 1px solid #fff; }
-
-        /* NAVIGATIEPIJLEN */
-        .slide-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: clamp(32px, 5vw, 46px);
-            font-weight: 100;
-            color: rgba(255, 255, 255, 0.25);
-            cursor: pointer;
-            user-select: none;
-            transition: color 0.3s, transform 0.3s;
-            z-index: 15;
-            padding: 25px;
-        }
-        .slide-arrow:hover { color: rgba(255, 255, 255, 0.8); }
-        .arrow-left { left: 15px; }
-        .arrow-right { right: 15px; }
-
-        /* 2. PRODUCT SECTIONS & INTERMISSIONS */
-        section {
-            position: relative; 
-            height: 100vh; 
-            width: 100%; 
-            overflow: hidden;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: flex-end;
-            padding: 0 6% 18vh 6%; 
-            border-bottom: 1px solid #111;
-        }
         
-        /* PARALLAX SPOTLIGHT INTERMISSIONS */
-        section.intermission {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: #000;
-            padding: 0 10%;
+        .hero-arrow {
+            font-size: clamp(24px, 3vw, 36px); font-weight: 100; color: rgba(255, 255, 255, 0.25);
+            cursor: pointer; transition: 0.3s; margin-bottom: 8px; user-select: none;
         }
+        .hero-arrow:hover { color: #fff; transform: scale(1.1); }
 
-        .spotlight-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.07) 0%, rgba(0,0,0,0) 60%);
-            z-index: 1;
-            pointer-events: none;
-            transform: scale(1.2);
-            will-change: transform;
-        }
-
-        .intermission-content {
-            position: relative;
-            z-index: 2;
+        /* 2. DESIGN SECTIONS */
+        section.product-view {
+            position: relative; height: 100vh; width: 100%; overflow: hidden;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: 0 6% 18vh 6%; border-bottom: 1px solid #111;
         }
         
         .section-bg {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            position: absolute; top: -15%; left: 0; width: 100%; height: 130%;
             background-size: cover; background-position: center;
-            opacity: 0; z-index: 1;
-            transform: scale(1.05);
-            transition: opacity 2s ease-in-out;
-            will-change: transform, opacity;
+            opacity: 0; z-index: 1; will-change: transform;
         }
         .section-bg.active { opacity: 1; z-index: 2; }
         
         .section-overlay { 
-            position: absolute; 
-            top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%); 
-            z-index: 3; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%); z-index: 3; 
         }
-
         .section-content { position: relative; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.5); }
         .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
         .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
         .plus-trigger {
             font-size: clamp(36px, 5vw, 48px); font-weight: 200; cursor: pointer;
-            display: inline-block; transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s;
-            line-height: 1; opacity: 0.7;
-            touch-action: manipulation;
+            display: inline-block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+            line-height: 1; opacity: 0.7; touch-action: manipulation;
         }
         .plus-trigger:hover { opacity: 1; }
 
-        /* 3. LOKAAL SIDE PANEL (Frosted Glass) */
+        /* 3. ADVANCED PARALLAX INTERMISSIONS */
+        section.intermission {
+            height: 120vh; 
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden; background: #000;
+        }
+
+        .parallax-spotlight {
+            position: absolute; width: 140%; height: 140%; top: -20%; left: -20%;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 65%);
+            z-index: 1; will-change: transform;
+        }
+
+        .parallax-drift-text {
+            position: absolute; white-space: nowrap; font-size: 14vh; font-weight: 900;
+            color: rgba(255,255,255,0.025); text-transform: uppercase; letter-spacing: 0.2em;
+            z-index: 2; pointer-events: none; will-change: transform;
+        }
+
+        .narrative-container {
+            position: relative; z-index: 10; max-width: 800px; padding: 0 40px; text-align: center;
+        }
+        .narrative-label {
+            font-size: 10px; letter-spacing: 8px; color: rgba(255,255,255,0.4); 
+            margin-bottom: 40px; text-transform: uppercase;
+        }
+        .narrative-text {
+            font-size: clamp(16px, 2.2vw, 24px); font-weight: 300; line-height: 2;
+            letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.9);
+        }
+        .narrative-line {
+            width: 1px; height: 100px; background: linear-gradient(to bottom, #fff, transparent);
+            margin: 60px auto 0 auto; opacity: 0.2;
+        }
+
+        /* 4. HIGH-END MONOLITHIC SIDE PANEL */
         .side-panel {
-            position: absolute; 
-            top: 0; 
-            right: -50%; 
-            width: 45%; 
-            height: 100vh;
-            z-index: 100; 
-            transition: right 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-            padding: 95px 60px; 
-            overflow-y: auto;
-            background: rgba(10, 10, 10, 0.85); 
-            backdrop-filter: blur(35px) saturate(140%);
-            -webkit-backdrop-filter: blur(35px) saturate(140%);
-            border-left: 1px solid rgba(255, 255, 255, 0.12);
-            color: #fff; 
+            position: absolute; top: 0; right: -50%; width: 45%; height: 100vh;
+            z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 100px 80px; overflow-y: auto; background: rgba(8, 8, 8, 0.92); 
+            backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+            border-left: 1px solid rgba(255, 255, 255, 0.06); color: #fff; 
         }
         .side-panel.open { right: 0; }
 
-        .spec-group {
-            margin-bottom: 35px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            padding-bottom: 20px;
-        }
-        .spec-label {
-            font-size: clamp(10px, 1.2vw, 12px);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.65);
-            font-weight: 400;
-            margin-bottom: 12px;
-        }
-        .spec-value {
-            font-size: clamp(16px, 2vw, 20px); 
-            font-weight: 400; 
-            line-height: 1.7;
-            color: #ffffff; 
-            letter-spacing: 0.5px;
+        .matrix-header {
+            font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4); margin-bottom: 50px;
         }
 
-        .panel-inquiry-container {
-            margin: 45px 0;
-            width: 100%;
+        .matrix-row {
+            margin-bottom: 45px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 30px;
         }
+
+        .matrix-meta {
+            font-size: 11px; font-family: monospace; letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.3); margin-bottom: 12px;
+            display: flex; justify-content: space-between;
+        }
+
+        .matrix-title {
+            font-size: 20px; font-weight: 300; letter-spacing: 1px;
+            line-height: 1.5; color: #ffffff; margin-bottom: 12px;
+        }
+
+        .panel-inquiry-container { margin-top: 60px; width: 100%; }
         .panel-inquiry-link {
-            display: block;
-            text-align: center;
-            font-size: clamp(12px, 1.5vw, 14px);
-            font-weight: 400;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #fff;
-            text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            padding: 20px 24px;
-            transition: background 0.4s, border-color 0.4s, letter-spacing 0.4s;
-            cursor: pointer;
-            touch-action: manipulation;
+            display: inline-block; font-size: 12px; letter-spacing: 5px;
+            text-transform: uppercase; color: #fff; text-decoration: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3); padding-bottom: 8px;
+            transition: border-color 0.4s, letter-spacing 0.4s; cursor: pointer;
         }
-        .panel-inquiry-link:hover { 
-            border-color: #fff; 
-            background: rgba(255, 255, 255, 0.12);
-            letter-spacing: 5px; 
-        }
+        .panel-inquiry-link:hover { border-color: #fff; letter-spacing: 6px; }
 
-        .drawing-container { width: 100%; margin-top: 45px; }
-        .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.85; }
-
-        /* 4. FOOTER */
+        /* 5. FOOTER & FORM */
         .footer-section { background: #000; padding: 140px 10%; text-align: center; border-top: 1px solid #111; }
-        .contact-form { max-width: 500px; margin: 0 auto; }
+        .contact-form { max-width: 500px; margin: 0 auto; text-align: center; }
         input, textarea { 
             width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff; padding: 18px 0; margin-bottom: 45px; font-family: inherit; font-size: 13px; letter-spacing: 1px;
         }
         input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
-        /* TABLET OPTIMALISATIE */
-        @media (max-width: 1024px) {
-            .side-panel { 
-                width: 65%; 
-                right: -70%;
-                padding: 95px 45px;
-            }
-            .logo-container { width: 120px; top: 20px; left: 20px; }
-            section { padding: 0 6% 16vh 6%; } 
+        .form-send-btn {
+            background: none; border: none; color: #fff;
+            font-size: 11px; letter-spacing: 3px; font-family: inherit;
+            cursor: pointer; opacity: 0.7; transition: opacity 0.3s, transform 0.3s;
+            display: inline-block; text-transform: uppercase;
         }
+        .form-send-btn:hover { opacity: 1; transform: scale(1.05); }
 
-        /* MOBIEL OPTIMALISATIE */
+        /* Responsive */
+        @media (max-width: 1024px) { .side-panel { width: 65%; right: -70%; padding: 80px 45px; } section.product-view { padding: 0 6% 16vh 6%; } }
         @media (max-width: 768px) {
-            .side-panel { 
-                width: 100%; 
-                height: 88vh; 
-                top: 100%; 
-                right: 0; 
-                transition: top 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-                border-left: none; 
-                border-top: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 60px 30px;
-            }
+            .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1); border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px; }
             .side-panel.open { top: 12vh; right: 0; }
-            section { padding: 0 30px 14vh 30px; }
+            section.product-view { padding: 0 30px 14vh 30px; }
             .hero-link { letter-spacing: 0.4em; }
+            .hero-navigation-wrapper { gap: 15px; }
         }
     </style>
 </head>
 <body>
 
     <div class="logo-container">
-        <a href="#"><img src="Logo.png" alt="FIORE"></a>
+        <a href="#"><img src="Logo.png" alt="FIORE Collective Design Logo"></a>
     </div>
 
     <div class="hero-slideshow" id="heroSlideshow">
-        <div class="slide-arrow arrow-left" onclick="moveHero(-1)">&#139;</div>
-        <div class="slide-arrow arrow-right" onclick="moveHero(1)">&#155;</div>
-        
-        <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
-            <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+        <div class="hero-slide active" style="background-image: url('assets/hero/starfish-gueridon.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#starfish" class="hero-link">Design I / Starfish</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-FD8.jpg');">
-            <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+        <div class="hero-slide" style="background-image: url('assets/hero/drop-ripple.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#drop-ripple" class="hero-link">Design II / Drop & Ripple</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-DoDragao.jpg');">
-            <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+        <div class="hero-slide" style="background-image: url('assets/hero/fd8-executive-desk.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#fd8" class="hero-link">Design III / FD8 Executive</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-About.jpg');">
-            <a href="#about" class="hero-link">About Fiore</a>
+        <div class="hero-slide" style="background-image: url('assets/hero/do-dragao-daybed.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#dodragao" class="hero-link">Design IV / Do Dragao</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <div class="hero-slide" style="background-image: url('assets/hero/about-fiore.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#about" class="hero-link">About Fiore</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
         </div>
     </div>
 
     <section class="intermission">
-        <div class="spotlight-bg"></div>
-        <div class="intermission-content" style="max-width: 750px;">
-            <p style="font-size: clamp(14px, 1.8vw, 19px); font-weight: 300; letter-spacing: 7px; line-height: 2.2; text-transform: uppercase; color: rgba(255,255,255,0.9);">
-                "Form does not follow function. Form follows emotion, frozen in digital permanence."
-            </p>
-            <div style="width: 40px; height: 1px; background: rgba(255,255,255,0.2); margin: 45px auto 0 auto;"></div>
+        <div class="parallax-spotlight"></div>
+        <div class="parallax-drift-text">ESTABLISHED 2020</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O1 / The Origin</p>
+            <h3 class="narrative-text">Fiore is a digital entity born from the intersection of algorithm and emotion. We do not design furniture; we curate digital permanence.</h3>
+            <div class="narrative-line"></div>
         </div>
     </section>
 
-    <section id="starfish">
+    <section id="starfish" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-
-        <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/starfish/view01.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/starfish/view02.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
-            <h2>Starfish Table</h2>
-            <p>Collectible Design</p>
+            <h2>Starfish</h2>
+            <p>Design Manifestation I</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">+</div>
         </div>
-        <div class="side-panel">
-            <div class="panel-data"></div>
-        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
     <section class="intermission">
-        <div class="spotlight-bg" style="background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
-        <div class="intermission-content" style="max-width: 800px; width: 100%; text-align: left; padding: 0 5%;">
-            <p style="font-size: 10px; letter-spacing: 6px; opacity: 0.5; margin-bottom: 35px; color: rgba(255,255,255,0.5);">SECTION O2 / BLUEPRINT MATRIX</p>
-            <div style="border-left: 1px solid rgba(255,255,255,0.15); padding-left: 30px; margin-bottom: 35px;">
-                <h4 style="font-size: clamp(18px, 2.5vw, 25px); font-weight: 300; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; color: #fff;">Architectural Workspace Systems</h4>
-                <p style="font-size: clamp(12px, 1.5vw, 14px); font-weight: 300; letter-spacing: 2px; line-height: 1.8; opacity: 0.8; color: rgba(255,255,255,0.75);">
-                    Shifting the paradigm from traditional corporate furniture to monolithic, executive workspace architecture. Zero compromises. Pure structural tension.
-                </p>
-            </div>
-            <p style="font-size: 11px; letter-spacing: 3px; opacity: 0.4;">FIORE DESIGN LABS // 51.2194° N, 4.4025° E</p>
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 30% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text" style="right: -10%;">ANATOMY OF FORM</div>
+        <div class="narrative-container" style="text-align: left; max-width: 850px;">
+            <p class="narrative-label">Chapter O2 / Fluid Landscapes</p>
+            <h3 class="narrative-text">Fusing domestic layers into singular organic statements. Where object and environment merge into an integrated tactical landscape.</h3>
+            <div class="narrative-line" style="margin-left: 0;"></div>
         </div>
     </section>
 
-    <section id="fd8">
+    <section id="drop-ripple" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="section-bg active" style="background-image: url('assets/designs/drop-ripple/view01.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/drop-ripple/view02.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Drop & Ripple</h2>
+            <p>Design Manifestation II</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
+    </section>
 
-        <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text">ZERO COMPROMISE</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O3 / Workspace Architecture</p>
+            <h3 class="narrative-text">Shifting the paradigm. Monolithic, executive systems engineered for environments where power meets advanced structural ergonomics.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
+
+    <section id="fd8" class="product-view">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="section-bg active" style="background-image: url('assets/designs/fd8/view01.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/fd8/view02.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>FD8 Executive</h2>
-            <p>Desk Collection</p>
+            <p>Design Manifestation III</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">+</div>
         </div>
-        <div class="side-panel">
-            <div class="panel-data"></div>
-        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
     <section style="position: relative; justify-content: center; align-items: center; text-align: center;">
-        <div class="section-bg active" style="background-image: url('Fiore-Texture-Leather.jpg'); opacity: 0.25;"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/leather-texture.jpg'); opacity: 0.25;" aria-label="Fiore Full Grain Aniline Leather Texture Profile"></div>
         <div class="section-overlay" style="background: rgba(0,0,0,0.45);"></div>
-        
         <div style="position: relative; z-index: 10; max-width: 800px;">
-            <h3 style="font-size: clamp(16px, 2.2vw, 22px); font-weight: 300; letter-spacing: 9px; text-transform: uppercase; margin-bottom: 15px;">
-                Material Focus: Aniline Leather
-            </h3>
-            <p style="font-size: 11px; letter-spacing: 4px; opacity: 0.6; text-transform: uppercase;">
-                Sourced to coat the organic anatomy of Do Dragao
-            </p>
+            <h3 style="font-size: clamp(16px, 2.2vw, 22px); font-weight: 300; letter-spacing: 9px; text-transform: uppercase; margin-bottom: 15px;">Material Focus: Aniline Leather</h3>
+            <p style="font-size: 11px; letter-spacing: 4px; opacity: 0.6; text-transform: uppercase;">Sourced to coat the organic anatomy of Do Dragao</p>
         </div>
     </section>
 
-    <section id="dodragao">
+    <section id="dodragao" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-
-        <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/view01.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/do-dragao/view02.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Do Dragao</h2>
-            <p>Daybed & Loveseat</p>
+            <p>Design Manifestation IV</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">+</div>
         </div>
-        <div class="side-panel">
-            <div class="panel-data"></div>
-        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
     <section class="intermission">
-        <div class="spotlight-bg" style="background: radial-gradient(circle at 50% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 65%);"></div>
-        <div class="intermission-content" style="max-width: 700px;">
-            <p style="font-size: 10px; letter-spacing: 8px; opacity: 0.5; margin-bottom: 30px; color: rgba(255,255,255,0.4);">GENESIS OF THOUGHT</p>
-            <p style="font-size: clamp(14px, 1.6vw, 18px); font-weight: 300; letter-spacing: 5px; line-height: 2; text-transform: uppercase; color: rgba(255,255,255,0.85);">
-                "Every artifact we shape is a manifestation of data engineered into visceral reality."
-            </p>
-            <div style="width: 25px; height: 1px; background: rgba(255,255,255,0.2); margin: 40px auto 0 auto;"></div>
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 65%);"></div>
+        <div class="parallax-drift-text" style="left: -10%;">BEYOND HUMAN SENSES</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O4 / Digital Prototyping</p>
+            <h3 class="narrative-text">Every artifact we materialize is a manifestation of raw computational data engineered into physical, visceral realities.</h3>
+            <div class="narrative-line"></div>
         </div>
     </section>
 
-    <section id="about">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-About.jpg');"></div>
+    <section id="about" class="product-view">
+        <div class="section-bg active" style="background-image: url('assets/designs/about/view01.jpg');" aria-label="Fiore Art Design Laboratory Antwerp Background"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>About Fiore</h2>
             <p>Immortal Vision</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">+</div>
         </div>
-        <div class="side-panel">
-            <div class="panel-data"></div>
-        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
     <footer class="footer-section" id="inquiries">
-        <div class="contact-form">
+        <form class="contact-form" id="fioreForm" onsubmit="handleFormSubmit(event)">
             <h3 style="font-size: 11px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
-            <input type="text" placeholder="NAME">
-            <input type="email" placeholder="EMAIL">
-            <textarea placeholder="MESSAGE" rows="4"></textarea>
-            <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
-        </div>
+            <input type="text" id="formName" name="Name" placeholder="NAME" required>
+            <input type="email" id="formEmail" name="Email" placeholder="EMAIL" required>
+            <textarea id="formMessage" name="Message" placeholder="MESSAGE" rows="4" required></textarea>
+            
+            <button type="submit" id="submitBtn" class="form-send-btn">SEND</button>
+        </form>
         <p style="margin-top: 100px; font-size: 8px; opacity: 0.2; letter-spacing: 5px;">© 2026 FIORE | BEYOND TIME</p>
     </footer>
 
     <script>
-        // Hero Preloader
-        const hImgs = ['Fiore-Hero-Starfish.jpg', 'Fiore-Hero-FD8.jpg', 'Fiore-Hero-DoDragao.jpg', 'Fiore-Hero-About.jpg'];
-        hImgs.forEach(s => { const i = new Image(); i.src = s; });
+        gsap.registerPlugin(ScrollTrigger);
 
-        // 1. HERO SLIDESHOW LOGICA
+        // 1. PREMIUM SMOOTH SCROLL (Lenis Engine)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // 2. ADVANCED GSAP PARALLAX ENGINE
+        document.querySelectorAll('.intermission').forEach(sect => {
+            const spot = sect.querySelector('.parallax-spotlight');
+            const drift = sect.querySelector('.parallax-drift-text');
+            const narrative = sect.querySelector('.narrative-container');
+
+            if(spot) { gsap.to(spot, { yPercent: 15, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+            if(drift) { gsap.fromTo(drift, { xPercent: 10 }, { xPercent: -10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+            if(narrative) {
+                gsap.fromTo(narrative, 
+                    { y: 100, opacity: 0 }, 
+                    { y: -40, opacity: 1, ease: "power2.out", scrollTrigger: { trigger: sect, start: "top 85%", end: "top 25%", scrub: 1 } }
+                );
+            }
+        });
+
+        // Product Images Parallax
+        document.querySelectorAll('.product-view').forEach(sect => {
+            const bg = sect.querySelector('.section-bg');
+            if(bg) { gsap.fromTo(bg, { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+        });
+
+        // 3. HERO SLIDESHOW SYSTEM
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
         let heroInterval = setInterval(() => moveHero(1), 6000);
@@ -406,8 +409,8 @@
             heroInterval = setInterval(() => moveHero(1), 6000);
         }
 
-        // 2. PRODUCT SECTIONS SLIDESHOW LOGICA
-        document.querySelectorAll('section').forEach(s => {
+        // 4. LOKALE PRODUCT SLIDESHOW SYSTEMS
+        document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
             if(bgs.length > 1) {
                 let bIdx = 0;
@@ -434,44 +437,57 @@
             }
         }
 
-        // DYNAMISCH PARALLAX EFFECT BIJ SCROLLEN
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            
-            // Subtiele parallax verschuiving voor alle object-achtergronden
-            document.querySelectorAll('.section-bg').forEach(bg => {
-                const parent = bg.closest('section');
-                const speed = 0.12;
-                if (parent) {
-                    const rect = parent.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const yPos = -(rect.top * speed);
-                        bg.style.transform = `translateY(${yPos}px) scale(1.05)`;
-                    }
-                }
-            });
-
-            // Parallax spotlight verschuiving voor intermissions
-            document.querySelectorAll('.spotlight-bg').forEach(spot => {
-                const parent = spot.closest('section');
-                if (parent) {
-                    const rect = parent.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const yPos = (rect.top * 0.2); // Beweegt trager mee
-                        spot.style.transform = `translateY(${yPos}px) scale(1.2)`;
-                    }
-                }
-            });
-        });
-
-        // Tech Spec Data Map
+        // 5. THE DESIGN ARCHIVE DATASTACK
         const projects = {
-            'starfish': { dimensions: 'H 740 mm | Ø 1300 mm', materials: 'Aerospace-grade Aluminum, High-gloss Soul-Red composite coating', leadtime: '16 Weeks', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
-            'fd8': { dimensions: '2200 x 1000 x 750 mm', materials: 'Anodized Titanium structural frame, Matte carbon fiber top', leadtime: '18 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-FD8.jpg' },
-            'dodragao': { dimensions: 'L 2100 mm | W 950 mm | H 650 mm', materials: 'Cast magnesium skeleton structure, Premium full-grain aniline leather', leadtime: '16 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DoDragao.jpg' },
-            'about': { dimensions: 'Beyond Human Limitations', materials: 'Algorithmic neural matrix, Pure procedural evolution', leadtime: 'Continuous', price: 'Eternity', draw: 'Fiore-Drawing-About.jpg' }
+            'starfish': {
+                title: 'Design I / Starfish',
+                details: [
+                    { label: 'Classification', value: 'Biomorphic Radially-Centered Table Architecture' },
+                    { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
+                    { label: 'Execution ST-01', value: 'Base: Soul-Red Metallic // Top: Carbon-Injected Noir de Mazy (Archived)' },
+                    { label: 'Execution ST-02', value: 'Base: Titanium Black // Top: Radially Bookmatched Macassar Ebony (Reserved)' },
+                    { label: 'Execution ST-03', value: 'Base: Emerald Green Liquid Chrome // Top: Patagonia Quartzite Slab (Available)' },
+                    { label: 'Lead-Time', value: '18 Weeks // Handmade in Antwerp Laboratory' }
+                ]
+            },
+            'drop-ripple': {
+                title: 'Design II / Drop & Ripple',
+                details: [
+                    { label: 'Classification', value: 'Integrated Domestic Topography System' },
+                    { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
+                    { label: 'Material DNA', value: 'Solid Black Walnut Slab, Hand-knotted Tibetan Silk & Wool' },
+                    { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
+                ]
+            },
+            'fd8': {
+                title: 'Design III / FD8 Executive',
+                details: [
+                    { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
+                    { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
+                    { label: 'Material DNA', value: 'Anodized Aerospace Titanium Frame, Compression-molded Matte Carbon' },
+                    { label: 'Lead-Time', value: '18 Weeks // Limited Commission Execution' }
+                ]
+            },
+            'dodragao': {
+                title: 'Design IV / Do Dragao',
+                details: [
+                    { label: 'Classification', value: 'Anatomical Daybed Sculpture' },
+                    { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
+                    { label: 'Material DNA', value: 'Cast Magnesium Internal Skeleton, Full-grain Liquid Aniline Hide' },
+                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Commission' }
+                ]
+            },
+            'about': {
+                title: 'FIORE LABS // ABOUT',
+                details: [
+                    { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
+                    { label: 'Coordinates', value: '51.2194° N, 4.4025° E // Antwerp Laboratory' },
+                    { label: 'Philosophy', value: 'Form follows emotion, frozen beyond traditional physical lifecycles.' }
+                ]
+            }
         };
 
+        // 6. ULTRA-MINIMALIST TYPE INJECTOR
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -485,31 +501,75 @@
                 const p = projects[id];
                 if(!p) return;
                 
-                panelData.innerHTML = `
-                    <div class="spec-group"><div class="spec-label">Dimensions</div><div class="spec-value">${p.dimensions}</div></div>
-                    <div class="spec-group"><div class="spec-label">Materials</div><div class="spec-value">${p.materials}</div></div>
-                    <div class="spec-group"><div class="spec-label">Lead Time</div><div class="spec-value">${p.leadtime}</div></div>
-                    <div class="spec-group"><div class="spec-label">Price</div><div class="spec-value" style="color: #fff;">${p.price}</div></div>
+                let cleanHTML = `<div class="matrix-header">${p.title} // Structural Specifications</div>`;
+                
+                p.details.forEach(item => {
+                    cleanHTML += `
+                        <div class="matrix-row">
+                            <div class="matrix-meta">${item.label}</div>
+                            <div class="matrix-title">${item.value}</div>
+                        </div>
+                    `;
+                });
+
+                cleanHTML += `
                     <div class="panel-inquiry-container">
-                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for purchase</div>
+                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for acquisition</div>
                     </div>
-                    <div class="drawing-container"><img src="${p.draw}" alt="Technical Specification"></div>
                 `;
                 
+                panelData.innerHTML = cleanHTML;
                 panel.classList.add('open');
                 plusTrigger.style.transform = 'rotate(45deg)';
             }
         }
+
+        document.addEventListener("touchstart", function(){}, true);
 
         function scrollToInquiries(linkElement) {
             const parentSection = linkElement.closest('section');
             const panel = parentSection.querySelector('.side-panel');
             const plusTrigger = parentSection.querySelector('.plus-trigger');
             
-            panel.classList.remove('open');
-            plusTrigger.style.transform = 'rotate(0deg)';
+            if (panel) panel.classList.remove('open');
+            if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
             
-            document.getElementById('inquiries').scrollIntoView({ behavior: 'smooth' });
+            lenis.scrollTo('#inquiries', { duration: 1.5 });
+        }
+
+        // 7. BACK-END AJAX SUBMIT SYSTEM
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('submitBtn');
+            const form = document.getElementById('fioreForm');
+            
+            button.innerText = "SENDING...";
+            button.style.pointerEvents = "none";
+            button.style.opacity = "0.4";
+            
+            const formData = new FormData(form);
+            
+            fetch("https://formsubmit.co/ajax/hi@fio.re", {
+                method: "POST",
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    button.innerText = "THANK YOU";
+                    button.style.opacity = "0.9";
+                    form.reset();
+                } else {
+                    button.innerText = "ERROR - TRY AGAIN";
+                    button.style.pointerEvents = "auto";
+                    button.style.opacity = "0.7";
+                }
+            })
+            .catch(error => {
+                button.innerText = "ERROR - TRY AGAIN";
+                button.style.pointerEvents = "auto";
+                button.style.opacity = "0.7";
+            });
         }
     </script>
 </body>
