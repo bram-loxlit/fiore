@@ -117,7 +117,7 @@
             margin: 60px auto 0 auto; opacity: 0.2;
         }
 
-        /* 4. LOKAAL SIDE PANEL (Frosted Glass hersteld) */
+        /* 4. LOKAAL SIDE PANEL (Frosted Glass) */
         .side-panel {
             position: absolute; top: 0; right: -50%; width: 45%; height: 100vh;
             z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
@@ -150,14 +150,23 @@
         .drawing-container { width: 100%; margin-top: 45px; }
         .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.85; }
 
-        /* 5. FOOTER */
+        /* 5. FOOTER & FORM */
         .footer-section { background: #000; padding: 140px 10%; text-align: center; border-top: 1px solid #111; }
-        .contact-form { max-width: 500px; margin: 0 auto; }
+        .contact-form { max-width: 500px; margin: 0 auto; text-align: center; }
         input, textarea { 
             width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             color: #fff; padding: 18px 0; margin-bottom: 45px; font-family: inherit; font-size: 13px; letter-spacing: 1px;
         }
         input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
+
+        /* Chique Send button styling */
+        .form-send-btn {
+            background: none; border: none; color: #fff;
+            font-size: 11px; letter-spacing: 3px; font-family: inherit;
+            cursor: pointer; opacity: 0.7; transition: opacity 0.3s, transform 0.3s;
+            display: inline-block; text-transform: uppercase;
+        }
+        .form-send-btn:hover { opacity: 1; transform: scale(1.05); }
 
         /* Responsive */
         @media (max-width: 1024px) { .side-panel { width: 65%; right: -70%; padding: 95px 45px; } section.product-view { padding: 0 6% 16vh 6%; } }
@@ -331,13 +340,14 @@
     </section>
 
     <footer class="footer-section" id="inquiries">
-        <div class="contact-form">
+        <form class="contact-form" id="fioreForm" onsubmit="handleFormSubmit(event)">
             <h3 style="font-size: 11px; letter-spacing: 4px; margin-bottom: 50px; opacity: 0.6;">INQUIRIES</h3>
-            <input type="text" placeholder="NAME">
-            <input type="email" placeholder="EMAIL">
-            <textarea placeholder="MESSAGE" rows="4"></textarea>
-            <div class="plus-trigger" style="font-size: 11px; letter-spacing: 3px;">SEND</div>
-        </div>
+            <input type="text" id="formName" name="Name" placeholder="NAME" required>
+            <input type="email" id="formEmail" name="Email" placeholder="EMAIL" required>
+            <textarea id="formMessage" name="Message" placeholder="MESSAGE" rows="4" required></textarea>
+            
+            <button type="submit" id="submitBtn" class="form-send-btn">SEND</button>
+        </form>
         <p style="margin-top: 100px; font-size: 8px; opacity: 0.2; letter-spacing: 5px;">© 2026 FIORE | BEYOND TIME</p>
     </footer>
 
@@ -377,7 +387,7 @@
             if(bg) { gsap.fromTo(bg, { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
         });
 
-        // 3. HERO SLIDESHOW SYSTEM (Hersteld)
+        // 3. HERO SLIDESHOW SYSTEM
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
         let heroInterval = setInterval(() => moveHero(1), 6000);
@@ -392,7 +402,7 @@
             heroInterval = setInterval(() => moveHero(1), 6000);
         }
 
-        // 4. LOKALE PRODUCT SLIDESHOW SYSTEMS (Hersteld)
+        // 4. LOKALE PRODUCT SLIDESHOW SYSTEMS
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
             if(bgs.length > 1) {
@@ -429,7 +439,7 @@
             'about': { dimensions: 'Beyond Human Limitations', materials: 'Algorithmic neural matrix, Pure procedural evolution', leadtime: 'Continuous', price: 'Eternity', draw: 'Fiore-Drawing-About.jpg' }
         };
 
-        // 5. TOUCH-PROOF LOKALE HOOFD-TOGGLE VOOR DE ZIJPANELEN (Hersteld)
+        // 5. ZIJPANELEN HOOFDTOGGLE
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -464,10 +474,52 @@
             const panel = parentSection.querySelector('.side-panel');
             const plusTrigger = parentSection.querySelector('.plus-trigger');
             
-            panel.classList.remove('open');
-            if(plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            if (panel) panel.classList.remove('open');
+            if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
             
             lenis.scrollTo('#inquiries', { duration: 1.5 });
+        }
+
+        // 6. BACK-END AJAX SUBMIT SYSTEM (Geruisloos naar hi@fio.re op de achtergrond)
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Voorkom herladen van de pagina
+            
+            const button = document.getElementById('submitBtn');
+            const form = document.getElementById('fioreForm');
+            
+            // Visuele feedback starten
+            button.innerText = "SENDING...";
+            button.style.pointerEvents = "none";
+            button.style.opacity = "0.4";
+            
+            // Verzamel de data live uit de invulvelden
+            const formData = new FormData(form);
+            
+            // Schiet de data onzichtbaar naar de gateway
+            fetch("https://formsubmit.co/ajax/hi@fio.re", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Succes: Knop transformeren naar high-end Bedankje
+                    button.innerText = "THANK YOU";
+                    button.style.opacity = "0.9";
+                    form.reset(); // Maak de velden leeg
+                } else {
+                    button.innerText = "ERROR - TRY AGAIN";
+                    button.style.pointerEvents = "auto";
+                    button.style.opacity = "0.7";
+                }
+            })
+            .catch(error => {
+                button.innerText = "ERROR - TRY AGAIN";
+                button.style.pointerEvents = "auto";
+                button.style.opacity = "0.7";
+            });
         }
     </script>
 </body>
