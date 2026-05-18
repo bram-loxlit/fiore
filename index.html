@@ -147,9 +147,6 @@
         }
         .panel-inquiry-link:hover { border-color: #fff; background: rgba(255, 255, 255, 0.12); letter-spacing: 5px; }
 
-        .drawing-container { width: 100%; margin-top: 45px; }
-        .drawing-container img { width: 100%; height: auto; filter: invert(1) grayscale(1); opacity: 0.85; }
-
         /* 5. FOOTER & FORM */
         .footer-section { background: #000; padding: 140px 10%; text-align: center; border-top: 1px solid #111; }
         .contact-form { max-width: 500px; margin: 0 auto; text-align: center; }
@@ -159,7 +156,6 @@
         }
         input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
-        /* Chique Send button styling */
         .form-send-btn {
             background: none; border: none; color: #fff;
             font-size: 11px; letter-spacing: 3px; font-family: inherit;
@@ -430,16 +426,49 @@
             }
         }
 
-        // Tech Spec Data Map
+        // 5. HYPER-EXCLUSIVE 1-OF-1 MATRIX DATA ARCHITECTURE (Zonder blauwdrukken, puur verzamelobjecten)
         const projects = {
-            'starfish': { dimensions: 'H 740 mm | Ø 1300 mm', materials: 'Aerospace-grade Aluminum, Soul-Red composite coating', leadtime: '16 Weeks', price: '€ 64.000', draw: 'Fiore-Drawing-Starfish.jpg' },
-            'drop-ripple': { dimensions: 'Table: 2400 x 1100 mm | Rug: 3500 x 2500 mm', materials: 'Solid Walnut, Hand-knotted Tibetan silk & wool landscape', leadtime: '14 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DropRipple.jpg' },
-            'fd8': { dimensions: '2200 x 1000 x 750 mm', materials: 'Anodized Titanium structural frame, Matte carbon fiber top', leadtime: '18 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-FD8.jpg' },
-            'dodragao': { dimensions: 'L 2100 mm | W 950 mm | H 650 mm', materials: 'Cast magnesium skeleton structure, Premium full-grain aniline leather', leadtime: '16 Weeks', price: 'Price on request', draw: 'Fiore-Drawing-DoDragao.jpg' },
-            'about': { dimensions: 'Beyond Human Limitations', materials: 'Algorithmic neural matrix, Pure procedural evolution', leadtime: 'Continuous', price: 'Eternity', draw: 'Fiore-Drawing-About.jpg' }
+            'starfish': {
+                isMatrix: true,
+                title: 'Starfish Table',
+                baseSpecs: { dimensions: 'H 740 mm | Ø 1300 mm (Pure Circular)', materials: 'Aerospace-grade Aluminum Monobloc Structure', leadtime: '18 Weeks' },
+                editions: [
+                    { code: 'ST-01-SR-FS', base: 'Soul-Red Lacquer', top: 'Fossilized Petrified Wood Slab', status: 'ARCHIVED IN PRIVATE COLLECTION', statusColor: '#888', price: 'Value Disclosed' },
+                    { code: 'ST-02-TB-ME', base: 'Titanium Black Metallic', top: 'Macassar Ebony Slab', status: 'RESERVED (EXHIBITION COPY)', statusColor: '#d4af37', price: 'Price on Request' },
+                    { code: 'ST-03-EG-PQ', base: 'Emerald Green Liquid Chrome', top: 'Patagonia Quartzite Slab (WOW Fusion)', status: 'AVAILABLE FOR ACQUISITION (1-of-1)', statusColor: '#deff9a', price: '€ 78.000' }
+                ]
+            },
+            'drop-ripple': {
+                isMatrix: false,
+                dimensions: 'Table: 2400 x 1100 mm | Rug: 3500 x 2500 mm',
+                materials: 'Solid Walnut, Hand-knotted Tibetan silk & wool landscape',
+                leadtime: '14 Weeks',
+                price: 'Price on request'
+            },
+            'fd8': {
+                isMatrix: false,
+                dimensions: '2200 x 1000 x 750 mm',
+                materials: 'Anodized Titanium structural frame, Matte carbon fiber top',
+                leadtime: '18 Weeks',
+                price: 'Price on request'
+            },
+            'dodragao': {
+                isMatrix: false,
+                dimensions: 'L 2100 mm | W 950 mm | H 650 mm',
+                materials: 'Cast magnesium skeleton structure, Premium full-grain aniline leather',
+                leadtime: '16 Weeks',
+                price: 'Price on request'
+            },
+            'about': {
+                isMatrix: false,
+                dimensions: 'Beyond Human Limitations',
+                materials: 'Algorithmic neural matrix, Pure procedural evolution',
+                leadtime: 'Continuous',
+                price: 'Eternity'
+            }
         };
 
-        // 5. ZIJPANELEN HOOFDTOGGLE
+        // 6. DYNAMIC INJECTOR VOOR DE ZIJPANELEN (Blauwdruk containers definitief verwijderd)
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -453,16 +482,45 @@
                 const p = projects[id];
                 if(!p) return;
                 
-                panelData.innerHTML = `
-                    <div class="spec-group"><div class="spec-label">Dimensions</div><div class="spec-value">${p.dimensions}</div></div>
-                    <div class="spec-group"><div class="spec-label">Materials</div><div class="spec-value">${p.materials}</div></div>
-                    <div class="spec-group"><div class="spec-label">Lead Time</div><div class="spec-value">${p.leadtime}</div></div>
-                    <div class="spec-group"><div class="spec-label">Price</div><div class="spec-value" style="color: #fff;">${p.price}</div></div>
-                    <div class="panel-inquiry-container">
-                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for purchase</div>
-                    </div>
-                    <div class="drawing-container"><img src="${p.draw}" alt="Technical Specification"></div>
-                `;
+                if (p.isMatrix) {
+                    let matrixHTML = `
+                        <div style="margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 25px;">
+                            <div class="spec-label" style="color: #deff9a; letter-spacing: 4px;">1-of-1 Inventory Matrix</div>
+                            <div class="spec-value" style="font-size: 14px; opacity: 0.6; margin-top: 5px;">${p.baseSpecs.dimensions} // ${p.baseSpecs.materials}</div>
+                        </div>
+                    `;
+
+                    p.editions.forEach(ed => {
+                        matrixHTML += `
+                            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 25px; border-radius: 6px; margin-bottom: 25px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                    <span style="font-family: monospace; font-size: 12px; letter-spacing: 2px; color: rgba(255,255,255,0.5);">${ed.code}</span>
+                                    <span style="font-size: 9px; font-weight: 700; letter-spacing: 1px; padding: 3px 8px; border-radius: 3px; background: rgba(255,255,255,0.1); color: ${ed.statusColor}; border: 1px solid ${ed.statusColor}40;">${ed.status}</span>
+                                </div>
+                                <div class="spec-value" style="font-size: 16px; margin-bottom: 10px; line-height: 1.4;">Base: ${ed.base}<br>Top: ${ed.top}</div>
+                                <div style="font-size: 13px; letter-spacing: 1px; color: ${ed.statusColor}; font-weight: 500;">${ed.price}</div>
+                            </div>
+                        `;
+                    });
+
+                    matrixHTML += `
+                        <div class="panel-inquiry-container">
+                            <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Request custom matrix execution</div>
+                        </div>
+                    `;
+                    panelData.innerHTML = matrixHTML;
+
+                } else {
+                    panelData.innerHTML = `
+                        <div class="spec-group"><div class="spec-label">Dimensions</div><div class="spec-value">${p.dimensions}</div></div>
+                        <div class="spec-group"><div class="spec-label">Materials</div><div class="spec-value">${p.materials}</div></div>
+                        <div class="spec-group"><div class="spec-label">Lead Time</div><div class="spec-value">${p.leadtime}</div></div>
+                        <div class="spec-group"><div class="spec-label">Price</div><div class="spec-value" style="color: #fff;">${p.price}</div></div>
+                        <div class="panel-inquiry-container">
+                            <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for purchase</div>
+                        </div>
+                    `;
+                }
                 
                 panel.classList.add('open');
                 plusTrigger.style.transform = 'rotate(45deg)';
@@ -480,35 +538,28 @@
             lenis.scrollTo('#inquiries', { duration: 1.5 });
         }
 
-        // 6. BACK-END AJAX SUBMIT SYSTEM (Geruisloos naar hi@fio.re op de achtergrond)
+        // 7. BACK-END AJAX SUBMIT SYSTEM
         function handleFormSubmit(event) {
-            event.preventDefault(); // Voorkom herladen van de pagina
-            
+            event.preventDefault();
             const button = document.getElementById('submitBtn');
             const form = document.getElementById('fioreForm');
             
-            // Visuele feedback starten
             button.innerText = "SENDING...";
             button.style.pointerEvents = "none";
             button.style.opacity = "0.4";
             
-            // Verzamel de data live uit de invulvelden
             const formData = new FormData(form);
             
-            // Schiet de data onzichtbaar naar de gateway
             fetch("https://formsubmit.co/ajax/hi@fio.re", {
                 method: "POST",
                 body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                headers: { 'Accept': 'application/json' }
             })
             .then(response => {
                 if (response.ok) {
-                    // Succes: Knop transformeren naar high-end Bedankje
                     button.innerText = "THANK YOU";
                     button.style.opacity = "0.9";
-                    form.reset(); // Maak de velden leeg
+                    form.reset();
                 } else {
                     button.innerText = "ERROR - TRY AGAIN";
                     button.style.pointerEvents = "auto";
@@ -522,5 +573,3 @@
             });
         }
     </script>
-</body>
-</html>
