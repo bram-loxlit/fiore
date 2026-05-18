@@ -302,12 +302,12 @@
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
-    <section style="position: relative; justify-content: center; align-items: center; text-align: center;">
-        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/leather-texture.jpg'); opacity: 0.25;" aria-label="Fiore Full Grain Aniline Leather Texture Profile"></div>
-        <div class="section-overlay" style="background: rgba(0,0,0,0.45);"></div>
-        <div style="position: relative; z-index: 10; max-width: 800px;">
-            <h3 style="font-size: clamp(16px, 2.2vw, 22px); font-weight: 300; letter-spacing: 9px; text-transform: uppercase; margin-bottom: 15px;">Material Focus: Aniline Leather</h3>
-            <p style="font-size: 11px; letter-spacing: 4px; opacity: 0.6; text-transform: uppercase;">Sourced to coat the organic anatomy of Do Dragao</p>
+    <section class="product-view" style="border-bottom: 1px solid #111;">
+        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/leather-texture.jpg');" aria-label="Fiore Full Grain Aniline Leather Texture Profile"></div>
+        <div class="section-overlay" style="background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 100%);"></div>
+        <div class="section-content">
+            <h2>Aniline Leather</h2>
+            <p>Material Focus // Sourced to coat the organic anatomy of Do Dragao</p>
         </div>
     </section>
 
@@ -437,7 +437,7 @@
             }
         }
 
-        // 5. THE DESIGN ARCHIVE DATASTACK (Gecorrigeerd naar pure, vloeiende designtitels)
+        // 5. THE DESIGN ARCHIVE DATASTACK
         const projects = {
             'starfish': {
                 title: 'Starfish Table',
@@ -493,6 +493,8 @@
             const panel = parentSection.querySelector('.side-panel');
             const plusTrigger = parentSection.querySelector('.plus-trigger');
             const panelData = parentSection.querySelector('.panel-data');
+            
+            if (!panel) return;
             
             if (panel.classList.contains('open')) {
                 panel.classList.remove('open');
