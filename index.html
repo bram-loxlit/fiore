@@ -53,7 +53,7 @@
         }
         .hero-arrow:hover { color: #fff; transform: scale(1.1); }
 
-        /* 2. PRODUCT SECTIONS */
+        /* 2. DESIGN SECTIONS */
         section.product-view {
             position: relative; height: 100vh; width: 100%; overflow: hidden;
             display: flex; flex-direction: column; justify-content: flex-end;
@@ -117,7 +117,7 @@
             margin: 60px auto 0 auto; opacity: 0.2;
         }
 
-        /* 4. HIGH-END MONOLITHIC SIDE PANEL (Totaal gecureerd) */
+        /* 4. HIGH-END MONOLITHIC SIDE PANEL */
         .side-panel {
             position: absolute; top: 0; right: -50%; width: 45%; height: 100vh;
             z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
@@ -127,7 +127,6 @@
         }
         .side-panel.open { right: 0; }
 
-        /* Pure Typografische Matrix Elementen */
         .matrix-header {
             font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
             color: rgba(255, 255, 255, 0.4); margin-bottom: 50px;
@@ -150,12 +149,6 @@
             line-height: 1.5; color: #ffffff; margin-bottom: 12px;
         }
 
-        .matrix-status {
-            font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.5); font-weight: 400;
-        }
-
-        /* Gecureerde Enquire link onderaan het paneel */
         .panel-inquiry-container { margin-top: 60px; width: 100%; }
         .panel-inquiry-link {
             display: inline-block; font-size: 12px; letter-spacing: 5px;
@@ -196,39 +189,39 @@
 <body>
 
     <div class="logo-container">
-        <a href="#"><img src="Logo.png" alt="FIORE"></a>
+        <a href="#"><img src="Logo.png" alt="FIORE Collective Design Logo"></a>
     </div>
 
     <div class="hero-slideshow" id="heroSlideshow">
-        <div class="hero-slide active" style="background-image: url('Fiore-Hero-Starfish.jpg');">
+        <div class="hero-slide active" style="background-image: url('assets/hero/starfish-gueridon.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
-                <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+                <a href="#starfish" class="hero-link">Design I / Starfish</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-DropRipple.jpg');">
+        <div class="hero-slide" style="background-image: url('assets/hero/drop-ripple.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
-                <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
+                <a href="#drop-ripple" class="hero-link">Design II / Drop & Ripple</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-FD8.jpg');">
+        <div class="hero-slide" style="background-image: url('assets/hero/fd8-executive-desk.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
-                <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+                <a href="#fd8" class="hero-link">Design III / FD8 Executive</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-DoDragao.jpg');">
+        <div class="hero-slide" style="background-image: url('assets/hero/do-dragao-daybed.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
-                <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+                <a href="#dodragao" class="hero-link">Design IV / Do Dragao</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('Fiore-Hero-About.jpg');">
+        <div class="hero-slide" style="background-image: url('assets/hero/about-fiore.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
                 <a href="#about" class="hero-link">About Fiore</a>
@@ -250,12 +243,12 @@
     <section id="starfish" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('Fiore-Section-Starfish01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-Starfish02.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/starfish/view01.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/starfish/view02.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
-            <h2>Starfish Table</h2>
-            <p>Collectible Design</p>
+            <h2>Starfish</h2>
+            <p>Design Manifestation I</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">+</div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
@@ -274,12 +267,12 @@
     <section id="drop-ripple" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('Fiore-Section-DropRipple01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-DropRipple02.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/drop-ripple/view01.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/drop-ripple/view02.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Drop & Ripple</h2>
-            <p>Table & Rug</p>
+            <p>Design Manifestation II</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
@@ -298,19 +291,19 @@
     <section id="fd8" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('Fiore-Section-FD8-01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-FD8-02.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/fd8/view01.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/fd8/view02.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>FD8 Executive</h2>
-            <p>Monolithic Workspace</p>
+            <p>Design Manifestation III</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">+</div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
 
     <section style="position: relative; justify-content: center; align-items: center; text-align: center;">
-        <div class="section-bg active" style="background-image: url('Fiore-Texture-Leather.jpg'); opacity: 0.25;"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/leather-texture.jpg'); opacity: 0.25;" aria-label="Fiore Full Grain Aniline Leather Texture Profile"></div>
         <div class="section-overlay" style="background: rgba(0,0,0,0.45);"></div>
         <div style="position: relative; z-index: 10; max-width: 800px;">
             <h3 style="font-size: clamp(16px, 2.2vw, 22px); font-weight: 300; letter-spacing: 9px; text-transform: uppercase; margin-bottom: 15px;">Material Focus: Aniline Leather</h3>
@@ -321,12 +314,12 @@
     <section id="dodragao" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('Fiore-Section-DoDragao01.jpg');"></div>
-        <div class="section-bg" style="background-image: url('Fiore-Section-DoDragao02.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/view01.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
+        <div class="section-bg" style="background-image: url('assets/designs/do-dragao/view02.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Do Dragao</h2>
-            <p>Anatomical Sculptures</p>
+            <p>Design Manifestation IV</p>
             <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">+</div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
@@ -343,7 +336,7 @@
     </section>
 
     <section id="about" class="product-view">
-        <div class="section-bg active" style="background-image: url('Fiore-Section-About.jpg');"></div>
+        <div class="section-bg active" style="background-image: url('assets/designs/about/view01.jpg');" aria-label="Fiore Art Design Laboratory Antwerp Background"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>About Fiore</h2>
@@ -444,62 +437,57 @@
             }
         }
 
-        // 5. DATA BLUEPRINT: Minimalist Clean Copy (Zonder kaders, met gerichte data)
+        // 5. THE DESIGN ARCHIVE DATASTACK
         const projects = {
             'starfish': {
-                isMatrix: true,
-                title: 'Starfish Table',
+                title: 'Design I / Starfish',
                 details: [
-                    { label: 'Collection', value: 'Starfish Monobloc Edition' },
-                    { label: 'Dimensions', value: 'H 740 mm | Ø 1400 mm (Gecentreerd Rond)' },
-                    { label: 'Anatomy O1', value: 'Base: Soul-Red Metallic // Top: Carbon-Injected Noir de Mazy (Archived)' },
-                    { label: 'Anatomy O2', value: 'Base: Titanium Black // Top: Radially Bookmatched Macassar Ebony (Reserved)' },
-                    { label: 'Anatomy O3', value: 'Base: Emerald Green Liquid Chrome // Top: Patagonia Quartzite Slab (1-of-1 Available)' },
-                    { label: 'Production', value: '18 Weeks // Handmade in Antwerp' }
+                    { label: 'Classification', value: 'Biomorphic Radially-Centered Table Architecture' },
+                    { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
+                    { label: 'Execution ST-01', value: 'Base: Soul-Red Metallic // Top: Carbon-Injected Noir de Mazy (Archived)' },
+                    { label: 'Execution ST-02', value: 'Base: Titanium Black // Top: Radially Bookmatched Macassar Ebony (Reserved)' },
+                    { label: 'Execution ST-03', value: 'Base: Emerald Green Liquid Chrome // Top: Patagonia Quartzite Slab (Available)' },
+                    { label: 'Lead-Time', value: '18 Weeks // Handmade in Antwerp Laboratory' }
                 ]
             },
             'drop-ripple': {
-                isMatrix: false,
-                title: 'Drop & Ripple',
+                title: 'Design II / Drop & Ripple',
                 details: [
-                    { label: 'Collection', value: 'Integrated Domestic Landscapes' },
-                    { label: 'Dimensions', value: 'Table: 2400 x 1100 mm // Rug: 3500 x 2500 mm' },
-                    { label: 'Materials', value: 'Solid Black Walnut, Hand-knotted Tibetan Silk & Wool' },
-                    { label: 'Production', value: '14 Weeks // Certified Piece Unique' }
+                    { label: 'Classification', value: 'Integrated Domestic Topography System' },
+                    { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
+                    { label: 'Material DNA', value: 'Solid Black Walnut Slab, Hand-knotted Tibetan Silk & Wool' },
+                    { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
                 ]
             },
             'fd8': {
-                isMatrix: false,
-                title: 'FD8 Executive',
+                title: 'Design III / FD8 Executive',
                 details: [
-                    { label: 'Collection', value: 'Monolithic Workspace Architecture' },
-                    { label: 'Dimensions', value: '2200 x 1000 x 750 mm' },
-                    { label: 'Materials', value: 'Anodized Aerospace Titanium, Compression-molded Matte Carbon' },
-                    { label: 'Production', value: '18 Weeks // Limited Commission' }
+                    { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
+                    { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
+                    { label: 'Material DNA', value: 'Anodized Aerospace Titanium Frame, Compression-molded Matte Carbon' },
+                    { label: 'Lead-Time', value: '18 Weeks // Limited Commission Execution' }
                 ]
             },
             'dodragao': {
-                isMatrix: false,
-                title: 'Do Dragao',
+                title: 'Design IV / Do Dragao',
                 details: [
-                    { label: 'Collection', value: 'Anatomical Daybed Sculpture' },
-                    { label: 'Dimensions', value: 'L 2100 mm // W 950 mm // H 650 mm' },
-                    { label: 'Materials', value: 'Cast Magnesium Skeleton, Full-grain Aniline Hide' },
-                    { label: 'Production', value: '16 Weeks // Crafted on Request' }
+                    { label: 'Classification', value: 'Anatomical Daybed Sculpture' },
+                    { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
+                    { label: 'Material DNA', value: 'Cast Magnesium Internal Skeleton, Full-grain Liquid Aniline Hide' },
+                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Commission' }
                 ]
             },
             'about': {
-                isMatrix: false,
-                title: 'About Fiore',
+                title: 'FIORE LABS // ABOUT',
                 details: [
-                    { label: 'Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
-                    { label: 'Location', value: '51.2194° N, 4.4025° E // Antwerp Laboratory' },
-                    { label: 'Vision', value: 'Form follows emotion, frozen beyond traditional lifecycles.' }
+                    { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
+                    { label: 'Coordinates', value: '51.2194° N, 4.4025° E // Antwerp Laboratory' },
+                    { label: 'Philosophy', value: 'Form follows emotion, frozen beyond traditional physical lifecycles.' }
                 ]
             }
         };
 
-        // 6. ADEMBENEMEND STRAKKE TYPE INJECTOR (Zaha Hadid Design Style)
+        // 6. ULTRA-MINIMALIST TYPE INJECTOR
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -513,8 +501,7 @@
                 const p = projects[id];
                 if(!p) return;
                 
-                // Opbouw van de pure, minimalistische regels met royale witruimte
-                let cleanHTML = `<div class="matrix-header">${p.title} // Specification</div>`;
+                let cleanHTML = `<div class="matrix-header">${p.title} // Structural Specifications</div>`;
                 
                 p.details.forEach(item => {
                     cleanHTML += `
@@ -525,7 +512,6 @@
                     `;
                 });
 
-                // Herstel van de Enquire knop als chique sluiting
                 cleanHTML += `
                     <div class="panel-inquiry-container">
                         <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for acquisition</div>
@@ -537,6 +523,8 @@
                 plusTrigger.style.transform = 'rotate(45deg)';
             }
         }
+
+        document.addEventListener("touchstart", function(){}, true);
 
         function scrollToInquiries(linkElement) {
             const parentSection = linkElement.closest('section');
