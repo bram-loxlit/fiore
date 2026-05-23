@@ -221,6 +221,84 @@
             section.intermission { height: 100vh; height: 100dvh; }
             .parallax-drift-text { font-size: 7vh; letter-spacing: 0.1em; }
         }
+
+        /* Scroll Down Mouse Animation (Pagani Inspired) */
+        .scroll-invitation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            text-align: center;
+            cursor: pointer;
+            transition: opacity 0.4s;
+        }
+        .scroll-invitation:hover {
+            opacity: 1;
+        }
+        .scroll-invitation:hover .scroll-invitation__label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .scroll-invitation:hover .scroll-invitation__svg {
+            fill: rgba(255, 255, 255, 0.9);
+        }
+        .scroll-invitation__label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 9px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            font-weight: 300;
+            transition: color 0.4s;
+        }
+        .scroll-invitation__svg {
+            display: block;
+            fill: rgba(255, 255, 255, 0.4);
+            margin-bottom: 15px;
+            transition: fill 0.4s;
+        }
+        .scroll-invitation__svg-line {
+            fill: #fff;
+            animation: moveLineDown 1.2s ease-out infinite;
+        }
+
+        @keyframes moveLineDown {
+            0% {
+                transform: translateY(-5px);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(12px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .scroll-invitation__svg {
+                display: none;
+            }
+            .scroll-invitation__label::after {
+                content: '';
+                display: block;
+                width: 6px;
+                height: 6px;
+                border-right: 1px solid rgba(255,255,255,0.4);
+                border-bottom: 1px solid rgba(255,255,255,0.4);
+                transform: rotate(45deg);
+                margin: 8px auto 0 auto;
+                animation: mobileArrow 1.5s infinite;
+            }
+        }
+        @keyframes mobileArrow {
+            0% { transform: rotate(45deg) translate(0, 0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: rotate(45deg) translate(4px, 4px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -264,6 +342,16 @@
                 <a href="#about" class="hero-link">About Fiore</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
+        </div>
+        <!-- Scroll Down Invitation -->
+        <div class="scroll-invitation" onclick="lenis.scrollTo(document.querySelector('.intermission'), { duration: 1.5 })" aria-label="Scroll Down">
+            <span class="scroll-invitation__label">
+                <svg class="scroll-invitation__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 42" width="18px" height="32px">
+                    <path d="M2,12H2V30a10,10,0,0,0,20,0V12A10,10,0,0,0,2,12ZM0,12a12,12,0,0,1,24,0V30A12,12,0,0,1,0,30V12Z"/>
+                    <path class="scroll-invitation__svg-line" d="M11,7v4a1,1,0,0,0,2,0V7a1,1,0,0,0-2,0Z"/>
+                </svg>
+                Scroll Down
+            </span>
         </div>
     </div>
 
