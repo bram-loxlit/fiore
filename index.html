@@ -302,7 +302,7 @@
             }
         }
 
-        // SWIPE LOGIC
+        // HERO SWIPE LOGIC
         const heroContainer = document.getElementById('heroSlideshow');
         let touchStartX = 0;
         let touchEndX = 0;
@@ -332,7 +332,7 @@
         }
 
         // ==========================================================================
-        // PRODUCT SECTIONS CAROUSEL LOGIC WITH PERFECT FADE TRANSITION
+        // PRODUCT SECTIONS CAROUSEL LOGIC WITH PERFECT FADE TRANSITION + SWIPE
         // ==========================================================================
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
@@ -344,6 +344,10 @@
                     bgs[bIdx].classList.remove('active');
                     bIdx = (bIdx + direction + bgs.length) % bgs.length;
                     bgs[bIdx].classList.add('active');
+                    
+                    if (navigator.vibrate && direction !== 0) {
+                        navigator.vibrate(15);
+                    }
                 }
 
                 s.moveBg = function(direction) {
@@ -351,6 +355,31 @@
                     clearInterval(sectInterval);
                     sectInterval = setInterval(() => changeBg(1), 5000);
                 };
+
+                // PRODUCT SWIPE DETECTIE
+                let pTouchStartX = 0;
+                let pTouchEndX = 0;
+
+                s.addEventListener('touchstart', (e) => {
+                    if (e.target.closest('.side-panel')) return;
+                    pTouchStartX = e.changedTouches[0].screenX;
+                }, { passive: true });
+
+                s.addEventListener('touchend', (e) => {
+                    if (e.target.closest('.side-panel')) return;
+                    pTouchEndX = e.changedTouches[0].screenX;
+                    
+                    const swipeThreshold = 50;
+                    const swipeDistance = pTouchEndX - pTouchStartX;
+
+                    if (Math.abs(swipeDistance) > swipeThreshold) {
+                        if (swipeDistance > 0) {
+                            s.moveBg(-1); 
+                        } else {
+                            s.moveBg(1);  
+                        }
+                    }
+                }, { passive: true });
             }
         });
 
