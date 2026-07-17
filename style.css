@@ -45,22 +45,45 @@ body, html {
     border: none !important;
 }
 .hero-link {
-    text-decoration: none; color: #fff; font-size: clamp(14px, 1.8vw, 18px); 
-    letter-spacing: 0.6em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 12px; transition: 0.5s; white-space: nowrap;
+    text-decoration: none; 
+    color: #fff; 
+    font-size: clamp(14px, 1.8vw, 18px); 
+    letter-spacing: 0.6em; 
+    text-transform: uppercase; 
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 12px; 
+    transition: 0.5s; 
+    white-space: nowrap;
     
-    /* Premium Typografie Upgrade */
-    font-weight: 500;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.9);
+    /* FIX: Pure, scherpe typografie zonder modderige schaduw */
+    font-weight: 600; /* Maakt de letters van zichzelf dikker en krachtiger */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Alleen een flinterdunne, zachte diepte */
+    
+    /* Forceert de browser om het font vlijmscherp te renderen */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-.hero-link:hover { letter-spacing: 0.8em; border-bottom: 1px solid #fff; }
+.hero-link:hover { 
+    letter-spacing: 0.8em; 
+    border-bottom: 1px solid #fff; 
+}
 
 .hero-arrow {
-    font-size: clamp(24px, 3vw, 36px); font-weight: 100; color: rgba(255, 255, 255, 0.4);
-    cursor: pointer; transition: 0.3s; margin-bottom: 8px; user-select: none;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    font-size: clamp(24px, 3vw, 36px); 
+    font-weight: 200; /* Iets dikker dan 100 voor balans met het font */
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer; 
+    transition: 0.3s; 
+    margin-bottom: 8px; 
+    user-select: none;
+    
+    /* FIX: Matcht met de schone schaduw van de link */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 }
-.hero-arrow:hover { color: #fff; transform: scale(1.1); }
+.hero-arrow:hover { 
+    color: #fff; 
+    transform: scale(1.1); 
+}
 
 /* 2. DESIGN SECTIONS */
 section.product-view {
