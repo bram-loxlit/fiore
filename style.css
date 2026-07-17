@@ -17,7 +17,16 @@ body, html {
 .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
 /* 1. HERO SLIDESHOW (GECENTREERD OP 60% HOOGTE) */
-.hero-slideshow { position: relative; height: 100vh; height: 100dvh; width: 100%; overflow: hidden; background: #000; }
+.hero-slideshow { 
+    position: relative; 
+    height: 100vh; 
+    height: 100dvh; 
+    width: 100%; 
+    overflow: hidden; 
+    background: #000; 
+    /* FIX: Voorkomt dat de browser de swipe kaapt voor browser-navigatie */
+    touch-action: pan-y; 
+}
 .hero-slide { 
     position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
     background-image: var(--bg-mobile);
@@ -271,18 +280,20 @@ input, textarea {
     .hero-arrow { font-size: 38px !important; color: rgba(255, 255, 255, 0.6) !important; padding: 10px; }
     .hero-navigation-wrapper { gap: 25px; }
     
-    /* Gecentraliseerde Mobiele Fix voor Woordstapeling */
+    /* Gecentraliseerde Mobiele Fix voor Perfect Gecentreerde Woordstapeling */
     .hero-link {
         white-space: normal !important; 
         text-align: center; 
-        font-size: 18px !important; 
-        line-height: 1.8 !important; 
+        font-size: 16px !important; 
+        line-height: 2.2 !important; 
         border-bottom: none !important; 
         padding-bottom: 0 !important;
         
-        /* Dwingt de browser tot 1 woord per regel */
         display: inline-block;
-        max-width: 150px; 
+        max-width: 180px; 
+        
+        /* FIX: Compenseert de brief-spacing aan de rechterkant voor mathematische centrering */
+        margin-right: -0.6em !important; 
     }
 
     .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1); border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px; }
