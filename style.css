@@ -1,5 +1,5 @@
 /* ==========================================================================
-   GELIJKE STIJLEN (DESKTOP & BASIS)
+   BASIS & DESKTOP STYLES
    ========================================================================== */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -25,7 +25,7 @@ body, html {
     opacity: 0; z-index: 1;
     transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
     
-    /* Positionering op 60% hoogte */
+    /* Tekst exact op 60% hoogte positioneren */
     display: flex; 
     align-items: flex-start; 
     justify-content: center;
@@ -48,14 +48,24 @@ body, html {
     -webkit-backdrop-filter: none !important;
     border: none !important;
 }
+
 .hero-link {
-    text-decoration: none; color: #fff; font-size: clamp(14px, 1.8vw, 18px); 
-    letter-spacing: 0.6em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 12px; transition: 0.5s; white-space: nowrap;
+    text-decoration: none; 
+    color: #fff; 
+    font-size: clamp(14px, 1.8vw, 18px); 
+    letter-spacing: 0.6em; 
+    text-transform: uppercase; 
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 12px; 
+    transition: 0.5s; 
+    white-space: nowrap;
     
-    /* PURE FLAT TYPOGRAFIE */
-    font-weight: 500;
+    /* PURE FLAT: 100% strakke vector zonder schaduw */
+    font-weight: 500; 
     text-shadow: none !important; 
+    
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 .hero-link:hover { 
     letter-spacing: 0.8em; 
@@ -63,11 +73,19 @@ body, html {
 }
 
 .hero-arrow {
-    font-size: clamp(24px, 3vw, 36px); font-weight: 100; color: rgba(255, 255, 255, 0.4);
-    cursor: pointer; transition: 0.3s; margin-bottom: 8px; user-select: none;
+    font-size: clamp(24px, 3vw, 36px); 
+    font-weight: 100; 
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer; 
+    transition: 0.3s; 
+    margin-bottom: 8px; 
+    user-select: none;
     text-shadow: none !important;
 }
-.hero-arrow:hover { color: #fff; transform: scale(1.1); }
+.hero-arrow:hover { 
+    color: #fff; 
+    transform: scale(1.1); 
+}
 
 /* 2. DESIGN SECTIONS */
 section.product-view {
@@ -191,6 +209,43 @@ input, textarea {
 }
 input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff !important;
+    -webkit-box-shadow: 0 0 0px 1000px #000 inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+input, textarea {
+    border-radius: 0 !important;
+    -webkit-appearance: none;
+    background-color: transparent !important;
+}
+
+.form-send-btn {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 4px;
+    font-family: inherit;
+    padding: 18px 40px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.4s, background 0.4s, color 0.4s, opacity 0.3s;
+    display: inline-block;
+    margin-top: 10px;
+}
+.form-send-btn:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+
 /* Scroll Down Mouse Animation */
 .scroll-invitation {
     position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; cursor: pointer; transition: opacity 0.4s;
@@ -204,7 +259,7 @@ input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 
 
 /* ==========================================================================
-   RESPONSIVE OVERRIDES (MEDIA QUERIES)
+   RESPONSIVE OVERRIDES (MEDIA QUERIES) - ALTIJD ONDERAAN PLAATSEN
    ========================================================================== */
 @media (max-width: 1024px) { 
     .side-panel { width: 65%; right: -70%; padding: 80px 45px; } 
@@ -212,14 +267,11 @@ input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
 }
 
 @media (max-width: 768px) {
-    /* Layout & Logo-aanpassingen voor mobiel */
     .logo-container { top: 35px; left: 20px; width: 110px; }
-    
-    /* Grote, makkelijk klikbare pijlen */
     .hero-arrow { font-size: 38px !important; color: rgba(255, 255, 255, 0.6) !important; padding: 10px; }
     .hero-navigation-wrapper { gap: 25px; }
     
-    /* FIX: Gestapelde typografie (1 woord per regel) */
+    /* Gecentraliseerde Mobiele Fix voor Woordstapeling */
     .hero-link {
         white-space: normal !important; 
         text-align: center; 
@@ -227,17 +279,20 @@ input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
         line-height: 1.8 !important; 
         border-bottom: none !important; 
         padding-bottom: 0 !important;
+        
+        /* Dwingt de browser tot 1 woord per regel */
+        display: inline-block;
+        max-width: 150px; 
     }
 
-    /* Productsecties & zijpaneel optimalisatie */
     .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1); border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px; }
     .side-panel.open { top: 12vh; right: 0; }
     section.product-view { padding: 0 30px 14vh 30px; }
+    
     .section-bg { height: 100% !important; top: 0 !important; }
     section.intermission { height: 100vh; height: 100dvh; }
     .parallax-drift-text { font-size: 7vh; letter-spacing: 0.1em; }
-    
-    /* Scroll-invitation mobiele pijl */
+
     .scroll-invitation__svg { display: none; }
     .scroll-invitation__label::after {
         content: ''; display: block; width: 6px; height: 6px; border-right: 1px solid rgba(255,255,255,0.4); border-bottom: 1px solid rgba(255,255,255,0.4); transform: rotate(45deg); margin: 8px auto 0 auto; animation: mobileArrow 1.5s infinite;
