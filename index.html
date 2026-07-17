@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FIORE | Beyond Time</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="FIORE | Evolving design intelligence exploring collectible furniture, high-end interior architecture, and biomorphic forms. Based in Antwerp.">
     
     <!-- Gekoppelde losse stylesheet -->
     <link rel="stylesheet" href="style.css">
@@ -92,7 +93,10 @@
         <div class="section-content">
             <h2>Starfish Table</h2>
             <p>Collectible Design</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">+</div>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
@@ -117,7 +121,10 @@
         <div class="section-content">
             <h2>Drop & Ripple</h2>
             <p>Table & Rug</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
@@ -142,7 +149,10 @@
         <div class="section-content">
             <h2>FD8 Executive</h2>
             <p>Monolithic Workspace</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">+</div>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
@@ -167,7 +177,10 @@
         <div class="section-content">
             <h2>Do Dragao</h2>
             <p>Anatomical Sculptures</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">+</div>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
@@ -189,7 +202,10 @@
         <div class="section-content">
             <h2>About Fiore</h2>
             <p>Immortal Vision</p>
-            <div class="plus-trigger" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">+</div>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
         </div>
         <div class="side-panel"><div class="panel-data"></div></div>
     </section>
@@ -251,7 +267,7 @@
         });
 
         // ==========================================================================
-        // HERO SLIDESHOW LOGIC + SWIPE SUPPORT
+        // HERO SLIDESHOW LOGIC + SWIPE SUPPORT + HAPTICS
         // ==========================================================================
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
@@ -266,9 +282,8 @@
             clearInterval(heroInterval);
             heroInterval = setInterval(() => moveHero(1), 6000);
 
-            // Tril heel kort (15ms) voor een high-end haptisch gevoel
             if (navigator.vibrate) {
-            navigator.vibrate(15); 
+                navigator.vibrate(15); 
             }
         }
 
@@ -276,7 +291,7 @@
         const heroContainer = document.getElementById('heroSlideshow');
         let touchStartX = 0;
         let touchEndX = 0;
-        
+
         if (heroContainer) {
             heroContainer.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
@@ -294,15 +309,15 @@
 
             if (Math.abs(swipeDistance) > swipeThreshold) {
                 if (swipeDistance > 0) {
-                    moveHero(-1); // Swipe naar rechts -> Vorige slide
+                    moveHero(-1); 
                 } else {
-                    moveHero(1);  // Swipe naar links -> Volgende slide
+                    moveHero(1);  
                 }
             }
         }
 
         // ==========================================================================
-        // PRODUCT SECTIONS CAROUSEL LOGIC
+        // PRODUCT SECTIONS CAROUSEL LOGIC WITH FADE TRANSITION
         // ==========================================================================
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
@@ -338,20 +353,23 @@
             'starfish': {
                 title: 'Starfish Table',
                 details: [
-                    { label: 'Classification', value: 'Biomorphic Radially-Centered Table Architecture' },
+                    { label: 'Classification', value: 'Biomorphic Radially-Centered Guéridon Architecture' },
                     { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
-                    { label: 'Execution ST-01', value: 'Base: Soul-Red Metallic // Top: Carbon-Injected Noir de Mazy (Archived)' },
-                    { label: 'Execution ST-02', value: 'Base: Titanium Black // Top: Radially Bookmatched Macassar Ebony (Reserved)' },
-                    { label: 'Execution ST-03', value: 'Base: Emerald Green Liquid Chrome // Top: Patagonia Quartzite Slab (Available)' },
-                    { label: 'Lead-Time', value: '18 Weeks // Handmade in Antwerp Laboratory' }
+                    { label: 'Material Configuration I (Slide 1)', value: 'Soul-Red Metallic Poly-Coated Base // Top: Carbon-Injected Noir de Mazy Marble' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Titanium Black Liquid Chrome Base // Top: Radially Bookmatched Macassar Ebony' },
+                    { label: 'Structural Core', value: 'Damped Multi-Layer Polymer Composite (Zero Acoustic Ringing)' },
+                    { label: 'Authentication', value: 'Micro-Enameled Titanium Plaque with Cryptographic DNA' },
+                    { label: 'Lead-Time', value: '18 Weeks // Handcrafted in Antwerp Laboratory // Limited Edition of 8' }
                 ]
             },
             'drop-ripple': {
                 title: 'Drop & Ripple',
                 details: [
-                    { label: 'Classification', value: 'Integrated Domestic Topography System' },
+                    { label: 'Classification', value: 'Integrated Domestic Topography System (Table & Rug)' },
                     { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
-                    { label: 'Material DNA', value: 'Solid Black Walnut Slab, Hand-knotted Tibetan Silk & Wool' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Milled Solid Black Walnut Slab // Low-Profile Organic Edge Satin Finish' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Hand-knotted Tibetan Silk & High-Density Botanical Wool Rug (Ripple Pattern)' },
+                    { label: 'Surface Treatment', value: 'Organic Oleo-Wax Nano Coating (Water & Scratch Resistant)' },
                     { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
                 ]
             },
@@ -360,25 +378,29 @@
                 details: [
                     { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
                     { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
-                    { label: 'Material DNA', value: 'Anodized Aerospace Titanium Frame, Compression-molded Matte Carbon' },
-                    { label: 'Lead-Time', value: '18 Weeks // Limited Commission Execution' }
+                    { label: 'Material Configuration I (Slide 1)', value: 'Anodized Aerospace-Grade Titanium Frame // Micro-Blasted Matte Finish' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Compression-Molded Structural Carbon Top // Integrated Wire Management' },
+                    { label: 'Hardware Integration', value: 'Flush Magnetic Cable Paths // Soft-Close Stealth Drawer Compartments' },
+                    { label: 'Lead-Time', value: '18 Weeks // Custom Tailored to Executive Ergonomics' }
                 ]
             },
             'dodragao': {
                 title: 'Do Dragao',
                 details: [
-                    { label: 'Classification', value: 'Anatomical Daybed Sculpture' },
+                    { label: 'Classification', value: 'Anatomical Sculptural Daybed' },
                     { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
-                    { label: 'Material DNA', value: 'Cast Magnesium Internal Skeleton, Full-grain Liquid Aniline Hide' },
-                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Commission' }
+                    { label: 'Material Configuration I (Slide 1)', value: 'Cast Magnesium Internal Skeleton // Ultralight Monocoque Geometry' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Full-Grain Liquid Aniline Hide // Hand-Stretched Seamless Saddle Stitching' },
+                    { label: 'Ergonomic Tuning', value: 'Variable-Density Memory Foam Core with Zonal Pressure Relief' },
+                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Curation' }
                 ]
             },
             'about': {
                 title: 'FIORE LABS // ABOUT',
                 details: [
                     { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
-                    { label: 'Coordinates', value: '51.2194° N, 4.4025° E // Antwerp Laboratory' },
-                    { label: 'Philosophy', value: 'Form follows emotion, frozen beyond traditional physical lifecycles.' }
+                    { label: 'Coordinates', value: 'Antwerp Laboratory // Flanders, Belgium' },
+                    { label: 'Philosophy', value: 'Form follows emotion. Objects created as autonomous emotional presences, blurring the line between physical craftsmanship and digital evolution.' }
                 ]
             }
         };
@@ -387,13 +409,15 @@
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
             const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const infoLabel = parentSection.querySelector('.plus-info-label');
             const panelData = parentSection.querySelector('.panel-data');
             
             if (!panel) return;
             
             if (panel.classList.contains('open')) {
                 panel.classList.remove('open');
-                plusTrigger.style.transform = 'rotate(0deg)';
+                if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+                if (infoLabel) infoLabel.style.opacity = '1';
             } else {
                 const p = projects[id];
                 if(!p) return;
@@ -417,7 +441,8 @@
                 
                 panelData.innerHTML = cleanHTML;
                 panel.classList.add('open');
-                plusTrigger.style.transform = 'rotate(45deg)';
+                if (plusTrigger) plusTrigger.style.transform = 'rotate(45deg)';
+                if (infoLabel) infoLabel.style.opacity = '0'; 
             }
         }
 
