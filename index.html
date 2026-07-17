@@ -43,9 +43,16 @@
             }
         }
         
-        .hero-navigation-wrapper {
+      .hero-navigation-wrapper {
             display: flex; align-items: center; justify-content: center;
-            gap: clamp(20px, 4vw, 50px); z-index: 10; padding: 0 20px;
+            gap: clamp(20px, 4vw, 50px); z-index: 10; padding: 15px 40px;
+            
+            /* Subtiele donkere waas die perfect wegsmelt in de foto */
+            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 80%);
+            border-radius: 50px;
+            
+            /* Extra verzekering: een zachte schaduw achter de letters zelf */
+            text-shadow: 0px 2px 10px rgba(0, 0, 0, 0.8);
         }
         .hero-link {
             text-decoration: none; color: #fff; font-size: clamp(14px, 1.8vw, 18px); 
