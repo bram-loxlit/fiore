@@ -35,7 +35,27 @@ body, html {
         padding-top: 60vh;
     }
 }
+@media (max-width: 768px) {
+    /* ... behoud je bestaande mobiele tweaks voor logo en arrows ... */
 
+    .hero-link {
+        /* Zorgt dat de tekst natuurlijk afbreekt per woord */
+        white-space: normal !important; 
+        
+        /* Centreert de gestapelde woorden netjes */
+        text-align: center; 
+        
+        /* Maakt de tekst groter omdat er nu verticale ruimte is */
+        font-size: 18px !important; 
+        
+        /* De afstand tussen de gestapelde regels */
+        line-height: 1.8 !important; 
+        
+        /* Verwijdert de onderlijn op mobiel, omdat die anders lelijk onder het onderste woord zweeft */
+        border-bottom: none !important; 
+        padding-bottom: 0 !important;
+    }
+}
 .hero-navigation-wrapper {
     display: flex; align-items: center; justify-content: center;
     gap: clamp(20px, 4vw, 50px); z-index: 10; padding: 0 20px;
