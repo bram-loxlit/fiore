@@ -16,7 +16,7 @@ body, html {
 .logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 2000; }
 .logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
 
-/* 1. HERO SLIDESHOW (GECENTREERD OP 60% HOOGTE) */
+/* 1. HERO SLIDESHOW WITH KINETIC ZOOM PREPARATION */
 .hero-slideshow { 
     position: relative; 
     height: 100vh; 
@@ -31,6 +31,10 @@ body, html {
     background-image: var(--bg-mobile);
     background-size: cover; background-position: center; 
     opacity: 0; z-index: 1;
+    
+    /* FIX: will-change en transform-origin bereiden de GPU voor op de cinematic scroll-zoom */
+    transform-origin: center center;
+    will-change: opacity, transform;
     transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
     
     display: flex; 
@@ -127,12 +131,12 @@ section.product-view {
 .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
 .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
-/* Subtiele & Gecentreerde Luxe Swipe Indicator op 20% van de bovenkant */
+/* Subtiele & Gecentreerde Luxe Swipe Indicator */
 .swipe-hint {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 20%; /* FIX: Exact op 20% van de bovenkant gepositioneerd */
+    top: 20%; 
     font-size: 10px;
     letter-spacing: 6px;
     text-transform: uppercase;
@@ -143,7 +147,6 @@ section.product-view {
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
-/* Activeert direct bij de start en pulseert tweemaal zacht met fadeout */
 .swipe-hint.visible {
     animation: quickPulseHint 4.5s forwards ease-in-out;
 }
@@ -385,7 +388,7 @@ input, textarea {
     section.product-view { padding: 0 30px 14vh 30px; }
     
     .swipe-hint {
-        top: 20%; /* Blijft ook mobiel exact op 20% hangen */
+        top: 20%; 
     }
 
     .section-bg { 
@@ -422,7 +425,6 @@ input, textarea {
     50% { opacity: 0.8; transform: translateX(2px); }
 }
 
-/* Twee subtiele, premium pulseringen direct vanaf de start met totale fadeout */
 @keyframes quickPulseHint {
     0% { opacity: 0; }
     15% { opacity: 0.6; }
