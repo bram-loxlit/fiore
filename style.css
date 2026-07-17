@@ -1,326 +1,478 @@
-/* ==========================================================================
-   BASIS & DESKTOP STYLES
-   ========================================================================== */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-
-body, html { 
-    background-color: #000; 
-    color: #fff; 
-    font-family: 'Inter', sans-serif;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Fixed Navigation */
-.logo-container { position: fixed; top: 25px; left: 30px; width: 140px; z-index: 2000; }
-.logo-container img { width: 100%; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); }
-
-/* 1. HERO SLIDESHOW (GECENTREERD OP 60% HOOGTE) */
-.hero-slideshow { 
-    position: relative; 
-    height: 100vh; 
-    height: 100dvh; 
-    width: 100%; 
-    overflow: hidden; 
-    background: #000; 
-    /* FIX: Voorkomt dat de browser de swipe kaapt voor browser-navigatie */
-    touch-action: pan-y; 
-}
-.hero-slide { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    background-image: var(--bg-mobile);
-    background-size: cover; background-position: center; 
-    opacity: 0; z-index: 1;
-    transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIORE | Beyond Time</title>
+    <link rel="icon" type="image/png" href="favicon.png">
     
-    /* Tekst exact op 60% hoogte positioneren */
-    display: flex; 
-    align-items: flex-start; 
-    justify-content: center;
-    padding-top: 60vh;
-}
-.hero-slide.active { opacity: 1; z-index: 2; }
-
-@media (min-width: 768px) {
-    .hero-slide {
-        background-image: var(--bg-desktop);
-        padding-top: 60vh;
-    }
-}
-
-.hero-navigation-wrapper {
-    display: flex; align-items: center; justify-content: center;
-    gap: clamp(20px, 4vw, 50px); z-index: 10; padding: 0 20px;
-    background: none !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    border: none !important;
-}
-
-.hero-link {
-    text-decoration: none; 
-    color: #fff; 
-    font-size: clamp(14px, 1.8vw, 18px); 
-    letter-spacing: 0.6em; 
-    text-transform: uppercase; 
-    border-bottom: 1px solid rgba(255,255,255,0.2);
-    padding-bottom: 12px; 
-    transition: 0.5s; 
-    white-space: nowrap;
+    <!-- Gekoppelde losse stylesheet -->
+    <link rel="stylesheet" href="style.css">
     
-    /* PURE FLAT: 100% strakke vector zonder schaduw */
-    font-weight: 500; 
-    text-shadow: none !important; 
-    
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-.hero-link:hover { 
-    letter-spacing: 0.8em; 
-    border-bottom: 1px solid #fff; 
-}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+</head>
+<body>
 
-.hero-arrow {
-    font-size: clamp(24px, 3vw, 36px); 
-    font-weight: 100; 
-    color: rgba(255, 255, 255, 0.4);
-    cursor: pointer; 
-    transition: 0.3s; 
-    margin-bottom: 8px; 
-    user-select: none;
-    text-shadow: none !important;
-}
-.hero-arrow:hover { 
-    color: #fff; 
-    transform: scale(1.1); 
-}
+    <div class="logo-container">
+        <a href="#"><img src="Logo.png" alt="FIORE Collective Design Logo"></a>
+    </div>
 
-/* 2. DESIGN SECTIONS */
-section.product-view {
-    position: relative; height: 100vh; height: 100dvh; width: 100%; overflow: hidden;
-    display: flex; flex-direction: column; justify-content: flex-end;
-    padding: 0 6% 18vh 6%; border-bottom: 1px solid #111;
-}
+    <div class="hero-slideshow" id="heroSlideshow">
+        <!-- Slide 1: Starfish Table -->
+        <div class="hero-slide active" style="--bg-desktop: url('assets/hero/Fiore-H-Starfish-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Starfish-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 2: Drop & Ripple -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-Drop-Ripple-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Drop-Ripple-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 3: FD8 Executive -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-FD8-Executive-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-FD8-Executive-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 4: Do Dragao -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-Do-Dragao-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Do-Dragao-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 5: About -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-About-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-About-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#about" class="hero-link">About Fiore</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Scroll Down Invitation -->
+        <div class="scroll-invitation" onclick="lenis.scrollTo(document.querySelector('.intermission'), { duration: 1.5 })" aria-label="Scroll Down">
+            <span class="scroll-invitation__label">
+                <svg class="scroll-invitation__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 42" width="18px" height="32px">
+                    <path d="M2,12H2V30a10,10,0,0,0,20,0V12A10,10,0,0,0,2,12ZM0,12a12,12,0,0,1,24,0V30A12,12,0,0,1,0,30V12Z"/>
+                    <path class="scroll-invitation__svg-line" d="M11,7v4a1,1,0,0,0,2,0V7a1,1,0,0,0-2,0Z"/>
+                </svg>
+                Scroll Down
+            </span>
+        </div>
+    </div>
 
-.section-bg {
-    position: absolute; top: -15%; left: 0; width: 100%; height: 130%;
-    background-image: var(--bg-mobile);
-    background-size: cover; background-position: center;
-    opacity: 0; z-index: 1; will-change: transform;
-}
-.section-bg.active { opacity: 1; z-index: 2; }
+    <section class="intermission">
+        <div class="parallax-spotlight"></div>
+        <div class="parallax-drift-text">FLUID AUTHORSHIP</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O1 / The Origin</p>
+            <h3 class="narrative-text">FIORE is an evolving design intelligence existing between human intuition, atmosphere, technology, materiality and fiction. We explore creation beyond fixed identity.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
 
-@media (min-width: 768px) {
-    .section-bg {
-        background-image: var(--bg-desktop);
-    }
-}
+    <!-- Section: Starfish Table -->
+    <section id="starfish" class="product-view">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/starfish/Fiore-Starfish-Table-view01-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/Fiore-Starfish-Table-view01-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/starfish/Fiore-Starfish-Table-view02-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/Fiore-Starfish-Table-view02-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Starfish Table</h2>
+            <p>Collectible Design</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
+    </section>
 
-.section-overlay { 
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-    background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%); z-index: 3; 
-}
-.section-content { position: relative; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.5); }
-.section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
-.section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 30% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text" style="right: -10%;">BEAUTY BEYOND EGO</div>
+        <div class="narrative-container" style="text-align: left; max-width: 850px;">
+            <p class="narrative-label">Chapter O2 / Fluid Landscapes</p>
+            <h3 class="narrative-text">What if the object, atmosphere and emotional resonance mattered more than the mythology surrounding the creator? Beauty should exist as an autonomous emotional presence.</h3>
+            <div class="narrative-line" style="margin-left: 0;"></div>
+        </div>
+    </section>
 
-.plus-trigger {
-    font-size: clamp(36px, 5vw, 48px); font-weight: 200; cursor: pointer;
-    display: inline-block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
-    line-height: 1; opacity: 0.7; touch-action: manipulation;
-}
-.plus-trigger:hover { opacity: 1; }
+    <!-- Section: Drop & Ripple -->
+    <section id="drop-ripple" class="product-view">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Drop & Ripple</h2>
+            <p>Table & Rug</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
+    </section>
 
-/* 3. ADVANCED PARALLAX INTERMISSIONS */
-section.intermission {
-    height: 120vh; 
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden; background: #000;
-}
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text">A SOFTER CYBORG CONDITION</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O3 / Workspace Architecture</p>
+            <h3 class="narrative-text">Technology is not the enemy, but an extension of imagination, sensitivity and poetic possibility. A dialogue between human intuition and evolving systems.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
 
-.parallax-spotlight {
-    position: absolute; width: 140%; height: 140%; top: -20%; left: -20%;
-    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 65%);
-    z-index: 1; will-change: transform;
-}
+    <!-- Section: FD8 Executive -->
+    <section id="fd8" class="product-view">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/fd8/Fiore-FD8-Executive-view01-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/Fiore-FD8-Executive-view01-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/fd8/Fiore-FD8-Executive-view02-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/Fiore-FD8-Executive-view02-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>FD8 Executive</h2>
+            <p>Monolithic Workspace</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
+    </section>
 
-.parallax-drift-text {
-    position: absolute; white-space: nowrap; font-size: 14vh; font-weight: 900;
-    color: rgba(255,255,255,0.025); text-transform: uppercase; letter-spacing: 0.2em;
-    z-index: 2; pointer-events: none; will-change: transform;
-}
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text">POETIC ERROR</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O4 / Material Evolution</p>
+            <h3 class="narrative-text">Unexpected outcomes are not flaws. The most meaningful creations emerge through misinterpretation, drift, randomness, and machine-assisted sensitivity.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
 
-.narrative-container {
-    position: relative; z-index: 10; max-width: 800px; padding: 0 40px; text-align: center;
-}
-.narrative-label {
-    font-size: 10px; letter-spacing: 8px; color: rgba(255,255,255,0.4); 
-    margin-bottom: 40px; text-transform: uppercase;
-}
-.narrative-text {
-    font-size: clamp(16px, 2.2vw, 24px); font-weight: 300; line-height: 2;
-    letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.9);
-}
-.narrative-line {
-    width: 1px; height: 100px; background: linear-gradient(to bottom, #fff, transparent);
-    margin: 60px auto 0 auto; opacity: 0.2;
-}
+    <!-- Section: Do Dragao -->
+    <section id="dodragao" class="product-view">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/do-dragao/Fiore-Do-Dragao-view01-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/Fiore-Do-Dragao-view01-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/do-dragao/Fiore-Do-Dragao-view02-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/Fiore-Do-Dragao-view02-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Do Dragao</h2>
+            <p>Anatomical Sculptures</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
+    </section>
 
-/* 4. HIGH-END MONOLITHIC SIDE PANEL */
-.side-panel {
-    position: absolute; top: 0; right: -50%; width: 45%; height: 100vh;
-    z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 100px 80px; overflow-y: auto; background: rgba(8, 8, 8, 0.92); 
-    backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-    border-left: 1px solid rgba(255, 255, 255, 0.06); color: #fff; 
-}
-.side-panel.open { right: 0; }
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 65%);"></div>
+        <div class="parallax-drift-text" style="left: -10%;">BEAUTY BECOMES FREER</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O5 / Digital Prototyping</p>
+            <h3 class="narrative-text">Does beauty become less meaningful if it no longer belongs entirely to a single individual? No. When the creator becomes fluid, beauty becomes freer.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
 
-.matrix-header {
-    font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4); margin-bottom: 50px;
-}
+    <!-- Section: About -->
+    <section id="about" class="product-view">
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/about/Fiore-About-view01-desktop.jpg'); --bg-mobile: url('assets/designs/about/Fiore-About-view01-mobile.jpg');" aria-label="Fiore Art Design Laboratory Antwerp Background"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>About Fiore</h2>
+            <p>Immortal Vision</p>
+            <div class="plus-trigger" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">+</div>
+        </div>
+        <div class="side-panel"><div class="panel-data"></div></div>
+    </section>
 
-.matrix-row {
-    margin-bottom: 45px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 30px;
-}
+    <footer class="footer-section" id="inquiries">
+        <form class="contact-form" id="fioreForm" onsubmit="handleFormSubmit(event)">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
+            <h3 style="font-size: 11px; letter-spacing: 5px; margin-bottom: 60px; opacity: 0.4; font-weight: 300;">INQUIRIES</h3>
+            
+            <input type="text" id="formName" name="Name" placeholder="NAME" required autocomplete="off">
+            <input type="email" id="formEmail" name="Email" placeholder="EMAIL" required autocomplete="off">
+            <textarea id="formMessage" name="Message" placeholder="MESSAGE" rows="4" required autocomplete="off"></textarea>
+            
+            <div style="margin-top: 20px;">
+                <button type="submit" id="submitBtn" class="form-send-btn">SUBMIT REQUEST</button>
+            </div>
+        </form>
+        <p style="margin-top: 140px; font-size: 8px; opacity: 0.15; letter-spacing: 6px;">© 2026 FIORE | BEYOND TIME</p>
+    </footer>
 
-.matrix-meta {
-    font-size: 11px; font-family: monospace; letter-spacing: 2px;
-    color: rgba(255, 255, 255, 0.3); margin-bottom: 12px;
-    display: flex; justify-content: space-between;
-}
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
 
-.matrix-title {
-    font-size: 20px; font-weight: 300; letter-spacing: 1px;
-    line-height: 1.5; color: #ffffff; margin-bottom: 12px;
-}
+        // Smooth Scrolling setup (Lenis)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+        lenis.on('scroll', ScrollTrigger.update);
 
-.panel-inquiry-container { margin-top: 60px; width: 100%; }
-.panel-inquiry-link {
-    display: inline-block; font-size: 12px; letter-spacing: 5px;
-    text-transform: uppercase; color: #fff; text-decoration: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3); padding-bottom: 8px;
-    transition: border-color 0.4s, letter-spacing 0.4s; cursor: pointer;
-}
-.panel-inquiry-link:hover { border-color: #fff; letter-spacing: 6px; }
+        // GSAP Animations (Desktop only)
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 769px)", () => {
+            document.querySelectorAll('.intermission').forEach(sect => {
+                const spot = sect.querySelector('.parallax-spotlight');
+                const drift = sect.querySelector('.parallax-drift-text');
+                const narrative = sect.querySelector('.narrative-container');
 
-/* 5. FOOTER & FORM HIGH-END STYLING */
-.footer-section { background: #000; padding: 140px 10%; text-align: center; border-top: 1px solid #111; }
-.contact-form { max-width: 500px; margin: 0 auto; text-align: center; }
+                if(spot) { gsap.to(spot, { yPercent: 15, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+                if(drift) { gsap.fromTo(drift, { xPercent: 10 }, { xPercent: -10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+                if(narrative) {
+                    gsap.fromTo(narrative, 
+                        { y: 100, opacity: 0 }, 
+                        { y: -40, opacity: 1, ease: "power2.out", scrollTrigger: { trigger: sect, start: "top 85%", end: "top 25%", scrub: 1 } }
+                    );
+                }
+            });
 
-input, textarea { 
-    width: 100%; background: none; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    color: #fff; padding: 18px 0; margin-bottom: 45px; font-family: inherit; font-size: 13px; letter-spacing: 1px;
-}
-input:focus, textarea:focus { outline: none; border-bottom: 1px solid #fff; }
+            document.querySelectorAll('.product-view').forEach(sect => {
+                const bg = sect.querySelector('.section-bg');
+                if(bg) { gsap.fromTo(bg, { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+            });
+        });
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus {
-    -webkit-text-fill-color: #fff !important;
-    -webkit-box-shadow: 0 0 0px 1000px #000 inset !important;
-    transition: background-color 5000s ease-in-out 0s;
-}
+        // ==========================================================================
+        // HERO SLIDESHOW LOGIC + SWIPE SUPPORT
+        // ==========================================================================
+        let hIdx = 0;
+        const hSlides = document.querySelectorAll('.hero-slide');
+        let heroInterval = setInterval(() => moveHero(1), 6000);
 
-input, textarea {
-    border-radius: 0 !important;
-    -webkit-appearance: none;
-    background-color: transparent !important;
-}
+        function moveHero(direction) {
+            if(hSlides.length === 0) return;
+            hSlides[hIdx].classList.remove('active');
+            hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
+            hSlides[hIdx].classList.add('active');
+            
+            clearInterval(heroInterval);
+            heroInterval = setInterval(() => moveHero(1), 6000);
+        }
 
-.form-send-btn {
-    background: none;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #fff;
-    font-size: 10px;
-    letter-spacing: 4px;
-    font-family: inherit;
-    padding: 18px 40px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: border-color 0.4s, background 0.4s, color 0.4s, opacity 0.3s;
-    display: inline-block;
-    margin-top: 10px;
-}
-.form-send-btn:hover {
-    border-color: #fff;
-    background: rgba(255, 255, 255, 0.08);
-    color: #fff;
-}
+        // SWIPE LOGIC
+        const heroContainer = document.getElementById('heroSlideshow');
+        let touchStartX = 0;
+        let touchEndX = 0;
 
-/* Scroll Down Mouse Animation */
-.scroll-invitation {
-    position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; cursor: pointer; transition: opacity 0.4s;
-}
-.scroll-invitation:hover { opacity: 1; }
-.scroll-invitation:hover .scroll-invitation__label { color: rgba(255, 255, 255, 0.9); }
-.scroll-invitation__hover .scroll-invitation__svg { fill: rgba(255, 255, 255, 0.9); }
-.scroll-invitation__label { display: flex; flex-direction: column; align-items: center; font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); font-weight: 300; transition: color 0.4s; }
-.scroll-invitation__svg { display: block; fill: rgba(255, 255, 255, 0.4); margin-bottom: 15px; transition: fill 0.4s; }
-.scroll-invitation__svg-line { fill: #fff; animation: moveLineDown 1.2s ease-out infinite; }
+        if (heroContainer) {
+            heroContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
 
+            heroContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleHeroSwipe();
+            }, { passive: true });
+        }
 
-/* ==========================================================================
-   RESPONSIVE OVERRIDES (MEDIA QUERIES) - ALTIJD ONDERAAN PLAATSEN
-   ========================================================================== */
-@media (max-width: 1024px) { 
-    .side-panel { width: 65%; right: -70%; padding: 80px 45px; } 
-    section.product-view { padding: 0 6% 16vh 6%; } 
-}
+        function handleHeroSwipe() {
+            const swipeThreshold = 50; 
+            const swipeDistance = touchEndX - touchStartX;
 
-@media (max-width: 768px) {
-    .logo-container { top: 35px; left: 20px; width: 110px; }
-    .hero-arrow { font-size: 38px !important; color: rgba(255, 255, 255, 0.6) !important; padding: 10px; }
-    .hero-navigation-wrapper { gap: 25px; }
-    
-    /* Gecentraliseerde Mobiele Fix voor Perfect Gecentreerde Woordstapeling */
-    .hero-link {
-        white-space: normal !important; 
-        text-align: center; 
-        font-size: 16px !important; 
-        line-height: 2.2 !important; 
-        border-bottom: none !important; 
-        padding-bottom: 0 !important;
-        
-        display: inline-block;
-        max-width: 180px; 
-        
-        /* FIX: Compenseert de brief-spacing aan de rechterkant voor mathematische centrering */
-        margin-right: -0.6em !important; 
-    }
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0) {
+                    moveHero(-1); // Swipe naar rechts -> Vorige slide
+                } else {
+                    moveHero(1);  // Swipe naar links -> Volgende slide
+                }
+            }
+        }
 
-    .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1); border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px; }
-    .side-panel.open { top: 12vh; right: 0; }
-    section.product-view { padding: 0 30px 14vh 30px; }
-    
-    .section-bg { height: 100% !important; top: 0 !important; }
-    section.intermission { height: 100vh; height: 100dvh; }
-    .parallax-drift-text { font-size: 7vh; letter-spacing: 0.1em; }
+        // ==========================================================================
+        // PRODUCT SECTIONS CAROUSEL LOGIC
+        // ==========================================================================
+        document.querySelectorAll('.product-view').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                let sectInterval = setInterval(() => changeBg(1), 5000);
 
-    .scroll-invitation__svg { display: none; }
-    .scroll-invitation__label::after {
-        content: ''; display: block; width: 6px; height: 6px; border-right: 1px solid rgba(255,255,255,0.4); border-bottom: 1px solid rgba(255,255,255,0.4); transform: rotate(45deg); margin: 8px auto 0 auto; animation: mobileArrow 1.5s infinite;
-    }
-}
+                function changeBg(direction) {
+                    bgs[bIdx].classList.remove('active');
+                    bIdx = (bIdx + direction + bgs.length) % bgs.length;
+                    bgs[bIdx].classList.add('active');
+                }
 
-/* ==========================================================================
-   ANIMATIES (KEYFRAMES)
-   ========================================================================== */
-@keyframes moveLineDown {
-    0% { transform: translateY(-5px); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: translateY(12px); opacity: 0; }
-}
+                s.moveBg = function(direction) {
+                    changeBg(direction);
+                    clearInterval(sectInterval);
+                    sectInterval = setInterval(() => changeBg(1), 5000);
+                };
+            }
+        });
 
-@keyframes mobileArrow {
-    0% { transform: rotate(45deg) translate(0, 0); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: rotate(45deg) translate(4px, 4px); opacity: 0; }
-}
+        function moveSection(arrowElement, direction) {
+            const parentSection = arrowElement.closest('section');
+            if (parentSection && typeof parentSection.moveBg === 'function') {
+                parentSection.moveBg(direction);
+            }
+        }
+
+        // ==========================================================================
+        // DATA MATRIX & SIDE PANEL LOGIC
+        // ==========================================================================
+        const projects = {
+            'starfish': {
+                title: 'Starfish Table',
+                details: [
+                    { label: 'Classification', value: 'Biomorphic Radially-Centered Table Architecture' },
+                    { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
+                    { label: 'Execution ST-01', value: 'Base: Soul-Red Metallic // Top: Carbon-Injected Noir de Mazy (Archived)' },
+                    { label: 'Execution ST-02', value: 'Base: Titanium Black // Top: Radially Bookmatched Macassar Ebony (Reserved)' },
+                    { label: 'Execution ST-03', value: 'Base: Emerald Green Liquid Chrome // Top: Patagonia Quartzite Slab (Available)' },
+                    { label: 'Lead-Time', value: '18 Weeks // Handmade in Antwerp Laboratory' }
+                ]
+            },
+            'drop-ripple': {
+                title: 'Drop & Ripple',
+                details: [
+                    { label: 'Classification', value: 'Integrated Domestic Topography System' },
+                    { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
+                    { label: 'Material DNA', value: 'Solid Black Walnut Slab, Hand-knotted Tibetan Silk & Wool' },
+                    { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
+                ]
+            },
+            'fd8': {
+                title: 'FD8 Executive',
+                details: [
+                    { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
+                    { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
+                    { label: 'Material DNA', value: 'Anodized Aerospace Titanium Frame, Compression-molded Matte Carbon' },
+                    { label: 'Lead-Time', value: '18 Weeks // Limited Commission Execution' }
+                ]
+            },
+            'dodragao': {
+                title: 'Do Dragao',
+                details: [
+                    { label: 'Classification', value: 'Anatomical Daybed Sculpture' },
+                    { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
+                    { label: 'Material DNA', value: 'Cast Magnesium Internal Skeleton, Full-grain Liquid Aniline Hide' },
+                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Commission' }
+                ]
+            },
+            'about': {
+                title: 'FIORE LABS // ABOUT',
+                details: [
+                    { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
+                    { label: 'Coordinates', value: '51.2194° N, 4.4025° E // Antwerp Laboratory' },
+                    { label: 'Philosophy', value: 'Form follows emotion, frozen beyond traditional physical lifecycles.' }
+                ]
+            }
+        };
+
+        function toggleDetails(element, id) {
+            const parentSection = element.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const panelData = parentSection.querySelector('.panel-data');
+            
+            if (!panel) return;
+            
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                plusTrigger.style.transform = 'rotate(0deg)';
+            } else {
+                const p = projects[id];
+                if(!p) return;
+                
+                let cleanHTML = `<div class="matrix-header">${p.title} // Structural Specifications</div>`;
+                
+                p.details.forEach(item => {
+                    cleanHTML += `
+                        <div class="matrix-row">
+                            <div class="matrix-meta">${item.label}</div>
+                            <div class="matrix-title">${item.value}</div>
+                        </div>
+                    `;
+                });
+
+                cleanHTML += `
+                    <div class="panel-inquiry-container">
+                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for acquisition</div>
+                    </div>
+                `;
+                
+                panelData.innerHTML = cleanHTML;
+                panel.classList.add('open');
+                plusTrigger.style.transform = 'rotate(45deg)';
+            }
+        }
+
+        document.addEventListener("touchstart", function(){}, true);
+
+        function scrollToInquiries(linkElement) {
+            const parentSection = linkElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            
+            if (panel) panel.classList.remove('open');
+            if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            
+            lenis.scrollTo('#inquiries', { duration: 1.5 });
+        }
+
+        // ==========================================================================
+        // FORM SUBMISSION LOGIC
+        // ==========================================================================
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('submitBtn');
+            const form = document.getElementById('fioreForm');
+            
+            button.innerText = "SENDING...";
+            button.style.pointerEvents = "none";
+            button.style.opacity = "0.4";
+            
+            const formData = new FormData(form);
+            
+            fetch("https://formsubmit.co/ajax/hi@fio.re", {
+                method: "POST",
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    button.innerText = "REQUEST SENT";
+                    button.style.opacity = "0.9";
+                    form.reset();
+                    setTimeout(() => {
+                        button.innerText = "SUBMIT REQUEST";
+                        button.style.pointerEvents = "auto";
+                    }, 5000);
+                } else {
+                    button.innerText = "REDIRECTING...";
+                    form.action = "https://formsubmit.co/hi@fio.re";
+                    form.method = "POST";
+                    form.removeAttribute('onsubmit'); 
+                    form.submit();
+                }
+            })
+            .catch(error => {
+                button.innerText = "REDIRECTING...";
+                form.action = "https://formsubmit.co/hi@fio.re";
+                form.method = "POST";
+                form.removeAttribute('onsubmit');
+                form.submit();
+            });
+        }
+    </script>
+</body>
+</html>
