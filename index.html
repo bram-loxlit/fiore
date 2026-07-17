@@ -265,13 +265,18 @@
             
             clearInterval(heroInterval);
             heroInterval = setInterval(() => moveHero(1), 6000);
+
+            // Tril heel kort (15ms) voor een high-end haptisch gevoel
+            if (navigator.vibrate) {
+            navigator.vibrate(15); 
+            }
         }
 
         // SWIPE LOGIC
         const heroContainer = document.getElementById('heroSlideshow');
         let touchStartX = 0;
         let touchEndX = 0;
-
+        
         if (heroContainer) {
             heroContainer.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
