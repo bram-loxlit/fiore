@@ -55,11 +55,10 @@ body, html {
     transition: 0.5s; 
     white-space: nowrap;
     
-    /* FIX: Pure, scherpe typografie zonder modderige schaduw */
-    font-weight: 600; /* Maakt de letters van zichzelf dikker en krachtiger */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Alleen een flinterdunne, zachte diepte */
+    /* PURE FLAT FIX: Geen enkele schaduw, 100% strakke vector */
+    font-weight: 500; /* Medium dikte, messcherp zonder lomp te worden */
+    text-shadow: none !important; 
     
-    /* Forceert de browser om het font vlijmscherp te renderen */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -70,15 +69,15 @@ body, html {
 
 .hero-arrow {
     font-size: clamp(24px, 3vw, 36px); 
-    font-weight: 200; /* Iets dikker dan 100 voor balans met het font */
-    color: rgba(255, 255, 255, 0.5);
+    font-weight: 100; /* Terug naar flinterdun voor die high-end esthetiek */
+    color: rgba(255, 255, 255, 0.4);
     cursor: pointer; 
     transition: 0.3s; 
     margin-bottom: 8px; 
     user-select: none;
     
-    /* FIX: Matcht met de schone schaduw van de link */
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    /* PURE FLAT FIX: Ook hier alle schaduw weg */
+    text-shadow: none !important;
 }
 .hero-arrow:hover { 
     color: #fff; 
