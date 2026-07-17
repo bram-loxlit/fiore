@@ -344,7 +344,7 @@
         }
 
         // ==========================================================================
-        // PRODUCT SECTIONS CAROUSEL LOGIC WITH PERFECT FADE TRANSITION + SWIPE + DELAYED HINT
+        // PRODUCT SECTIONS CAROUSEL LOGIC WITH IMMEDIATE PULSING HINT + SWIPE FIX
         // ==========================================================================
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
@@ -353,20 +353,17 @@
             if(bgs.length > 1) {
                 let bIdx = 0;
                 
-                // Activeer de getimede hint: verschijnt exact halverwege slide 1 (na 2,5 seconden)
-                let hintTimeout = setTimeout(() => {
-                    if (bIdx === 0 && hint) {
-                        hint.classList.add('visible');
-                    }
-                }, 2500);
+                // Activeer direct de visible klasse zodra de pagina laadt / element in beeld komt
+                if (hint) {
+                    hint.classList.add('visible');
+                }
 
                 let sectInterval = setInterval(() => changeBg(1), 5000);
 
                 function changeBg(direction) {
-                    // Verberg de hint permanent bij elke vorm van interactie of slide wissel
+                    // Verwijder de hint permanent bij de allereerste verandering
                     if (hint) {
                         hint.classList.remove('visible');
-                        clearTimeout(hintTimeout);
                     }
 
                     bgs[bIdx].classList.remove('active');
@@ -384,7 +381,7 @@
                     sectInterval = setInterval(() => changeBg(1), 5000);
                 };
 
-                // ADVANCED FIXED SWIPE DETECTIE VOOR CHROME MOBILE
+                // FIXED SWIPE DETECTIE VOOR CHROME MOBILE
                 let pTouchStartX = 0;
                 let pTouchStartY = 0;
 
