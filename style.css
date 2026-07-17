@@ -127,25 +127,25 @@ section.product-view {
 .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
 .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
-/* Subtiele Luxe Swipe Indicator */
+/* Subtiele & Gecentreerde Luxe Swipe Indicator op 20% van de bovenkant */
 .swipe-hint {
     position: absolute;
-    left: 6%;
-    bottom: clamp(34vh, 32vh, 40vh); /* Zweeft prachtig strak boven de product-titel */
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20%; /* FIX: Exact op 20% van de bovenkant gepositioneerd */
     font-size: 10px;
     letter-spacing: 6px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.3);
-    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
     z-index: 15;
     pointer-events: none;
     opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 1.5s ease-in-out, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 1s ease-in-out;
 }
+/* Activeert direct bij de start en pulseert tweemaal zacht met fadeout */
 .swipe-hint.visible {
-    opacity: 1;
-    transform: translateY(0);
+    animation: quickPulseHint 4.5s forwards ease-in-out;
 }
 
 /* Geanimeerde Plus Trigger Wrapper met groter INFO label */
@@ -385,8 +385,7 @@ input, textarea {
     section.product-view { padding: 0 30px 14vh 30px; }
     
     .swipe-hint {
-        left: 30px;
-        bottom: clamp(28vh, 26vh, 32vh); /* Positionering gecorrigeerd voor mobiele schermen */
+        top: 20%; /* Blijft ook mobiel exact op 20% hangen */
     }
 
     .section-bg { 
@@ -421,4 +420,15 @@ input, textarea {
 @keyframes pulseOpacity {
     0%, 100% { opacity: 0.3; transform: translateX(0px); }
     50% { opacity: 0.8; transform: translateX(2px); }
+}
+
+/* Twee subtiele, premium pulseringen direct vanaf de start met totale fadeout */
+@keyframes quickPulseHint {
+    0% { opacity: 0; }
+    15% { opacity: 0.6; }
+    30% { opacity: 0.1; }
+    45% { opacity: 0.6; }
+    60% { opacity: 0.1; }
+    75% { opacity: 0.6; }
+    100% { opacity: 0; display: none; }
 }
