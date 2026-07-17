@@ -29,12 +29,21 @@
         .hero-slideshow { position: relative; height: 100vh; height: 100dvh; width: 100%; overflow: hidden; background: #000; }
         .hero-slide { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            /* Gebruik de mobiele variabele als standaard */
+            background-image: var(--bg-mobile);
             background-size: cover; background-position: center; 
             opacity: 0; z-index: 1;
             transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
             display: flex; align-items: center; justify-content: center;
         }
         .hero-slide.active { opacity: 1; z-index: 2; }
+        
+        /* Overschakelen naar desktop-afbeelding op grotere schermen */
+        @media (min-width: 768px) {
+            .hero-slide {
+                background-image: var(--bg-desktop);
+            }
+        }
         
         .hero-navigation-wrapper {
             display: flex; align-items: center; justify-content: center;
@@ -62,10 +71,19 @@
         
         .section-bg {
             position: absolute; top: -15%; left: 0; width: 100%; height: 130%;
+            /* Gebruik de mobiele variabele als standaard */
+            background-image: var(--bg-mobile);
             background-size: cover; background-position: center;
             opacity: 0; z-index: 1; will-change: transform;
         }
         .section-bg.active { opacity: 1; z-index: 2; }
+
+        /* Overschakelen naar desktop-afbeelding op grotere schermen */
+        @media (min-width: 768px) {
+            .section-bg {
+                background-image: var(--bg-desktop);
+            }
+        }
         
         .section-overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -308,35 +326,40 @@
     </div>
 
     <div class="hero-slideshow" id="heroSlideshow">
-        <div class="hero-slide active" style="background-image: url('assets/hero/starfish-gueridon.jpg');">
+        <!-- Slide 1 (Starfish met jouw exact geüploade bestanden) -->
+        <div class="hero-slide active" style="--bg-desktop: url('assets/hero/Fiore-H-Starfish-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Starfish-mobile.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
                 <a href="#starfish" class="hero-link">Explore Starfish Table</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('assets/hero/drop-ripple.jpg');">
+        <!-- Slide 2 -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/drop-ripple-desktop.jpg'); --bg-mobile: url('assets/hero/drop-ripple-mobile.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
                 <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('assets/hero/fd8-executive-desk.jpg');">
+        <!-- Slide 3 -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/fd8-executive-desk-desktop.jpg'); --bg-mobile: url('assets/hero/fd8-executive-desk-mobile.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
                 <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('assets/hero/do-dragao-daybed.jpg');">
+        <!-- Slide 4 -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/do-dragao-daybed-desktop.jpg'); --bg-mobile: url('assets/hero/do-dragao-daybed-mobile.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
                 <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
                 <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
             </div>
         </div>
-        <div class="hero-slide" style="background-image: url('assets/hero/about-fiore.jpg');">
+        <!-- Slide 5 -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/about-fiore-desktop.jpg'); --bg-mobile: url('assets/hero/about-fiore-mobile.jpg');">
             <div class="hero-navigation-wrapper">
                 <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
                 <a href="#about" class="hero-link">About Fiore</a>
@@ -368,8 +391,8 @@
     <section id="starfish" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('assets/designs/starfish/view01.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
-        <div class="section-bg" style="background-image: url('assets/designs/starfish/view02.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/starfish/view01-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/view01-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/starfish/view02-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/view02-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Starfish Table</h2>
@@ -392,8 +415,8 @@
     <section id="drop-ripple" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('assets/designs/drop-ripple/view01.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
-        <div class="section-bg" style="background-image: url('assets/designs/drop-ripple/view02.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/drop-ripple/view01-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/view01-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/drop-ripple/view02-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/view02-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Drop & Ripple</h2>
@@ -416,8 +439,8 @@
     <section id="fd8" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('assets/designs/fd8/view01.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
-        <div class="section-bg" style="background-image: url('assets/designs/fd8/view02.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/fd8/view01-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/view01-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/fd8/view02-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/view02-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>FD8 Executive</h2>
@@ -440,8 +463,8 @@
     <section id="dodragao" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="section-bg active" style="background-image: url('assets/designs/do-dragao/view01.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
-        <div class="section-bg" style="background-image: url('assets/designs/do-dragao/view02.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/do-dragao/view01-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/view01-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
+        <div class="section-bg" style="--bg-desktop: url('assets/designs/do-dragao/view02-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/view02-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Do Dragao</h2>
@@ -462,7 +485,7 @@
     </section>
 
     <section id="about" class="product-view">
-        <div class="section-bg active" style="background-image: url('assets/designs/about/view01.jpg');" aria-label="Fiore Art Design Laboratory Antwerp Background"></div>
+        <div class="section-bg active" style="--bg-desktop: url('assets/designs/about/view01-desktop.jpg'); --bg-mobile: url('assets/designs/about/view01-mobile.jpg');" aria-label="Fiore Art Design Laboratory Antwerp Background"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>About Fiore</h2>
