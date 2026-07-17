@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,12 +94,15 @@
         <div class="section-content">
             <h2>Starfish Table</h2>
             <p>Collectible Design</p>
-            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'starfish')" ontouchstart="toggleDetails(this, 'starfish')">
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'starfish')">
                 <div class="plus-trigger">+</div>
                 <span class="plus-info-label">Info</span>
             </div>
         </div>
-        <div class="side-panel"><div class="panel-data"></div></div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
     </section>
 
     <section class="intermission">
@@ -121,12 +125,15 @@
         <div class="section-content">
             <h2>Drop & Ripple</h2>
             <p>Table & Rug</p>
-            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'drop-ripple')" ontouchstart="toggleDetails(this, 'drop-ripple')">
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'drop-ripple')">
                 <div class="plus-trigger">+</div>
                 <span class="plus-info-label">Info</span>
             </div>
         </div>
-        <div class="side-panel"><div class="panel-data"></div></div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
     </section>
 
     <section class="intermission">
@@ -149,12 +156,15 @@
         <div class="section-content">
             <h2>FD8 Executive</h2>
             <p>Monolithic Workspace</p>
-            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'fd8')" ontouchstart="toggleDetails(this, 'fd8')">
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'fd8')">
                 <div class="plus-trigger">+</div>
                 <span class="plus-info-label">Info</span>
             </div>
         </div>
-        <div class="side-panel"><div class="panel-data"></div></div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
     </section>
 
     <section class="intermission">
@@ -177,12 +187,15 @@
         <div class="section-content">
             <h2>Do Dragao</h2>
             <p>Anatomical Sculptures</p>
-            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'dodragao')" ontouchstart="toggleDetails(this, 'dodragao')">
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'dodragao')">
                 <div class="plus-trigger">+</div>
                 <span class="plus-info-label">Info</span>
             </div>
         </div>
-        <div class="side-panel"><div class="panel-data"></div></div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
     </section>
 
     <section class="intermission">
@@ -202,12 +215,15 @@
         <div class="section-content">
             <h2>About Fiore</h2>
             <p>Immortal Vision</p>
-            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'about')" ontouchstart="toggleDetails(this, 'about')">
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'about')">
                 <div class="plus-trigger">+</div>
                 <span class="plus-info-label">Info</span>
             </div>
         </div>
-        <div class="side-panel"><div class="panel-data"></div></div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
     </section>
 
     <footer class="footer-section" id="inquiries">
@@ -435,7 +451,7 @@
 
                 cleanHTML += `
                     <div class="panel-inquiry-container">
-                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)" ontouchstart="scrollToInquiries(this)">Inquire for acquisition</div>
+                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)">Inquire for acquisition</div>
                     </div>
                 `;
                 
@@ -446,15 +462,27 @@
             }
         }
 
-        document.addEventListener("touchstart", function(){}, true);
+        // Dedicated sluitfunctie voor de X CLOSE knop
+        function closeDetails(closeButtonElement) {
+            const parentSection = closeButtonElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const infoLabel = parentSection.querySelector('.plus-info-label');
+            
+            if (panel) panel.classList.remove('open');
+            if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            if (infoLabel) infoLabel.style.opacity = '1';
+        }
 
         function scrollToInquiries(linkElement) {
             const parentSection = linkElement.closest('section');
             const panel = parentSection.querySelector('.side-panel');
             const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const infoLabel = parentSection.querySelector('.plus-info-label');
             
             if (panel) panel.classList.remove('open');
             if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            if (infoLabel) infoLabel.style.opacity = '1';
             
             lenis.scrollTo('#inquiries', { duration: 1.5 });
         }
