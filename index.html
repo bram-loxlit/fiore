@@ -87,6 +87,7 @@
     <section id="starfish" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint">Swipe for more</div>
         <div class="section-bg active" style="--bg-desktop: url('assets/designs/starfish/Fiore-Starfish-Table-view01-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/Fiore-Starfish-Table-view01-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
         <div class="section-bg" style="--bg-desktop: url('assets/designs/starfish/Fiore-Starfish-Table-view02-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/Fiore-Starfish-Table-view02-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
         <div class="section-overlay"></div>
@@ -118,6 +119,7 @@
     <section id="drop-ripple" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint">Swipe for more</div>
         <div class="section-bg active" style="--bg-desktop: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
         <div class="section-bg" style="--bg-desktop: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
         <div class="section-overlay"></div>
@@ -149,6 +151,7 @@
     <section id="fd8" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint">Swipe for more</div>
         <div class="section-bg active" style="--bg-desktop: url('assets/designs/fd8/Fiore-FD8-Executive-view01-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/Fiore-FD8-Executive-view01-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
         <div class="section-bg" style="--bg-desktop: url('assets/designs/fd8/Fiore-FD8-Executive-view02-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/Fiore-FD8-Executive-view02-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
         <div class="section-overlay"></div>
@@ -180,6 +183,7 @@
     <section id="dodragao" class="product-view">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint">Swipe for more</div>
         <div class="section-bg active" style="--bg-desktop: url('assets/designs/do-dragao/Fiore-Do-Dragao-view01-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/Fiore-Do-Dragao-view01-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
         <div class="section-bg" style="--bg-desktop: url('assets/designs/do-dragao/Fiore-Do-Dragao-view02-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/Fiore-Do-Dragao-view02-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
         <div class="section-overlay"></div>
@@ -282,7 +286,7 @@
         });
 
         // ==========================================================================
-        // HERO SLIDESHOW LOGIC + SWIPE SUPPORT + HAPTICS
+        // HERO SLIDESHOW LOGIC + ADVANCED CHROME SWIPE SUPPORT + HAPTICS
         // ==========================================================================
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
@@ -302,45 +306,69 @@
             }
         }
 
-        // HERO SWIPE LOGIC
+        // HERO GALAXY / CHROME FIXED TOUCH DETECTION
         const heroContainer = document.getElementById('heroSlideshow');
         let touchStartX = 0;
-        let touchEndX = 0;
+        let touchStartY = 0;
 
         if (heroContainer) {
             heroContainer.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
             }, { passive: true });
+
+            heroContainer.addEventListener('touchmove', (e) => {
+                let xDist = Math.abs(e.changedTouches[0].screenX - touchStartX);
+                let yDist = Math.abs(e.changedTouches[0].screenY - touchStartY);
+                if (xDist > yDist && xDist > 10) {
+                    if (e.cancelable) e.preventDefault();
+                }
+            }, { passive: false });
 
             heroContainer.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleHeroSwipe();
-            }, { passive: true });
-        }
+                let touchEndX = e.changedTouches[0].screenX;
+                let touchEndY = e.changedTouches[0].screenY;
+                
+                let swipeThreshold = 40; 
+                let swipeDistance = touchEndX - touchStartX;
+                let yDistance = Math.abs(touchEndY - touchStartY);
 
-        function handleHeroSwipe() {
-            const swipeThreshold = 50; 
-            const swipeDistance = touchEndX - touchStartX;
-
-            if (Math.abs(swipeDistance) > swipeThreshold) {
-                if (swipeDistance > 0) {
-                    moveHero(-1); 
-                } else {
-                    moveHero(1);  
+                if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
+                    if (swipeDistance > 0) {
+                        moveHero(-1); 
+                    } else {
+                        moveHero(1);  
+                    }
                 }
-            }
+            }, { passive: true });
         }
 
         // ==========================================================================
-        // PRODUCT SECTIONS CAROUSEL LOGIC WITH PERFECT FADE TRANSITION + SWIPE
+        // PRODUCT SECTIONS CAROUSEL LOGIC WITH PERFECT FADE TRANSITION + SWIPE + DELAYED HINT
         // ==========================================================================
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
+            const hint = s.querySelector('.swipe-hint');
+            
             if(bgs.length > 1) {
                 let bIdx = 0;
+                
+                // Activeer de getimede hint: verschijnt exact halverwege slide 1 (na 2,5 seconden)
+                let hintTimeout = setTimeout(() => {
+                    if (bIdx === 0 && hint) {
+                        hint.classList.add('visible');
+                    }
+                }, 2500);
+
                 let sectInterval = setInterval(() => changeBg(1), 5000);
 
                 function changeBg(direction) {
+                    // Verberg de hint permanent bij elke vorm van interactie of slide wissel
+                    if (hint) {
+                        hint.classList.remove('visible');
+                        clearTimeout(hintTimeout);
+                    }
+
                     bgs[bIdx].classList.remove('active');
                     bIdx = (bIdx + direction + bgs.length) % bgs.length;
                     bgs[bIdx].classList.add('active');
@@ -356,23 +384,36 @@
                     sectInterval = setInterval(() => changeBg(1), 5000);
                 };
 
-                // PRODUCT SWIPE DETECTIE
+                // ADVANCED FIXED SWIPE DETECTIE VOOR CHROME MOBILE
                 let pTouchStartX = 0;
-                let pTouchEndX = 0;
+                let pTouchStartY = 0;
 
                 s.addEventListener('touchstart', (e) => {
                     if (e.target.closest('.side-panel')) return;
                     pTouchStartX = e.changedTouches[0].screenX;
+                    pTouchStartY = e.changedTouches[0].screenY;
                 }, { passive: true });
+
+                s.addEventListener('touchmove', (e) => {
+                    if (e.target.closest('.side-panel')) return;
+                    let xDist = Math.abs(e.changedTouches[0].screenX - pTouchStartX);
+                    let yDist = Math.abs(e.changedTouches[0].screenY - pTouchStartY);
+                    
+                    if (xDist > yDist && xDist > 10) {
+                        if (e.cancelable) e.preventDefault();
+                    }
+                }, { passive: false });
 
                 s.addEventListener('touchend', (e) => {
                     if (e.target.closest('.side-panel')) return;
-                    pTouchEndX = e.changedTouches[0].screenX;
+                    let pTouchEndX = e.changedTouches[0].screenX;
+                    let pTouchEndY = e.changedTouches[0].screenY;
                     
-                    const swipeThreshold = 50;
+                    const swipeThreshold = 40;
                     const swipeDistance = pTouchEndX - pTouchStartX;
+                    const yDistance = Math.abs(pTouchEndY - pTouchStartY);
 
-                    if (Math.abs(swipeDistance) > swipeThreshold) {
+                    if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
                         if (swipeDistance > 0) {
                             s.moveBg(-1); 
                         } else {
