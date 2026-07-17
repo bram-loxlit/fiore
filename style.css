@@ -103,12 +103,11 @@ section.product-view {
     position: absolute; top: -15%; left: 0; width: 100%; height: 130%;
     background-image: var(--bg-mobile);
     background-size: cover; background-position: center;
-    opacity: 0 !important; /* Standaard onzichtbaar */
+    opacity: 0 !important; 
     z-index: 1;
     will-change: opacity, transform;
     transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1) !important; 
 }
-/* Alleen de actieve achtergrond krijgt opacity 1, overal afgedwongen */
 .section-bg.active { 
     opacity: 1 !important; 
     z-index: 2; 
@@ -127,6 +126,27 @@ section.product-view {
 .section-content { position: relative; z-index: 10; text-shadow: 0 2px 15px rgba(0,0,0,0.5); }
 .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
 .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
+
+/* Subtiele Luxe Swipe Indicator */
+.swipe-hint {
+    position: absolute;
+    left: 6%;
+    bottom: clamp(34vh, 32vh, 40vh); /* Zweeft prachtig strak boven de product-titel */
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: 300;
+    z-index: 15;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.5s ease-in-out, transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.swipe-hint.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 /* Geanimeerde Plus Trigger Wrapper met groter INFO label */
 .plus-trigger-wrapper {
@@ -364,7 +384,11 @@ input, textarea {
 
     section.product-view { padding: 0 30px 14vh 30px; }
     
-    /* FIX: Geen overschrijving van opacity meer in de mobiele sectie stand */
+    .swipe-hint {
+        left: 30px;
+        bottom: clamp(28vh, 26vh, 32vh); /* Positionering gecorrigeerd voor mobiele schermen */
+    }
+
     .section-bg { 
         height: 100% !important; 
         top: 0 !important; 
