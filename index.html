@@ -261,8 +261,10 @@
         requestAnimationFrame(raf);
         lenis.on('scroll', ScrollTrigger.update);
 
-        // GSAP Animations (Desktop only)
+        // GSAP Animations (Desktop & Multi-device Scroll Effects)
         const mm = gsap.matchMedia();
+        
+        // INTERMISSIONS PARALLAX (Desktop only)
         mm.add("(min-width: 769px)", () => {
             document.querySelectorAll('.intermission').forEach(sect => {
                 const spot = sect.querySelector('.parallax-spotlight');
@@ -285,6 +287,18 @@
             });
         });
 
+        // FIXED: CINEMATIC HERO ZOOM EFFECT (Werkt op alle apparaten vlekkeloos)
+        gsap.to('.hero-slide', {
+            scale: 1.08,
+            ease: "none",
+            scrollTrigger: {
+                trigger: '.hero-slideshow',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
         // ==========================================================================
         // HERO SLIDESHOW LOGIC + ADVANCED CHROME SWIPE SUPPORT + HAPTICS
         // ==========================================================================
@@ -294,6 +308,8 @@
 
         function moveHero(direction) {
             if(hSlides.length === 0) return;
+            
+            // Haal active weg, maar behoud de schaal die ScrollTrigger dicteert
             hSlides[hIdx].classList.remove('active');
             hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
             hSlides[hIdx].classList.add('active');
@@ -306,7 +322,7 @@
             }
         }
 
-        // HERO GALAXY / CHROME FIXED TOUCH DETECTION
+        // HERO CHROME FIXED TOUCH DETECTION
         const heroContainer = document.getElementById('heroSlideshow');
         let touchStartX = 0;
         let touchStartY = 0;
@@ -353,7 +369,6 @@
             if(bgs.length > 1) {
                 let bIdx = 0;
                 
-                // Activeer direct de visible klasse zodra de pagina laadt / element in beeld komt
                 if (hint) {
                     hint.classList.add('visible');
                 }
@@ -361,7 +376,6 @@
                 let sectInterval = setInterval(() => changeBg(1), 5000);
 
                 function changeBg(direction) {
-                    // Verwijder de hint permanent bij de allereerste verandering
                     if (hint) {
                         hint.classList.remove('visible');
                     }
@@ -487,6 +501,7 @@
             }
         };
 
+        // Panel toggles
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -552,9 +567,7 @@
             lenis.scrollTo('#inquiries', { duration: 1.5 });
         }
 
-        // ==========================================================================
-        // FORM SUBMISSION LOGIC
-        // ==========================================================================
+        // Form Submit
         function handleFormSubmit(event) {
             event.preventDefault();
             const button = document.getElementById('submitBtn');
