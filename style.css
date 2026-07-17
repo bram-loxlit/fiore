@@ -24,7 +24,6 @@ body, html {
     width: 100%; 
     overflow: hidden; 
     background: #000; 
-    /* FIX: Voorkomt dat de browser de swipe kaapt voor browser-navigatie */
     touch-action: pan-y; 
 }
 .hero-slide { 
@@ -34,7 +33,6 @@ body, html {
     opacity: 0; z-index: 1;
     transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
     
-    /* Tekst exact op 60% hoogte positioneren */
     display: flex; 
     align-items: flex-start; 
     justify-content: center;
@@ -68,11 +66,8 @@ body, html {
     padding-bottom: 12px; 
     transition: 0.5s; 
     white-space: nowrap;
-    
-    /* PURE FLAT: 100% strakke vector zonder schaduw */
     font-weight: 500; 
     text-shadow: none !important; 
-    
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -108,8 +103,6 @@ section.product-view {
     background-image: var(--bg-mobile);
     background-size: cover; background-position: center;
     opacity: 0; z-index: 1; will-change: transform;
-    
-    /* FIX: Activeert de zachte 2.5 seconde cross-fade transitie tussen foto's */
     transition: opacity 2.5s cubic-bezier(0.4, 0, 0.2, 1); 
 }
 .section-bg.active { opacity: 1; z-index: 2; }
@@ -128,7 +121,7 @@ section.product-view {
 .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
 .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
-/* Geanimeerde Plus Trigger Wrapper met INFO label */
+/* Geanimeerde Plus Trigger Wrapper met groter INFO label */
 .plus-trigger-wrapper {
     display: inline-flex;
     align-items: center;
@@ -138,7 +131,7 @@ section.product-view {
 }
 
 .plus-trigger {
-    font-size: clamp(36px, 5vw, 48px); 
+    font-size: clamp(38px, 5.5vw, 52px); 
     font-weight: 200; 
     display: inline-block; 
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
@@ -147,11 +140,11 @@ section.product-view {
 }
 
 .plus-info-label {
-    font-size: 9px;
-    letter-spacing: 4px;
+    font-size: clamp(11px, 1.5vw, 13px); /* FIX: Groter en leesbaarder gemaakt */
+    letter-spacing: 5px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4);
-    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
     transition: color 0.3s, opacity 0.3s;
     animation: pulseOpacity 2.5s infinite ease-in-out;
 }
@@ -206,19 +199,37 @@ section.intermission {
     margin: 60px auto 0 auto; opacity: 0.2;
 }
 
-/* 4. HIGH-END MONOLITHIC SIDE PANEL */
+/* 4. HIGH-END MONOLITHIC SIDE PANEL WITH X CLOSE SUPPORT */
 .side-panel {
     position: absolute; top: 0; right: -50%; width: 45%; height: 100vh;
-    z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    padding: 100px 80px; overflow-y: auto; background: rgba(8, 8, 8, 0.92); 
+    z-index: 100; transition: right 0.7s cubic-bezier(0.16, 1, 0.3, 1), top 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 120px 80px 100px 80px; overflow-y: auto; background: rgba(8, 8, 8, 0.95); 
     backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
     border-left: 1px solid rgba(255, 255, 255, 0.06); color: #fff; 
 }
 .side-panel.open { right: 0; }
 
+/* New Elegant X CLOSE Button Elements */
+.panel-close-btn {
+    position: absolute;
+    top: 45px;
+    right: 50px;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    z-index: 110;
+    font-weight: 300;
+}
+.panel-close-btn:hover {
+    color: #fff;
+    transform: scale(1.02);
+}
+
 .matrix-header {
     font-size: 10px; letter-spacing: 5px; text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.4); margin-bottom: 50px;
+    color: rgba(255, 255, 255, 0.4); margin-bottom: 50px; margin-top: 20px;
 }
 
 .matrix-row {
@@ -310,7 +321,7 @@ input, textarea {
    RESPONSIVE OVERRIDES (MEDIA QUERIES) - ALTIJD ONDERAAN PLAATSEN
    ========================================================================== */
 @media (max-width: 1024px) { 
-    .side-panel { width: 65%; right: -70%; padding: 80px 45px; } 
+    .side-panel { width: 65%; right: -70%; padding: 100px 45px 80px 45px; } 
     section.product-view { padding: 0 6% 16vh 6%; } 
 }
 
@@ -319,7 +330,6 @@ input, textarea {
     .hero-arrow { font-size: 38px !important; color: rgba(255, 255, 255, 0.6) !important; padding: 10px; }
     .hero-navigation-wrapper { gap: 25px; }
     
-    /* Gecentraliseerde Mobiele Fix voor Perfect Gecentreerde Woordstapeling */
     .hero-link {
         white-space: normal !important; 
         text-align: center; 
@@ -327,18 +337,27 @@ input, textarea {
         line-height: 2.2 !important; 
         border-bottom: none !important; 
         padding-bottom: 0 !important;
-        
         display: inline-block;
         max-width: 180px; 
-        
-        /* FIX: Compenseert de brief-spacing aan de rechterkant voor mathematische centrering */
         margin-right: -0.6em !important; 
     }
 
-    .side-panel { width: 100%; height: 88vh; top: 100%; right: 0; transition: top 0.7s cubic-bezier(0.16, 1, 0.3, 1); border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); padding: 60px 30px; }
+    /* Mobiele fix voor bottom-sheet sidepanel */
+    .side-panel { 
+        width: 100%; height: 88vh; 
+        top: 100%; right: 0; 
+        border-left: none; border-top: 1px solid rgba(255, 255, 255, 0.1); 
+        padding: 80px 30px 60px 30px; 
+    }
     .side-panel.open { top: 12vh; right: 0; }
-    section.product-view { padding: 0 30px 14vh 30px; }
     
+    .panel-close-btn {
+        top: 30px;
+        right: 30px;
+        font-size: 12px;
+    }
+
+    section.product-view { padding: 0 30px 14vh 30px; }
     .section-bg { height: 100% !important; top: 0 !important; }
     section.intermission { height: 100vh; height: 100dvh; }
     .parallax-drift-text { font-size: 7vh; letter-spacing: 0.1em; }
