@@ -130,72 +130,31 @@ section.product-view {
 .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
 .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
-/* VEEL GROTERE & GECENTREERDE Luxe Swipe Indicator (Desktop / Tablet Landschap) */
+/* FIX: Op desktop verbergen we de 'Swipe for more' tekst volledig */
 .swipe-hint {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: 22%; 
-    z-index: 15;
-    pointer-events: none;
-    opacity: 0;
-    text-align: center;
-    
-    /* Gecorrigeerde premium desktop-schaling */
-    font-size: 26px; 
-    letter-spacing: 12px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.75); 
-    font-weight: 300;
-}
-.swipe-hint span { display: inline-block; } /* Houdt op desktop de boel op één lijn */
-
-.swipe-hint.visible {
-    animation: quickPulseHint 4.5s forwards ease-in-out;
+    display: none !important;
 }
 
-/* Geanimeerde Plus Trigger Wrapper met groter INFO label */
-.plus-trigger-wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    touch-action: manipulation;
-}
-
-.plus-trigger {
-    font-size: clamp(38px, 5.5vw, 52px); 
-    font-weight: 200; 
-    display: inline-block; 
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
-    line-height: 1; 
-    opacity: 0.8;
-}
-
-.plus-info-label {
-    font-size: clamp(11px, 1.5vw, 13px); 
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 400;
-    transition: color 0.3s, opacity 0.3s;
-    animation: pulseOpacity 2.5s infinite ease-in-out;
-}
-
-.plus-trigger-wrapper:hover .plus-trigger { opacity: 1; }
-.plus-trigger-wrapper:hover .plus-info-label { color: #fff; opacity: 1; }
-
-/* Product Section Pijltjes Styling */
+/* HIGH-END VERGROTE NAVIGATIEPIJLTJES (Desktop / Tablet Landschap) */
 .slide-arrow {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    font-size: clamp(32px, 4vw, 48px); font-weight: 100;
-    color: rgba(255, 255, 255, 0.3); cursor: pointer; z-index: 20;
-    user-select: none; transition: color 0.3s, transform 0.3s;
-    padding: 20px;
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%);
+    font-size: 64px; /* Veel groter, museum schaal */
+    font-weight: 100; /* Ultradun en super elegant vector-design */
+    color: rgba(255, 255, 255, 0.15); /* Subtiel weggestreept in ruststand */
+    cursor: pointer; 
+    z-index: 25;
+    user-select: none; 
+    transition: color 0.4s, transform 0.4s, opacity 0.4s;
+    padding: 30px 20px;
 }
-.slide-arrow:hover { color: #fff; transform: translateY(-50%) scale(1.1); }
-.arrow-left { left: 4%; }
-.arrow-right { right: 4%; }
+.slide-arrow:hover { 
+    color: rgba(255, 255, 255, 0.8); /* Elegante, heldere oplichting */
+    transform: translateY(-50%) scale(1.05); 
+}
+.arrow-left { left: 3%; }
+.arrow-right { right: 3%; }
 
 /* 3. ADVANCED PARALLAX INTERMISSIONS */
 section.intermission {
@@ -342,8 +301,6 @@ input, textarea {
     position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 10; text-align: center; cursor: pointer; transition: opacity 0.4s;
 }
 .scroll-invitation:hover { opacity: 1; }
-.scroll-invitation:hover .scroll-invitation__label { color: rgba(255, 255, 255, 0.9); }
-.scroll-invitation__hover .scroll-invitation__svg { fill: rgba(255, 255, 255, 0.9); }
 .scroll-invitation__label { display: flex; flex-direction: column; align-items: center; font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255, 255, 255, 0.4); font-weight: 300; transition: color 0.4s; }
 .scroll-invitation__svg { display: block; fill: rgba(255, 255, 255, 0.4); margin-bottom: 15px; transition: fill 0.4s; }
 .scroll-invitation__svg-line { fill: #fff; animation: moveLineDown 1.2s ease-out infinite; }
@@ -390,22 +347,31 @@ input, textarea {
 
     section.product-view { padding: 0 30px 14vh 30px; }
     
-    /* GECORRIGEERDE MOBIELE STYLING VOOR 'SWIPE FOR MORE' (BRUTALISTISCH GROOT EN GESTAPELD) */
+    /* FIX: Activeer mobiele indicator uitsluitend op smartphone schermen */
     .swipe-hint {
-        top: 18%; 
-        font-size: 44px; /* Krachtig en onmisbaar groot */
+        display: block !important; /* Maak zichtbaar op mobiel */
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20%; 
+        font-size: 44px; /* Brutalistisch groot */
         letter-spacing: 4px;
         line-height: 1.15;
         font-weight: 300;
-        color: rgba(255, 255, 255, 0.85); /* Iets meer wit-waarde voor contrast op telefoons */
+        color: rgba(255, 255, 255, 0.85); 
         width: 100%;
         padding: 0 20px;
+        text-align: center;
     }
     
-    /* FIX: Dwingt elk woord af op een gloednieuwe regel op smartphones */
     .swipe-hint span { 
         display: block !important; 
         text-align: center;
+    }
+
+    /* Mobiel verbergen we de pijltjes omdat swipen de UI domineert */
+    .slide-arrow {
+        display: none !important;
     }
 
     .section-bg { 
@@ -425,6 +391,18 @@ input, textarea {
 /* ==========================================================================
    ANIMATIES (KEYFRAMES)
    ========================================================================== */
+@media (max-width: 768px) {
+    @keyframes quickPulseHint {
+        0% { opacity: 0; }
+        15% { opacity: 0.75; }
+        30% { opacity: 0.15; }
+        45% { opacity: 0.75; }
+        60% { opacity: 0.15; }
+        75% { opacity: 0.75; }
+        100% { opacity: 0; display: none; }
+    }
+}
+
 @keyframes moveLineDown {
     0% { transform: translateY(-5px); opacity: 0; }
     50% { opacity: 1; }
@@ -440,15 +418,4 @@ input, textarea {
 @keyframes pulseOpacity {
     0%, 100% { opacity: 0.3; transform: translateX(0px); }
     50% { opacity: 0.8; transform: translateX(2px); }
-}
-
-/* Gecorrigeerde pulse: Iets feller gluren voor superieure leesbaarheid op OLED schermen */
-@keyframes quickPulseHint {
-    0% { opacity: 0; }
-    15% { opacity: 0.75; }
-    30% { opacity: 0.15; }
-    45% { opacity: 0.75; }
-    60% { opacity: 0.15; }
-    75% { opacity: 0.75; }
-    100% { opacity: 0; display: none; }
 }
