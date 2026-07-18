@@ -87,7 +87,7 @@
     <section id="starfish" class="product-view" data-project-id="starfish">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
         <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
@@ -118,7 +118,7 @@
     <section id="drop-ripple" class="product-view" data-project-id="drop-ripple">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
         <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
@@ -149,7 +149,7 @@
     <section id="fd8" class="product-view" data-project-id="fd8">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
         <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
@@ -180,7 +180,7 @@
     <section id="dodragao" class="product-view" data-project-id="dodragao">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
-        <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
         <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
@@ -253,13 +253,11 @@
             touchMultiplier: 1.5,
             infinite: false,
         });
-        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        function raf(time) { lenis.fn ? lenis.fn(time) : lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
         lenis.on('scroll', ScrollTrigger.update);
 
-        // ==========================================================================
-        // DYNAMIC DATA MATRIX (COMPLEET MET HIER DE NIEUWE GENERATIE SLIDES)
-        // ==========================================================================
+        // Data matrix object
         const projects = {
             'starfish': {
                 title: 'Starfish Table',
@@ -338,9 +336,7 @@
             }
         };
 
-        // ==========================================================================
-        // AUTOMATISCHE HTML GENERATIE VOOR ACHTERGRONDEN
-        // ==========================================================================
+        // Injectie van achtergronden bij het laden
         document.querySelectorAll('.product-view').forEach(section => {
             const pId = section.getAttribute('data-project-id');
             const container = section.querySelector('.bg-injection-container');
@@ -354,7 +350,7 @@
             }
         });
 
-        // GSAP Animations (Desktop only)
+        // GSAP Parallax (Desktop)
         const mm = gsap.matchMedia();
         mm.add("(min-width: 769px)", () => {
             document.querySelectorAll('.intermission').forEach(sect => {
@@ -378,7 +374,7 @@
             });
         });
 
-        // CINEMATIC HERO ZOOM EFFECT
+        // Hero Cinematic Scroll Zoom
         gsap.to('.hero-slide', {
             scale: 1.08,
             ease: "none",
@@ -390,9 +386,7 @@
             }
         });
 
-        // ==========================================================================
-        // HERO SLIDESHOW LOGIC
-        // ==========================================================================
+        // Hero Slideshow Switch
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
         let heroInterval = setInterval(() => moveHero(1), 6000);
@@ -402,14 +396,12 @@
             hSlides[hIdx].classList.remove('active');
             hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
             hSlides[hIdx].classList.add('active');
-            
             clearInterval(heroInterval);
             heroInterval = setInterval(() => moveHero(1), 6000);
-
             if (navigator.vibrate) { navigator.vibrate(15); }
         }
 
-        // HERO CHROME FIXED TOUCH DETECTION
+        // Hero Swipe
         const heroContainer = document.getElementById('heroSlideshow');
         let touchStartX = 0;
         let touchStartY = 0;
@@ -423,28 +415,22 @@
             heroContainer.addEventListener('touchmove', (e) => {
                 let xDist = Math.abs(e.changedTouches[0].screenX - touchStartX);
                 let yDist = Math.abs(e.changedTouches[0].screenY - touchStartY);
-                if (xDist > yDist && xDist > 10) {
-                    if (e.cancelable) e.preventDefault();
-                }
+                if (xDist > yDist && xDist > 10) { if (e.cancelable) e.preventDefault(); }
             }, { passive: false });
 
             heroContainer.addEventListener('touchend', (e) => {
                 let touchEndX = e.changedTouches[0].screenX;
                 let touchEndY = e.changedTouches[0].screenY;
-                
                 let swipeThreshold = 40; 
                 let swipeDistance = touchEndX - touchStartX;
                 let yDistance = Math.abs(touchEndY - touchStartY);
-
                 if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
                     if (swipeDistance > 0) { moveHero(-1); } else { moveHero(1); }
                 }
             }, { passive: true });
         }
 
-        // ==========================================================================
-        // PRODUCT SECTIONS DYNAMIC CAROUSEL LOGIC
-        // ==========================================================================
+        // Section Carousels
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
             const hint = s.querySelector('.swipe-hint');
@@ -457,11 +443,9 @@
 
                 function changeBg(direction) {
                     if (hint) { hint.classList.remove('visible'); }
-
                     bgs[bIdx].classList.remove('active');
                     bIdx = (bIdx + direction + bgs.length) % bgs.length;
                     bgs[bIdx].classList.add('active');
-                    
                     if (navigator.vibrate && direction !== 0) { navigator.vibrate(15); }
                 }
 
@@ -484,20 +468,16 @@
                     if (e.target.closest('.side-panel')) return;
                     let xDist = Math.abs(e.changedTouches[0].screenX - pTouchStartX);
                     let yDist = Math.abs(e.changedTouches[0].screenY - pTouchStartY);
-                    if (xDist > yDist && xDist > 10) {
-                        if (e.cancelable) e.preventDefault();
-                    }
+                    if (xDist > yDist && xDist > 10) { if (e.cancelable) e.preventDefault(); }
                 }, { passive: false });
 
                 s.addEventListener('touchend', (e) => {
                     if (e.target.closest('.side-panel')) return;
                     let pTouchEndX = e.changedTouches[0].screenX;
                     let pTouchEndY = e.changedTouches[0].screenY;
-                    
                     const swipeThreshold = 40;
                     const swipeDistance = pTouchEndX - pTouchStartX;
                     const yDistance = Math.abs(pTouchEndY - pTouchStartY);
-
                     if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
                         if (swipeDistance > 0) { s.moveBg(-1); } else { s.moveBg(1); }
                     }
@@ -512,7 +492,7 @@
             }
         }
 
-        // SIDE PANEL DATA OPEN / CLOSE
+        // Side panel toggles
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -531,7 +511,6 @@
                 if(!p) return;
                 
                 let cleanHTML = `<div class="matrix-header">${p.title} // Structural Specifications</div>`;
-                
                 p.details.forEach(item => {
                     cleanHTML += `
                         <div class="matrix-row">
@@ -578,15 +557,14 @@
             lenis.scrollTo('#inquiries', { duration: 1.5 });
         }
 
+        // Form Submission
         function handleFormSubmit(event) {
             event.preventDefault();
             const button = document.getElementById('submitBtn');
             const form = document.getElementById('fioreForm');
-            
             button.innerText = "SENDING...";
             button.style.pointerEvents = "none";
             button.style.opacity = "0.4";
-            
             const formData = new FormData(form);
             
             fetch("https://formsubmit.co/ajax/hi@fio.re", {
