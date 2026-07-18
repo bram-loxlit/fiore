@@ -84,12 +84,11 @@
     </section>
 
     <!-- Section: Starfish Table -->
-    <section id="starfish" class="product-view">
+    <section id="starfish" class="product-view" data-project-id="starfish">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
         <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
-        <div class="section-bg active" style="--bg-desktop: url('assets/designs/starfish/Fiore-Starfish-Table-view01-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/Fiore-Starfish-Table-view01-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 1"></div>
-        <div class="section-bg" style="--bg-desktop: url('assets/designs/starfish/Fiore-Starfish-Table-view02-desktop.jpg'); --bg-mobile: url('assets/designs/starfish/Fiore-Starfish-Table-view02-mobile.jpg');" aria-label="Fiore Starfish Table Gueridon Collectible Design view 2"></div>
+        <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Starfish Table</h2>
@@ -116,12 +115,11 @@
     </section>
 
     <!-- Section: Drop & Ripple -->
-    <section id="drop-ripple" class="product-view">
+    <section id="drop-ripple" class="product-view" data-project-id="drop-ripple">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
         <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
-        <div class="section-bg active" style="--bg-desktop: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 1"></div>
-        <div class="section-bg" style="--bg-desktop: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-desktop.jpg'); --bg-mobile: url('assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg');" aria-label="Fiore Drop and Ripple Luxury Table and Rug View 2"></div>
+        <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Drop & Ripple</h2>
@@ -148,12 +146,11 @@
     </section>
 
     <!-- Section: FD8 Executive -->
-    <section id="fd8" class="product-view">
+    <section id="fd8" class="product-view" data-project-id="fd8">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
         <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
-        <div class="section-bg active" style="--bg-desktop: url('assets/designs/fd8/Fiore-FD8-Executive-view01-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/Fiore-FD8-Executive-view01-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 1"></div>
-        <div class="section-bg" style="--bg-desktop: url('assets/designs/fd8/Fiore-FD8-Executive-view02-desktop.jpg'); --bg-mobile: url('assets/designs/fd8/Fiore-FD8-Executive-view02-mobile.jpg');" aria-label="Fiore FD8 Executive Desk Titanium Workspace View 2"></div>
+        <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>FD8 Executive</h2>
@@ -180,12 +177,11 @@
     </section>
 
     <!-- Section: Do Dragao -->
-    <section id="dodragao" class="product-view">
+    <section id="dodragao" class="product-view" data-project-id="dodragao">
         <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
         <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
         <div class="swipe-hint"><span>Swipe</span> <span>for</span> <span>more</span></div>
-        <div class="section-bg active" style="--bg-desktop: url('assets/designs/do-dragao/Fiore-Do-Dragao-view01-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/Fiore-Do-Dragao-view01-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 1"></div>
-        <div class="section-bg" style="--bg-desktop: url('assets/designs/do-dragao/Fiore-Do-Dragao-view02-desktop.jpg'); --bg-mobile: url('assets/designs/do-dragao/Fiore-Do-Dragao-view02-mobile.jpg');" aria-label="Fiore Do Dragao Daybed Anatomical Sculpture View 2"></div>
+        <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>Do Dragao</h2>
@@ -212,8 +208,8 @@
     </section>
 
     <!-- Section: About -->
-    <section id="about" class="product-view">
-        <div class="section-bg active" style="--bg-desktop: url('assets/designs/about/Fiore-About-view01-desktop.jpg'); --bg-mobile: url('assets/designs/about/Fiore-About-view01-mobile.jpg');" aria-label="Fiore Art Design Laboratory Antwerp Background"></div>
+    <section id="about" class="product-view" data-project-id="about">
+        <div class="bg-injection-container"></div>
         <div class="section-overlay"></div>
         <div class="section-content">
             <h2>About Fiore</h2>
@@ -261,10 +257,105 @@
         requestAnimationFrame(raf);
         lenis.on('scroll', ScrollTrigger.update);
 
-        // GSAP Animations (Desktop & Multi-device Scroll Effects)
+        // ==========================================================================
+        // DYNAMIC DATA MATRIX (COMPLEET MET HIER DE NIEUWE GENERATIE SLIDES)
+        // ==========================================================================
+        const projects = {
+            'starfish': {
+                title: 'Starfish Table',
+                images: [
+                    { d: 'assets/designs/starfish/Fiore-Starfish-Table-view01-desktop.jpg', m: 'assets/designs/starfish/Fiore-Starfish-Table-view01-mobile.jpg' },
+                    { d: 'assets/designs/starfish/Fiore-Starfish-Table-view02-desktop.jpg', m: 'assets/designs/starfish/Fiore-Starfish-Table-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Biomorphic Radially-Centered Guéridon Architecture' },
+                    { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Soul-Red Metallic Poly-Coated Base // Top: Carbon-Injected Noir de Mazy Marble' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Titanium Black Liquid Chrome Base // Top: Radially Bookmatched Macassar Ebony' },
+                    { label: 'Structural Core', value: 'Damped Multi-Layer Polymer Composite (Zero Acoustic Ringing)' },
+                    { label: 'Authentication', value: 'Micro-Enameled Titanium Plaque with Cryptographic DNA' },
+                    { label: 'Lead-Time', value: '18 Weeks // Handcrafted in Antwerp Laboratory // Limited Edition of 8' }
+                ]
+            },
+            'drop-ripple': {
+                title: 'Drop & Ripple',
+                images: [
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view03-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view05-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view09-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Integrated Domestic Topography System (Table & Rug)' },
+                    { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Milled Solid Black Walnut Slab // Low-Profile Organic Edge Satin Finish' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Hand-knotted Tibetan Silk & High-Density Botanical Wool Rug (Ripple Pattern)' },
+                    { label: 'Surface Treatment', value: 'Organic Oleo-Wax Nano Coating (Water & Scratch Resistant)' },
+                    { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
+                ]
+            },
+            'fd8': {
+                title: 'FD8 Executive',
+                images: [
+                    { d: 'assets/designs/fd8/Fiore-FD8-Executive-view01-desktop.jpg', m: 'assets/designs/fd8/Fiore-FD8-Executive-view01-mobile.jpg' },
+                    { d: 'assets/designs/fd8/Fiore-FD8-Executive-view02-desktop.jpg', m: 'assets/designs/fd8/Fiore-FD8-Executive-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
+                    { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Anodized Aerospace-Grade Titanium Frame // Micro-Blasted Matte Finish' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Compression-Molded Structural Carbon Top // Integrated Wire Management' },
+                    { label: 'Hardware Integration', value: 'Flush Magnetic Cable Paths // Soft-Close Stealth Drawer Compartments' },
+                    { label: 'Lead-Time', value: '18 Weeks // Custom Tailored to Executive Ergonomics' }
+                ]
+            },
+            'dodragao': {
+                title: 'Do Dragao',
+                images: [
+                    { d: 'assets/designs/do-dragao/Fiore-Do-Dragao-view01-desktop.jpg', m: 'assets/designs/do-dragao/Fiore-Do-Dragao-view01-mobile.jpg' },
+                    { d: 'assets/designs/do-dragao/Fiore-Do-Dragao-view02-desktop.jpg', m: 'assets/designs/do-dragao/Fiore-Do-Dragao-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Anatomical Sculptural Daybed' },
+                    { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Cast Magnesium Internal Skeleton // Ultralight Monocoque Geometry' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Full-Grain Liquid Aniline Hide // Hand-Stretched Seamless Saddle Stitching' },
+                    { label: 'Ergonomic Tuning', value: 'Variable-Density Memory Foam Core with Zonal Pressure Relief' },
+                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Curation' }
+                ]
+            },
+            'about': {
+                title: 'FIORE LABS // ABOUT',
+                images: [
+                    { d: 'assets/designs/about/Fiore-About-view01-desktop.jpg', m: 'assets/designs/about/Fiore-About-view01-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
+                    { label: 'Coordinates', value: 'Antwerp Laboratory // Flanders, Belgium' },
+                    { label: 'Philosophy', value: 'Form follows emotion. Objects created as autonomous emotional presences, blurring the line between physical craftsmanship and digital evolution.' }
+                ]
+            }
+        };
+
+        // ==========================================================================
+        // AUTOMATISCHE HTML GENERATIE VOOR ACHTERGRONDEN
+        // ==========================================================================
+        document.querySelectorAll('.product-view').forEach(section => {
+            const pId = section.getAttribute('data-project-id');
+            const container = section.querySelector('.bg-injection-container');
+            if (pId && projects[pId] && container) {
+                let generatedHTML = '';
+                projects[pId].images.forEach((img, index) => {
+                    const activeClass = (index === 0) ? 'active' : '';
+                    generatedHTML += `<div class="section-bg ${activeClass}" style="--bg-desktop: url('${img.d}'); --bg-mobile: url('${img.m}');"></div>`;
+                });
+                container.innerHTML = generatedHTML;
+            }
+        });
+
+        // GSAP Animations (Desktop only)
         const mm = gsap.matchMedia();
-        
-        // INTERMISSIONS PARALLAX (Desktop only)
         mm.add("(min-width: 769px)", () => {
             document.querySelectorAll('.intermission').forEach(sect => {
                 const spot = sect.querySelector('.parallax-spotlight');
@@ -300,7 +391,7 @@
         });
 
         // ==========================================================================
-        // HERO SLIDESHOW LOGIC + ADVANCED CHROME SWIPE SUPPORT + HAPTICS
+        // HERO SLIDESHOW LOGIC
         // ==========================================================================
         let hIdx = 0;
         const hSlides = document.querySelectorAll('.hero-slide');
@@ -308,7 +399,6 @@
 
         function moveHero(direction) {
             if(hSlides.length === 0) return;
-            
             hSlides[hIdx].classList.remove('active');
             hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
             hSlides[hIdx].classList.add('active');
@@ -316,9 +406,7 @@
             clearInterval(heroInterval);
             heroInterval = setInterval(() => moveHero(1), 6000);
 
-            if (navigator.vibrate) {
-                navigator.vibrate(15); 
-            }
+            if (navigator.vibrate) { navigator.vibrate(15); }
         }
 
         // HERO CHROME FIXED TOUCH DETECTION
@@ -349,17 +437,13 @@
                 let yDistance = Math.abs(touchEndY - touchStartY);
 
                 if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
-                    if (swipeDistance > 0) {
-                        moveHero(-1); 
-                    } else {
-                        moveHero(1);  
-                    }
+                    if (swipeDistance > 0) { moveHero(-1); } else { moveHero(1); }
                 }
             }, { passive: true });
         }
 
         // ==========================================================================
-        // PRODUCT SECTIONS CAROUSEL LOGIC WITH IMMEDIATE PULSING HINT + SWIPE FIX
+        // PRODUCT SECTIONS DYNAMIC CAROUSEL LOGIC
         // ==========================================================================
         document.querySelectorAll('.product-view').forEach(s => {
             const bgs = s.querySelectorAll('.section-bg');
@@ -367,26 +451,18 @@
             
             if(bgs.length > 1) {
                 let bIdx = 0;
-                
-                // Activeer hint alleen op mobiele schermen (CSS handelt de weergave af)
-                if (hint) {
-                    hint.classList.add('visible');
-                }
+                if (hint) { hint.classList.add('visible'); }
 
                 let sectInterval = setInterval(() => changeBg(1), 5000);
 
                 function changeBg(direction) {
-                    if (hint) {
-                        hint.classList.remove('visible');
-                    }
+                    if (hint) { hint.classList.remove('visible'); }
 
                     bgs[bIdx].classList.remove('active');
                     bIdx = (bIdx + direction + bgs.length) % bgs.length;
                     bgs[bIdx].classList.add('active');
                     
-                    if (navigator.vibrate && direction !== 0) {
-                        navigator.vibrate(15);
-                    }
+                    if (navigator.vibrate && direction !== 0) { navigator.vibrate(15); }
                 }
 
                 s.moveBg = function(direction) {
@@ -395,7 +471,6 @@
                     sectInterval = setInterval(() => changeBg(1), 5000);
                 };
 
-                // FIXED SWIPE DETECTIE VOOR CHROME MOBILE
                 let pTouchStartX = 0;
                 let pTouchStartY = 0;
 
@@ -409,7 +484,6 @@
                     if (e.target.closest('.side-panel')) return;
                     let xDist = Math.abs(e.changedTouches[0].screenX - pTouchStartX);
                     let yDist = Math.abs(e.changedTouches[0].screenY - pTouchStartY);
-                    
                     if (xDist > yDist && xDist > 10) {
                         if (e.cancelable) e.preventDefault();
                     }
@@ -425,11 +499,7 @@
                     const yDistance = Math.abs(pTouchEndY - pTouchStartY);
 
                     if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
-                        if (swipeDistance > 0) {
-                            s.moveBg(-1); 
-                        } else {
-                            s.moveBg(1);  
-                        }
+                        if (swipeDistance > 0) { s.moveBg(-1); } else { s.moveBg(1); }
                     }
                 }, { passive: true });
             }
@@ -442,65 +512,7 @@
             }
         }
 
-        // ==========================================================================
-        // DATA MATRIX & SIDE PANEL LOGIC
-        // ==========================================================================
-        const projects = {
-            'starfish': {
-                title: 'Starfish Table',
-                details: [
-                    { label: 'Classification', value: 'Biomorphic Radially-Centered Guéridon Architecture' },
-                    { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
-                    { label: 'Material Configuration I (Slide 1)', value: 'Soul-Red Metallic Poly-Coated Base // Top: Carbon-Injected Noir de Mazy Marble' },
-                    { label: 'Material Configuration II (Slide 2)', value: 'Titanium Black Liquid Chrome Base // Top: Radially Bookmatched Macassar Ebony' },
-                    { label: 'Structural Core', value: 'Damped Multi-Layer Polymer Composite (Zero Acoustic Ringing)' },
-                    { label: 'Authentication', value: 'Micro-Enameled Titanium Plaque with Cryptographic DNA' },
-                    { label: 'Lead-Time', value: '18 Weeks // Handcrafted in Antwerp Laboratory // Limited Edition of 8' }
-                ]
-            },
-            'drop-ripple': {
-                title: 'Drop & Ripple',
-                details: [
-                    { label: 'Classification', value: 'Integrated Domestic Topography System (Table & Rug)' },
-                    { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
-                    { label: 'Material Configuration I (Slide 1)', value: 'Milled Solid Black Walnut Slab // Low-Profile Organic Edge Satin Finish' },
-                    { label: 'Material Configuration II (Slide 2)', value: 'Hand-knotted Tibetan Silk & High-Density Botanical Wool Rug (Ripple Pattern)' },
-                    { label: 'Surface Treatment', value: 'Organic Oleo-Wax Nano Coating (Water & Scratch Resistant)' },
-                    { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
-                ]
-            },
-            'fd8': {
-                title: 'FD8 Executive',
-                details: [
-                    { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
-                    { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
-                    { label: 'Material Configuration I (Slide 1)', value: 'Anodized Aerospace-Grade Titanium Frame // Micro-Blasted Matte Finish' },
-                    { label: 'Material Configuration II (Slide 2)', value: 'Compression-Molded Structural Carbon Top // Integrated Wire Management' },
-                    { label: 'Hardware Integration', value: 'Flush Magnetic Cable Paths // Soft-Close Stealth Drawer Compartments' },
-                    { label: 'Lead-Time', value: '18 Weeks // Custom Tailored to Executive Ergonomics' }
-                ]
-            },
-            'dodragao': {
-                title: 'Do Dragao',
-                details: [
-                    { label: 'Classification', value: 'Anatomical Sculptural Daybed' },
-                    { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
-                    { label: 'Material Configuration I (Slide 1)', value: 'Cast Magnesium Internal Skeleton // Ultralight Monocoque Geometry' },
-                    { label: 'Material Configuration II (Slide 2)', value: 'Full-Grain Liquid Aniline Hide // Hand-Stretched Seamless Saddle Stitching' },
-                    { label: 'Ergonomic Tuning', value: 'Variable-Density Memory Foam Core with Zonal Pressure Relief' },
-                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Curation' }
-                ]
-            },
-            'about': {
-                title: 'FIORE LABS // ABOUT',
-                details: [
-                    { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
-                    { label: 'Coordinates', value: 'Antwerp Laboratory // Flanders, Belgium' },
-                    { label: 'Philosophy', value: 'Form follows emotion. Objects created as autonomous emotional presences, blurring the line between physical craftsmanship and digital evolution.' }
-                ]
-            }
-        };
-
+        // SIDE PANEL DATA OPEN / CLOSE
         function toggleDetails(element, id) {
             const parentSection = element.closest('section');
             const panel = parentSection.querySelector('.side-panel');
@@ -566,7 +578,6 @@
             lenis.scrollTo('#inquiries', { duration: 1.5 });
         }
 
-        // Form Submit
         function handleFormSubmit(event) {
             event.preventDefault();
             const button = document.getElementById('submitBtn');
