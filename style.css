@@ -102,6 +102,10 @@ section.product-view {
     touch-action: pan-y; 
 }
 
+.bg-injection-container {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+}
+
 .section-bg {
     position: absolute; top: -15%; left: 0; width: 100%; height: 130%;
     background-image: var(--bg-mobile);
@@ -130,7 +134,7 @@ section.product-view {
 .section-content h2 { font-size: clamp(28px, 4.5vw, 44px); font-weight: 300; letter-spacing: 6px; text-transform: uppercase; margin-bottom: 12px; }
 .section-content p { font-size: clamp(12px, 1.6vw, 15px); letter-spacing: 4px; opacity: 0.75; margin-bottom: 30px; text-transform: uppercase; }
 
-/* FIX: Op desktop verbergen we de 'Swipe for more' tekst volledig */
+/* Op desktop verbergen we de 'Swipe for more' tekst volledig */
 .swipe-hint {
     display: none !important;
 }
@@ -140,9 +144,9 @@ section.product-view {
     position: absolute; 
     top: 50%; 
     transform: translateY(-50%);
-    font-size: 64px; /* Veel groter, museum schaal */
-    font-weight: 100; /* Ultradun en super elegant vector-design */
-    color: rgba(255, 255, 255, 0.15); /* Subtiel weggestreept in ruststand */
+    font-size: 64px; 
+    font-weight: 100; 
+    color: rgba(255, 255, 255, 0.15); 
     cursor: pointer; 
     z-index: 25;
     user-select: none; 
@@ -150,7 +154,7 @@ section.product-view {
     padding: 30px 20px;
 }
 .slide-arrow:hover { 
-    color: rgba(255, 255, 255, 0.8); /* Elegante, heldere oplichting */
+    color: rgba(255, 255, 255, 0.8); 
     transform: translateY(-50%) scale(1.05); 
 }
 .arrow-left { left: 3%; }
@@ -347,14 +351,13 @@ input, textarea {
 
     section.product-view { padding: 0 30px 14vh 30px; }
     
-    /* FIX: Activeer mobiele indicator uitsluitend op smartphone schermen */
     .swipe-hint {
-        display: block !important; /* Maak zichtbaar op mobiel */
+        display: block !important; 
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
         top: 20%; 
-        font-size: 44px; /* Brutalistisch groot */
+        font-size: 44px; 
         letter-spacing: 4px;
         line-height: 1.15;
         font-weight: 300;
@@ -369,7 +372,6 @@ input, textarea {
         text-align: center;
     }
 
-    /* Mobiel verbergen we de pijltjes omdat swipen de UI domineert */
     .slide-arrow {
         display: none !important;
     }
