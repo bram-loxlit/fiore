@@ -1,153 +1,602 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AAA HiFi — Integrating Sound & Vision for Artists</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #bdc8d0;
-      color: #2c353d;
-      line-height: 1.6;
-    }
-
-    /* Hero / Banner Section met Grande Utopia */
-    .hero {
-      position: relative;
-      height: 100vh;
-      width: 100vw;
-      background-image: url('hero.jpg');
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      align-items: center;
-      padding-bottom: 2rem;
-    }
-
-    /* Sliding Marquee Banner */
-    .marquee-container {
-      position: absolute;
-      bottom: 4rem;
-      width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      background: rgba(189, 200, 208, 0.4);
-      backdrop-filter: blur(8px);
-      padding: 12px 0;
-    }
-    .marquee-content {
-      display: inline-block;
-      animation: marquee 20s linear infinite;
-    }
-    .marquee-content span {
-      font-size: 0.95rem;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-weight: 600;
-      margin-right: 3rem;
-      color: #2c353d;
-    }
-    @keyframes marquee {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .contact-link {
-      color: #2c353d;
-      text-decoration: none;
-      font-size: 0.85rem;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      font-weight: 600;
-      border-bottom: 1px solid rgba(44, 53, 61, 0.4);
-      padding-bottom: 2px;
-      z-index: 2;
-    }
-
-    /* Content Sections */
-    .section {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 5rem 2rem;
-      border-bottom: 1px solid rgba(44, 53, 61, 0.15);
-    }
-    .section h2 {
-      font-size: 1.8rem;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }
-    .section p {
-      font-size: 1.1rem;
-      max-width: 700px;
-      opacity: 0.9;
-    }
-
-    footer {
-      text-align: center;
-      padding: 3rem 2rem;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      opacity: 0.7;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIORE | Beyond Time & Matter.</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="FIORE | Evolving design intelligence exploring collectible furniture, high-end interior architecture, and biomorphic forms. Based in Antwerp.">
+    
+    <!-- Gekoppelde losse stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
 <body>
 
-  <!-- HERO MET SLIDING BANNER -->
-  <header class="hero">
-    <div class="marquee-container">
-      <div class="marquee-content">
-        <span>AAA HiFi</span>
-        <span>•</span>
-        <span>INTEGRATING SOUND & VISION FOR ARTISTS</span>
-        <span>•</span>
-        <span>AAA HiFi</span>
-        <span>•</span>
-        <span>INTEGRATING SOUND & VISION FOR ARTISTS</span>
-        <span>•</span>
-        <span>AAA HiFi</span>
-        <span>•</span>
-        <span>INTEGRATING SOUND & VISION FOR ARTISTS</span>
-        <span>•</span>
-        <span>AAA HiFi</span>
-        <span>•</span>
-        <span>INTEGRATING SOUND & VISION FOR ARTISTS</span>
-        <span>•</span>
-      </div>
+    <div class="logo-container">
+        <a href="#"><img src="Logo.png" alt="FIORE Collective Design Logo"></a>
     </div>
-    <a href="mailto:info@aaahifi.com" class="contact-link">info@aaahifi.com</a>
-  </header>
 
-  <!-- SECTIES -->
-  <section class="section">
-    <h2>About AAA HiFi</h2>
-    <p>We combine high-end acoustics and vision systems tailored specifically for artists, studios, and discerning listeners.</p>
-  </section>
+    <div class="hero-slideshow" id="heroSlideshow">
+        <!-- Slide 1: Starfish Table -->
+        <div class="hero-slide active" style="--bg-desktop: url('assets/hero/Fiore-H-Starfish-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Starfish-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#starfish" class="hero-link">Explore Starfish Table</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 2: Drop & Ripple -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-Drop-Ripple-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Drop-Ripple-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#drop-ripple" class="hero-link">Explore Drop & Ripple</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 3: FD8 Executive -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-FD8-Executive-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-FD8-Executive-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#fd8" class="hero-link">Explore FD8 Executive</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 4: Do Dragao -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-Do-Dragao-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-Do-Dragao-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#dodragao" class="hero-link">Explore Do Dragao</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Slide 5: About -->
+        <div class="hero-slide" style="--bg-desktop: url('assets/hero/Fiore-H-About-desktop.jpg'); --bg-mobile: url('assets/hero/Fiore-H-About-mobile.jpg');">
+            <div class="hero-navigation-wrapper">
+                <div class="hero-arrow" onclick="moveHero(-1)">&#139;</div>
+                <a href="#about" class="hero-link">About Fiore</a>
+                <div class="hero-arrow" onclick="moveHero(1)">&#155;</div>
+            </div>
+        </div>
+        <!-- Scroll Down Invitation -->
+        <div class="scroll-invitation" onclick="lenis.scrollTo(document.querySelector('.intermission'), { duration: 1.5 })" aria-label="Scroll Down">
+            <span class="scroll-invitation__label">
+                <svg class="scroll-invitation__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 42" width="18px" height="32px">
+                    <path d="M2,12H2V30a10,10,0,0,0,20,0V12A10,10,0,0,0,2,12ZM0,12a12,12,0,0,1,24,0V30A12,12,0,0,1,0,30V12Z"/>
+                    <path class="scroll-invitation__svg-line" d="M11,7v4a1,1,0,0,0,2,0V7a1,1,0,0,0-2,0Z"/>
+                </svg>
+                Scroll Down
+            </span>
+        </div>
+    </div>
 
-  <section class="section">
-    <h2>Services</h2>
-    <p>Custom acoustic design, reference monitor integration, and full-room sound & vision architecture.</p>
-  </section>
+    <section class="intermission">
+        <div class="parallax-spotlight"></div>
+        <div class="parallax-drift-text">FLUID AUTHORSHIP</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O1 / The Origin</p>
+            <h3 class="narrative-text">FIORE is an evolving design intelligence existing between human intuition, atmosphere, technology, materiality and fiction. We explore creation beyond fixed identity.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
 
-  <section class="section">
-    <h2>Contact</h2>
-    <p>For inquiries and consultations, reach out via <a href="mailto:info@aaahifi.com" style="color: inherit;">info@aaahifi.com</a>.</p>
-  </section>
+    <!-- Section: Starfish Table -->
+    <section id="starfish" class="product-view" data-project-id="starfish">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
+        <div class="bg-injection-container"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Starfish Table</h2>
+            <p>Collectible Design</p>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'starfish')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
+    </section>
 
-  <footer>
-    &copy; AAA HiFi. All rights reserved.
-  </footer>
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 30% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text" style="right: -10%;">BEAUTY BEYOND EGO</div>
+        <div class="narrative-container" style="text-align: left; max-width: 850px;">
+            <p class="narrative-label">Chapter O2 / Fluid Landscapes</p>
+            <h3 class="narrative-text">What if the object, atmosphere and emotional resonance mattered more than the mythology surrounding the creator? Beauty should exist as an autonomous emotional presence.</h3>
+            <div class="narrative-line" style="margin-left: 0;"></div>
+        </div>
+    </section>
 
+    <!-- Section: Drop & Ripple -->
+    <section id="drop-ripple" class="product-view" data-project-id="drop-ripple">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
+        <div class="bg-injection-container"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Drop & Ripple</h2>
+            <p>Table & Rug</p>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'drop-ripple')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
+    </section>
+
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text">A SOFTER CYBORG CONDITION</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O3 / Workspace Architecture</p>
+            <h3 class="narrative-text">Technology is not the enemy, but an extension of imagination, sensitivity and poetic possibility. A dialogue between human intuition and evolving systems.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
+
+    <!-- Section: FD8 Executive -->
+    <section id="fd8" class="product-view" data-project-id="fd8">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
+        <div class="bg-injection-container"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>FD8 Executive</h2>
+            <p>Monolithic Workspace</p>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'fd8')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
+    </section>
+
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.04) 0%, rgba(0,0,0,0) 60%);"></div>
+        <div class="parallax-drift-text">POETIC ERROR</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O4 / Material Evolution</p>
+            <h3 class="narrative-text">Unexpected outcomes are not flaws. The most meaningful creations emerge through misinterpretation, drift, randomness, and machine-assisted sensitivity.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
+
+    <!-- Section: Do Dragao -->
+    <section id="dodragao" class="product-view" data-project-id="dodragao">
+        <div class="slide-arrow arrow-left" onclick="moveSection(this, -1)">&#139;</div>
+        <div class="slide-arrow arrow-right" onclick="moveSection(this, 1)">&#155;</div>
+        <div class="swipe-hint"><span>swipe</span> <span>for</span> <span>more</span></div>
+        <div class="bg-injection-container"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>Do Dragao</h2>
+            <p>Anatomical Sculptures</p>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'dodragao')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
+    </section>
+
+    <section class="intermission">
+        <div class="parallax-spotlight" style="background: radial-gradient(circle at 50% 60%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 65%);"></div>
+        <div class="parallax-drift-text" style="left: -10%;">BEAUTY BECOMES FREER</div>
+        <div class="narrative-container">
+            <p class="narrative-label">Chapter O5 / Digital Prototyping</p>
+            <h3 class="narrative-text">Does beauty become less meaningful if it no longer belongs entirely to a single individual? No. When the creator becomes fluid, beauty becomes freer.</h3>
+            <div class="narrative-line"></div>
+        </div>
+    </section>
+
+    <!-- Section: About -->
+    <section id="about" class="product-view" data-project-id="about">
+        <div class="bg-injection-container"></div>
+        <div class="section-overlay"></div>
+        <div class="section-content">
+            <h2>About Fiore</h2>
+            <p>Immortal Vision</p>
+            <div class="plus-trigger-wrapper" onclick="toggleDetails(this, 'about')">
+                <div class="plus-trigger">+</div>
+                <span class="plus-info-label">Info</span>
+            </div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-close-btn" onclick="closeDetails(this)">&#x2715; CLOSE</div>
+            <div class="panel-data"></div>
+        </div>
+    </section>
+
+    <footer class="footer-section" id="inquiries">
+        <form class="contact-form" id="fioreForm" onsubmit="handleFormSubmit(event)">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
+            <h3 style="font-size: 11px; letter-spacing: 5px; margin-bottom: 60px; opacity: 0.4; font-weight: 300;">INQUIRIES</h3>
+            
+            <input type="text" id="formName" name="Name" placeholder="NAME" required autocomplete="off">
+            <input type="email" id="formEmail" name="Email" placeholder="EMAIL" required autocomplete="off">
+            <textarea id="formMessage" name="Message" placeholder="MESSAGE" rows="4" required autocomplete="off"></textarea>
+            
+            <div style="margin-top: 20px;">
+                <button type="submit" id="submitBtn" class="form-send-btn">SUBMIT REQUEST</button>
+            </div>
+        </form>
+        <p style="margin-top: 140px; font-size: 8px; opacity: 0.15; letter-spacing: 6px;">© 2026 FIORE | BEYOND TIME & MATTER.</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Smooth Scrolling setup (Lenis)
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+        function raf(time) { lenis.fn ? lenis.fn(time) : lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+        lenis.on('scroll', ScrollTrigger.update);
+
+        // Data matrix object
+        const projects = {
+            'starfish': {
+                title: 'Starfish Table',
+                images: [
+                    { d: 'assets/designs/starfish/Fiore-Starfish-Table-view01-desktop.jpg', m: 'assets/designs/starfish/Fiore-Starfish-Table-view01-mobile.jpg' },
+                    { d: 'assets/designs/starfish/Fiore-Starfish-Table-view02-desktop.jpg', m: 'assets/designs/starfish/Fiore-Starfish-Table-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Biomorphic Radially-Centered Guéridon Architecture' },
+                    { label: 'Scale Metrics', value: 'H 740 mm | Ø 1400 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Soul-Red Metallic Poly-Coated Base // Top: Carbon-Injected Noir de Mazy Marble' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Titanium Black Liquid Chrome Base // Top: Radially Bookmatched Macassar Ebony' },
+                    { label: 'Structural Core', value: 'Damped Multi-Layer Polymer Composite (Zero Acoustic Ringing)' },
+                    { label: 'Authentication', value: 'Micro-Enameled Titanium Plaque with Cryptographic DNA' },
+                    { label: 'Lead-Time', value: '18 Weeks // Handcrafted in Antwerp Laboratory // Limited Edition of 8' }
+                ]
+            },
+            'drop-ripple': {
+                title: 'Drop & Ripple',
+                images: [
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view01-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view03-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view05-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' },
+                    { d: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view09-desktop.jpg', m: 'assets/designs/drop-ripple/Fiore-Drop-Ripple-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Integrated Domestic Topography System (Table & Rug)' },
+                    { label: 'Scale Metrics', value: 'Table Body: 2400 x 1100 mm // Landscape Rug: 3500 x 2500 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Milled Solid Black Walnut Slab // Low-Profile Organic Edge Satin Finish' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Hand-knotted Tibetan Silk & High-Density Botanical Wool Rug (Ripple Pattern)' },
+                    { label: 'Surface Treatment', value: 'Organic Oleo-Wax Nano Coating (Water & Scratch Resistant)' },
+                    { label: 'Lead-Time', value: '14 Weeks // Certified Pièce Unique' }
+                ]
+            },
+            'fd8': {
+                title: 'FD8 Executive',
+                images: [
+                    { d: 'assets/designs/fd8/Fiore-FD8-Executive-view01-desktop.jpg', m: 'assets/designs/fd8/Fiore-FD8-Executive-view01-mobile.jpg' },
+                    { d: 'assets/designs/fd8/Fiore-FD8-Executive-view02-desktop.jpg', m: 'assets/designs/fd8/Fiore-FD8-Executive-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Monolithic Executive Workspace Layer' },
+                    { label: 'Scale Metrics', value: '2200 x 1000 x 750 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Anodized Aerospace-Grade Titanium Frame // Micro-Blasted Matte Finish' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Compression-Molded Structural Carbon Top // Integrated Wire Management' },
+                    { label: 'Hardware Integration', value: 'Flush Magnetic Cable Paths // Soft-Close Stealth Drawer Compartments' },
+                    { label: 'Lead-Time', value: '18 Weeks // Custom Tailored to Executive Ergonomics' }
+                ]
+            },
+            'dodragao': {
+                title: 'Do Dragao',
+                images: [
+                    { d: 'assets/designs/do-dragao/Fiore-Do-Dragao-view01-desktop.jpg', m: 'assets/designs/do-dragao/Fiore-Do-Dragao-view01-mobile.jpg' },
+                    { d: 'assets/designs/do-dragao/Fiore-Do-Dragao-view02-desktop.jpg', m: 'assets/designs/do-dragao/Fiore-Do-Dragao-view02-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Classification', value: 'Anatomical Sculptural Daybed' },
+                    { label: 'Scale Metrics', value: 'L 2100 mm // W 950 mm // H 650 mm' },
+                    { label: 'Material Configuration I (Slide 1)', value: 'Cast Magnesium Internal Skeleton // Ultralight Monocoque Geometry' },
+                    { label: 'Material Configuration II (Slide 2)', value: 'Full-Grain Liquid Aniline Hide // Hand-Stretched Seamless Saddle Stitching' },
+                    { label: 'Ergonomic Tuning', value: 'Variable-Density Memory Foam Core with Zonal Pressure Relief' },
+                    { label: 'Lead-Time', value: '16 Weeks // Engineered on Custom Curation' }
+                ]
+            },
+            'about': {
+                title: 'FIORE LABS // ABOUT',
+                images: [
+                    { d: 'assets/designs/about/Fiore-About-view01-desktop.jpg', m: 'assets/designs/about/Fiore-About-view01-mobile.jpg' }
+                ],
+                details: [
+                    { label: 'Core Identity', value: 'Procedural Art & Digital Permanent Artifacts' },
+                    { label: 'Coordinates', value: 'Antwerp Laboratory // Flanders, Belgium' },
+                    { label: 'Philosophy', value: 'Form follows emotion. Objects created as autonomous emotional presences, blurring the line between physical craftsmanship and digital evolution.' }
+                ]
+            }
+        };
+
+        // Injectie van achtergronden bij het laden
+        document.querySelectorAll('.product-view').forEach(section => {
+            const pId = section.getAttribute('data-project-id');
+            const container = section.querySelector('.bg-injection-container');
+            if (pId && projects[pId] && container) {
+                let generatedHTML = '';
+                projects[pId].images.forEach((img, index) => {
+                    const activeClass = (index === 0) ? 'active' : '';
+                    generatedHTML += `<div class="section-bg ${activeClass}" style="--bg-desktop: url('${img.d}'); --bg-mobile: url('${img.m}');"></div>`;
+                });
+                container.innerHTML = generatedHTML;
+            }
+        });
+
+        // GSAP Parallax (Desktop)
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 769px)", () => {
+            document.querySelectorAll('.intermission').forEach(sect => {
+                const spot = sect.querySelector('.parallax-spotlight');
+                const drift = sect.querySelector('.parallax-drift-text');
+                const narrative = sect.querySelector('.narrative-container');
+
+                if(spot) { gsap.to(spot, { yPercent: 15, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+                if(drift) { gsap.fromTo(drift, { xPercent: 10 }, { xPercent: -10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+                if(narrative) {
+                    gsap.fromTo(narrative, 
+                        { y: 100, opacity: 0 }, 
+                        { y: -40, opacity: 1, ease: "power2.out", scrollTrigger: { trigger: sect, start: "top 85%", end: "top 25%", scrub: 1 } }
+                    );
+                }
+            });
+
+            document.querySelectorAll('.product-view').forEach(sect => {
+                const bg = sect.querySelector('.section-bg');
+                if(bg) { gsap.fromTo(bg, { yPercent: -10 }, { yPercent: 10, ease: "none", scrollTrigger: { trigger: sect, scrub: true } }); }
+            });
+        });
+
+        // Hero Cinematic Scroll Zoom
+        gsap.to('.hero-slide', {
+            scale: 1.08,
+            ease: "none",
+            scrollTrigger: {
+                trigger: '.hero-slideshow',
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true
+            }
+        });
+
+        // Hero Slideshow Switch
+        let hIdx = 0;
+        const hSlides = document.querySelectorAll('.hero-slide');
+        let heroInterval = setInterval(() => moveHero(1), 6000);
+
+        function moveHero(direction) {
+            if(hSlides.length === 0) return;
+            hSlides[hIdx].classList.remove('active');
+            hIdx = (hIdx + direction + hSlides.length) % hSlides.length;
+            hSlides[hIdx].classList.add('active');
+            clearInterval(heroInterval);
+            heroInterval = setInterval(() => moveHero(1), 6000);
+            if (navigator.vibrate) { navigator.vibrate(15); }
+        }
+
+        // Hero Swipe
+        const heroContainer = document.getElementById('heroSlideshow');
+        let touchStartX = 0;
+        let touchStartY = 0;
+
+        if (heroContainer) {
+            heroContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                touchStartY = e.changedTouches[0].screenY;
+            }, { passive: true });
+
+            heroContainer.addEventListener('touchmove', (e) => {
+                let xDist = Math.abs(e.changedTouches[0].screenX - touchStartX);
+                let yDist = Math.abs(e.changedTouches[0].screenY - touchStartY);
+                if (xDist > yDist && xDist > 10) { if (e.cancelable) e.preventDefault(); }
+            }, { passive: false });
+
+            heroContainer.addEventListener('touchend', (e) => {
+                let touchEndX = e.changedTouches[0].screenX;
+                let touchEndY = e.changedTouches[0].screenY;
+                let swipeThreshold = 40; 
+                let swipeDistance = touchEndX - touchStartX;
+                let yDistance = Math.abs(touchEndY - touchStartY);
+                if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
+                    if (swipeDistance > 0) { moveHero(-1); } else { moveHero(1); }
+                }
+            }, { passive: true });
+        }
+
+        // Section Carousels
+        document.querySelectorAll('.product-view').forEach(s => {
+            const bgs = s.querySelectorAll('.section-bg');
+            const hint = s.querySelector('.swipe-hint');
+            
+            if(bgs.length > 1) {
+                let bIdx = 0;
+                if (hint) { hint.classList.add('visible'); }
+
+                let sectInterval = setInterval(() => changeBg(1), 5000);
+
+                function changeBg(direction) {
+                    if (hint) { hint.classList.remove('visible'); }
+                    bgs[bIdx].classList.remove('active');
+                    bIdx = (bIdx + direction + bgs.length) % bgs.length;
+                    bgs[bIdx].classList.add('active');
+                    if (navigator.vibrate && direction !== 0) { navigator.vibrate(15); }
+                }
+
+                s.moveBg = function(direction) {
+                    changeBg(direction);
+                    clearInterval(sectInterval);
+                    sectInterval = setInterval(() => changeBg(1), 5000);
+                };
+
+                let pTouchStartX = 0;
+                let pTouchStartY = 0;
+
+                s.addEventListener('touchstart', (e) => {
+                    if (e.target.closest('.side-panel')) return;
+                    pTouchStartX = e.changedTouches[0].screenX;
+                    pTouchStartY = e.changedTouches[0].screenY;
+                }, { passive: true });
+
+                s.addEventListener('touchmove', (e) => {
+                    if (e.target.closest('.side-panel')) return;
+                    let xDist = Math.abs(e.changedTouches[0].screenX - pTouchStartX);
+                    let yDist = Math.abs(e.changedTouches[0].screenY - pTouchStartY);
+                    if (xDist > yDist && xDist > 10) { if (e.cancelable) e.preventDefault(); }
+                }, { passive: false });
+
+                s.addEventListener('touchend', (e) => {
+                    if (e.target.closest('.side-panel')) return;
+                    let pTouchEndX = e.changedTouches[0].screenX;
+                    let pTouchEndY = e.changedTouches[0].screenY;
+                    const swipeThreshold = 40;
+                    const swipeDistance = pTouchEndX - pTouchStartX;
+                    const yDistance = Math.abs(pTouchEndY - pTouchStartY);
+                    if (Math.abs(swipeDistance) > swipeThreshold && Math.abs(swipeDistance) > yDistance) {
+                        if (swipeDistance > 0) { s.moveBg(-1); } else { s.moveBg(1); }
+                    }
+                }, { passive: true });
+            }
+        });
+
+        function moveSection(arrowElement, direction) {
+            const parentSection = arrowElement.closest('section');
+            if (parentSection && typeof parentSection.moveBg === 'function') {
+                parentSection.moveBg(direction);
+            }
+        }
+
+        // Side panel toggles
+        function toggleDetails(element, id) {
+            const parentSection = element.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const infoLabel = parentSection.querySelector('.plus-info-label');
+            const panelData = parentSection.querySelector('.panel-data');
+            
+            if (!panel) return;
+            
+            if (panel.classList.contains('open')) {
+                panel.classList.remove('open');
+                if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+                if (infoLabel) infoLabel.style.opacity = '1';
+            } else {
+                const p = projects[id];
+                if(!p) return;
+                
+                let cleanHTML = `<div class="matrix-header">${p.title} // Structural Specifications</div>`;
+                p.details.forEach(item => {
+                    cleanHTML += `
+                        <div class="matrix-row">
+                            <div class="matrix-meta">${item.label}</div>
+                            <div class="matrix-title">${item.value}</div>
+                        </div>
+                    `;
+                });
+
+                cleanHTML += `
+                    <div class="panel-inquiry-container">
+                        <div class="panel-inquiry-link" onclick="scrollToInquiries(this)">Inquire for acquisition</div>
+                    </div>
+                `;
+                
+                panelData.innerHTML = cleanHTML;
+                panel.classList.add('open');
+                if (plusTrigger) plusTrigger.style.transform = 'rotate(45deg)';
+                if (infoLabel) infoLabel.style.opacity = '0'; 
+            }
+        }
+
+        function closeDetails(closeButtonElement) {
+            const parentSection = closeButtonElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const infoLabel = parentSection.querySelector('.plus-info-label');
+            
+            if (panel) panel.classList.remove('open');
+            if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            if (infoLabel) infoLabel.style.opacity = '1';
+        }
+
+        function scrollToInquiries(linkElement) {
+            const parentSection = linkElement.closest('section');
+            const panel = parentSection.querySelector('.side-panel');
+            const plusTrigger = parentSection.querySelector('.plus-trigger');
+            const infoLabel = parentSection.querySelector('.plus-info-label');
+            
+            if (panel) panel.classList.remove('open');
+            if (plusTrigger) plusTrigger.style.transform = 'rotate(0deg)';
+            if (infoLabel) infoLabel.style.opacity = '1';
+            
+            lenis.scrollTo('#inquiries', { duration: 1.5 });
+        }
+
+        // Form Submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            const button = document.getElementById('submitBtn');
+            const form = document.getElementById('fioreForm');
+            button.innerText = "SENDING...";
+            button.style.pointerEvents = "none";
+            button.style.opacity = "0.4";
+            const formData = new FormData(form);
+            
+            fetch("https://formsubmit.co/ajax/hi@fio.re", {
+                method: "POST",
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    button.innerText = "REQUEST SENT";
+                    button.style.opacity = "0.9";
+                    form.reset();
+                    setTimeout(() => {
+                        button.innerText = "SUBMIT REQUEST";
+                        button.style.pointerEvents = "auto";
+                    }, 5000);
+                } else {
+                    button.innerText = "REDIRECTING...";
+                    form.action = "https://formsubmit.co/hi@fio.re";
+                    form.method = "POST";
+                    form.removeAttribute('onsubmit'); 
+                    form.submit();
+                }
+            })
+            .catch(error => {
+                button.innerText = "REDIRECTING...";
+                form.action = "https://formsubmit.co/hi@fio.re";
+                form.method = "POST";
+                form.removeAttribute('onsubmit');
+                form.submit();
+            });
+        }
+    </script>
 </body>
 </html>
